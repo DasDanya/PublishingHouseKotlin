@@ -10,4 +10,10 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="server_url">http://192.168.1.2:8080</string>
+    <string name="signInLabel">Авторизация пользователя</string>
+    <string name="signInMessage">Введите данные для входа в систему</string>
+    <string name="email">Электронная почта</string>
+    <string name="password">Пароль</string>
+    <string name="signInButton">Войти</string>
 </resources>
