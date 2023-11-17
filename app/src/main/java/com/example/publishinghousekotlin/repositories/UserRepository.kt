@@ -1,6 +1,8 @@
 package com.example.publishinghousekotlin.repositories
 import com.example.publishinghousekotlin.http.requests.LoginRequest
+import com.example.publishinghousekotlin.http.requests.RegisterRequest
 import com.example.publishinghousekotlin.http.responses.JwtResponse
+import com.example.publishinghousekotlin.http.responses.RegisterResponse
 import com.google.gson.GsonBuilder
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -14,13 +16,14 @@ class UserRepository(private val serverUrl: String) {
     private val client = OkHttpClient()
     private val builder = GsonBuilder()
     private val gson = builder.create()
-     suspend fun signin(loginData: LoginRequest): JwtResponse?{
+     suspend fun login(loginData: LoginRequest): JwtResponse?{
+
         val loginDataAsJson = gson.toJson(loginData)
         val mediaType = "application/json; chapset=utf-8".toMediaType()
-        val body: RequestBody = loginDataAsJson.toRequestBody(mediaType)
+        val body = loginDataAsJson.toRequestBody(mediaType)
 
         val request = Request.Builder()
-            .url("$serverUrl/auth/signin")
+            .url("$serverUrl/api/auth/login")
             .post(body)
             .build()
 
@@ -31,4 +34,23 @@ class UserRepository(private val serverUrl: String) {
 
         return null
      }
+
+    suspend fun register(registerData: RegisterRequest):RegisterResponse?{
+
+        val registerDataAsJson = gson.toJson(registerData)
+        val mediaType = "application/json; chapset=utf-8".toMediaType()
+        val body: RequestBody = registerDataAsJson.toRequestBody(mediaType)
+
+        val request = Request.Builder()
+            .url("$serverUrl/api/auth/register")
+            .post(body)
+            .build()
+
+        val response = client.newCall(request).execute()
+        if(response.code == 200 || response.code == 400){
+            return RegisterResponse(response.code, response.body!!.string())
+        }
+
+        return null
+    }
 }

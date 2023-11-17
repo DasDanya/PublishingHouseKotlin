@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.SignInActivity">
+    tools:context=".controllers.LoginActivity">
 
 
     <LinearLayout
@@ -22,9 +22,10 @@
             android:fontFamily = "@font/inter_bold"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:text="@string/signInMessage" />
+            android:text="@string/loginMessage" />
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -49,6 +50,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -67,7 +69,7 @@
                 android:layout_marginBottom="10dp"
                 android:ems="10"
                 android:minHeight="48dp"
-                android:inputType="text"
+                android:inputType="textPassword"
                 android:maxLength="30"
                 android:lines="1"
                 android:hint="@string/password" />
@@ -75,16 +77,29 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/signInBtn"
-            android:layout_width="290dp"
+            android:id="@+id/loginBtn"
+            android:layout_width="382dp"
             android:layout_height="wrap_content"
-            android:text="@string/signInButton" />
+            android:gravity="center"
+            android:text="@string/loginButton" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
 
         <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
+            android:id="@+id/registerTextView"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:layout_marginTop="105dp"
+            android:fontFamily="@font/inter_bold"
+            android:gravity="center"
+            android:text="@string/signupTextView"
+            android:textSize="17dp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

@@ -14,8 +14,8 @@
         android:theme="@style/Theme.PublishingHouseKotlin"
         tools:targetApi="31">
         <activity
-            android:name=".activities.SignInActivity"
-            android:label="@string/signInLabel"
+            android:name=".controllers.LoginActivity"
+            android:label="@string/loginLabel"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,9 +24,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".controllers.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.PublishingHouseKotlin.NoActionBar">
+        </activity>
+        <activity
+            android:name=".controllers.RegisterActivity"
+            android:label="@string/registerLabel">
         </activity>
         <meta-data
             android:name="preloaded_fonts"
