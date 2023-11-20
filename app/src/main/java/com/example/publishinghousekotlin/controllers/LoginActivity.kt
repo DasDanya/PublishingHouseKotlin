@@ -10,6 +10,7 @@ import com.example.publishinghousekotlin.basics.Listener
 import com.example.publishinghousekotlin.basics.Messages
 import com.example.publishinghousekotlin.databinding.ActivityLoginBinding
 import com.example.publishinghousekotlin.http.requests.LoginRequest
+import com.example.publishinghousekotlin.http.responses.JwtResponse
 import com.example.publishinghousekotlin.repositories.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -24,8 +25,9 @@ class LoginActivity: AppCompatActivity() {
         activityLoginBinding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(activityLoginBinding.root)
 
-        setListeners()
+        goToMainScreen()
 
+        setListeners()
         activityLoginBinding.loginBtn.setOnClickListener {
             login()
         }
@@ -53,8 +55,9 @@ class LoginActivity: AppCompatActivity() {
 
             val loginRequest = LoginRequest(email, password)
             val userRepository = UserRepository(applicationContext.resources.getString(R.string.server))
+            var jwtResponse: JwtResponse?
+            var unauthorizedAccess = true
 
-            //activityLoginBinding.progressBar.visibility = View.VISIBLE
             lifecycleScope.launch(Dispatchers.IO) {
                 try {
                     delay(1000)
@@ -62,20 +65,38 @@ class LoginActivity: AppCompatActivity() {
                         activityLoginBinding.progressBar.visibility = View.VISIBLE
                     }
 
-                    userRepository.login(loginRequest)
-                    //activityLoginBinding.textView2.text = userRepository.login(loginRequest)!!.user.email
-                    val messages = Messages()
-                    messages.showSuccess(userRepository.login(loginRequest)!!.user.email,activityLoginBinding.root)
+                    jwtResponse = userRepository.login(loginRequest)
+
+                    if(jwtResponse != null){
+                        JwtResponse.saveToMemory(applicationContext, jwtResponse!!, applicationContext.resources.getString(R.string.keyForJwtResponse))
+                    }
+
                 } catch(e: Exception){
                     message.showError("Ошибка авторизации. Повторите попытку",activityLoginBinding.root)
+                    unauthorizedAccess = false
                 }
                 runOnUiThread{
                     activityLoginBinding.progressBar.visibility = View.GONE
+                }
+
+                goToMainScreen()
+
+                if(unauthorizedAccess){
+                    message.showError("Ошибка авторизации. Неверный логин или пароль",activityLoginBinding.root)
                 }
             }
 
         } else{
             message.showError("Некорректный ввод. Повторите попытку.",activityLoginBinding.root)
+        }
+    }
+
+    private fun goToMainScreen(){
+        if(JwtResponse.getFromMemory(applicationContext, applicationContext.resources.getString(R.string.keyForJwtResponse)) != null){
+            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+            //intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
+            finish()
         }
     }
 

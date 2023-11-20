@@ -7,9 +7,13 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_bookings">Заказы</string>
+    <string name="menu_products">Продукция</string>
+    <string name="menu_employees">Сотрудники</string>
+    <string name="menu_materials">Материалы</string>
+    <string name="menu_printingHouses">Типографии</string>
+    <string name="menu_typeProducts">Типы продукции</string>
+    <string name="menu_customers">Заказчики</string>
     <string name="server">http://192.168.1.2:8080</string>
     <string name="loginLabel">Авторизация пользователя</string>
     <string name="registerLabel">Регистрация пользователя</string>
@@ -23,4 +27,6 @@
     <string name="registerMessage">Данные для регистрации</string>
     <string name="nameUser">Наименование</string>
     <string name="phone">Номер телефона</string>
+    <string name="exit">Выйти</string>
+    <string name="keyForJwtResponse">THISISKEYFORJWTRESPONSE</string>
 </resources>

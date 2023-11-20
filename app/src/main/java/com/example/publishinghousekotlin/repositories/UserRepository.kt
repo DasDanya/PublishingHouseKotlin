@@ -39,7 +39,7 @@ class UserRepository(private val serverUrl: String) {
 
         val registerDataAsJson = gson.toJson(registerData)
         val mediaType = "application/json; chapset=utf-8".toMediaType()
-        val body: RequestBody = registerDataAsJson.toRequestBody(mediaType)
+        val body = registerDataAsJson.toRequestBody(mediaType)
 
         val request = Request.Builder()
             .url("$serverUrl/api/auth/register")
