@@ -1,10 +1,10 @@
 package com.example.publishinghousekotlin.controllers
 
+
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.widget.TextView
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -13,18 +13,24 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
 import com.example.publishinghousekotlin.R
+import com.example.publishinghousekotlin.basics.Messages
 import com.example.publishinghousekotlin.databinding.ActivityMainBinding
 import com.example.publishinghousekotlin.http.responses.JwtResponse
+import com.example.publishinghousekotlin.models.TypeProduct
 import com.example.publishinghousekotlin.models.User
 import com.example.publishinghousekotlin.models.UserRole
+
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
+    var navController: NavController? = null
     private var user: User? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,9 +39,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.appBarMain.toolbar)
-        binding.appBarMain.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+        binding.appBarMain.fab.setOnClickListener {
+            goToAddItem()
         }
 
         user = JwtResponse.getFromMemory(applicationContext, applicationContext.resources.getString(R.string.keyForJwtResponse))!!.user
@@ -43,19 +48,21 @@ class MainActivity : AppCompatActivity() {
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
+        navController = findNavController(R.id.nav_host_fragment_content_main)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
+                R.id.nav_home, R.id.nav_slideshow, R.id.typeProductsScreen
             ), drawerLayout
         )
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+        setupActionBarWithNavController(navController!!, appBarConfiguration)
+        navView.setupWithNavController(navController!!)
 
         setUserInfo()
+        goToFragmentAfterAction()
         listenerOfSelectedItemNavView()
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -89,6 +96,33 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun goToAddItem(){
+        val currentDestination = navController!!.currentDestination
+
+        when (currentDestination?.id) {
+            R.id.nav_home -> {
+                Messages().showError("Nav home", binding.root)
+            }
+            R.id.nav_slideshow -> {
+                Messages().showError("Nav Slideshow", binding.root)
+            }
+            else -> {
+                val intent = Intent(this@MainActivity, SaveTypeProductActivity::class.java)
+                intent.putExtra("typeProduct", TypeProduct())
+                startActivity(intent)
+            }
+        }
+    }
+
+    private fun goToFragmentAfterAction(){
+        val fragment = intent?.getStringExtra("fragment")
+
+        if(fragment.equals("TypeProductFragment")){
+            navController!!.navigate(R.id.typeProductsScreen)
+        }
+    }
+
+
     private fun listenerOfSelectedItemNavView(){
         binding.navView.setNavigationItemSelectedListener { menuItem->
             when(menuItem.itemId){
@@ -98,9 +132,21 @@ class MainActivity : AppCompatActivity() {
                     val intent = Intent(this@MainActivity, LoginActivity::class.java)
                     startActivity(intent)
 
-                    false
+                    true
                 }
-
+                R.id.nav_typeProducts ->{
+                    navController!!.navigate(R.id.typeProductsScreen)
+                    binding.drawerLayout.closeDrawers()
+                    true
+                }
+                R.id.nav_customers ->{
+                    navController!!.navigate(R.id.nav_slideshow)
+                    true
+                }
+                R.id.nav_bookings ->{
+                    navController!!.navigate(R.id.nav_home)
+                    true
+                }
                 else -> {
                     false
                 }

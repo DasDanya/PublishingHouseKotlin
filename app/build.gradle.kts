@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+
 }
 
 android {
@@ -37,6 +38,7 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
 }
 
 dependencies {
@@ -49,11 +51,17 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation("androidx.navigation:navigation-fragment-ktx:2.5.3")
     implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
-    implementation ("org.projectlombok:lombok:1.18.22")
-    implementation ("jakarta.validation:jakarta.validation-api:2.0.1")
+
+    // Корутины + http
     implementation ("com.squareup.okhttp3:okhttp:4.9.0")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
     implementation ("com.google.code.gson:gson:2.8.5")
+
+    // Пагинация
+    implementation ("androidx.paging:paging-runtime-ktx:3.2.1")
+    implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+    implementation ("com.google.dagger:hilt-android:2.39.1")
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

@@ -71,4 +71,23 @@ class Listener {
         })
 
     }
+
+    fun russianWordsListener(minLengthOfWord: Int, maxLengthOfWord: Int, russianWordsText: TextInputEditText, russianWordsContainer: TextInputLayout){
+        russianWordsText.addTextChangedListener {
+            russianWordsContainer.helperText = validator.isValidRussianWord(russianWordsText.text.toString(), minLengthOfWord, maxLengthOfWord)
+        }
+    }
+
+    fun doubleNumberListener(minValue: Double, maxValue: Double, doubleAsText: TextInputEditText, doubleContainer: TextInputLayout){
+        doubleAsText.addTextChangedListener {
+            val doubleValue = doubleAsText.text.toString()
+
+            if(doubleValue != "") {
+                doubleContainer.helperText = validator.isValidDoubleValue(doubleAsText.text.toString().toDouble(), minValue, maxValue)
+            }else{
+                doubleContainer.helperText = "Необходимо ввести"
+            }
+        }
+    }
+
 }

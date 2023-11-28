@@ -1,4 +1,6 @@
 package com.example.publishinghousekotlin.repositories
+import com.example.publishinghousekotlin.MyApplication
+import com.example.publishinghousekotlin.R
 import com.example.publishinghousekotlin.http.requests.LoginRequest
 import com.example.publishinghousekotlin.http.requests.RegisterRequest
 import com.example.publishinghousekotlin.http.responses.JwtResponse
@@ -11,11 +13,12 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 
 
-class UserRepository(private val serverUrl: String) {
+class UserRepository() {
 
     private val client = OkHttpClient()
-    private val builder = GsonBuilder()
-    private val gson = builder.create()
+    private val gson = GsonBuilder().create()
+    private var serverUrl = MyApplication.instance.applicationContext.resources.getString(R.string.server)
+
      suspend fun login(loginData: LoginRequest): JwtResponse?{
 
         val loginDataAsJson = gson.toJson(loginData)

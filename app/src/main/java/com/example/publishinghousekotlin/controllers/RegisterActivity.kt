@@ -62,13 +62,12 @@ class RegisterActivity: AppCompatActivity() {
         if(activityRegisterBinding.nameContainer.helperText == null && activityRegisterBinding.phoneContainer.helperText == null && activityRegisterBinding.emailContainer.helperText == null &&
             activityRegisterBinding.passwordContainer.helperText == null && activityRegisterBinding.confirmPasswordContainer.helperText == null){
 
-            val name = activityRegisterBinding.nameText.text.toString()
-            val phone = activityRegisterBinding.phoneText.text.toString()
-            val email = activityRegisterBinding.emailText.text.toString()
-            val password = activityRegisterBinding.passwordText.text.toString()
+            val name = activityRegisterBinding.nameText.text.toString().trim()
+            val phone = activityRegisterBinding.phoneText.text.toString().trim()
+            val email = activityRegisterBinding.emailText.text.toString().trim()
+            val password = activityRegisterBinding.passwordText.text.toString().trim()
 
             val registerRequest = RegisterRequest(name, phone, email,password, "CUSTOMER")
-            val userRepository = UserRepository(applicationContext.resources.getString(R.string.server))
             var registerResponse: RegisterResponse? = null
 
             lifecycleScope.launch(Dispatchers.IO) {
@@ -78,7 +77,7 @@ class RegisterActivity: AppCompatActivity() {
                         activityRegisterBinding.progressBar.visibility = View.VISIBLE
                     }
 
-                    registerResponse = userRepository.register(registerRequest)
+                    registerResponse = UserRepository().register(registerRequest)
 
                 } catch (e:Exception){
                     message.showError("Ошибка регистрации. Повторите попытку",activityRegisterBinding.root)

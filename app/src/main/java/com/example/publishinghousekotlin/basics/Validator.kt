@@ -62,4 +62,42 @@ class Validator {
         return null
     }
 
+    fun isValidRussianWord(word:String, minLength: Int, maxLength:Int):String?{
+        if(word.length < minLength){
+            return "Минимальная длина $minLength символов"
+        }
+
+        if(word.length > maxLength){
+            return "Максимальная длина $maxLength символов"
+        }
+
+        val russianWordRegex = Regex("^[А-Яа-я ]+$")
+        if(!word.matches(russianWordRegex)){
+            return "Допускаются русские буквы и пробел"
+        }
+
+        return null
+    }
+
+    fun isValidDoubleValue(doubleValue: Double, minValue: Double, maxValue: Double): String? {
+        if(doubleValue < minValue){
+            return "Минимальное значение: $minValue"
+        }
+
+        if(doubleValue > maxValue){
+            return "Максимальное значение: $maxValue"
+        }
+
+        val stringValue = doubleValue.toString()
+        val indexOfDecimal = stringValue.indexOf('.')
+
+        if(indexOfDecimal > 0){
+            if(stringValue.length - indexOfDecimal - 1 > 2){
+                return "Допустимое количество цифр после запятой = 2"
+            }
+        }
+
+        return null
+    }
+
 }

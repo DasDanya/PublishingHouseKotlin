@@ -50,11 +50,10 @@ class LoginActivity: AppCompatActivity() {
 
         if(activityLoginBinding.emailContainer.helperText == null && activityLoginBinding.passwordContainer.helperText == null){
 
-            val email = activityLoginBinding.emailText.text.toString()
-            val password = activityLoginBinding.passwordText.text.toString()
+            val email = activityLoginBinding.emailText.text.toString().trim()
+            val password = activityLoginBinding.passwordText.text.toString().trim()
 
             val loginRequest = LoginRequest(email, password)
-            val userRepository = UserRepository(applicationContext.resources.getString(R.string.server))
             var jwtResponse: JwtResponse?
             var unauthorizedAccess = true
 
@@ -65,7 +64,7 @@ class LoginActivity: AppCompatActivity() {
                         activityLoginBinding.progressBar.visibility = View.VISIBLE
                     }
 
-                    jwtResponse = userRepository.login(loginRequest)
+                    jwtResponse = UserRepository().login(loginRequest)
 
                     if(jwtResponse != null){
                         JwtResponse.saveToMemory(applicationContext, jwtResponse!!, applicationContext.resources.getString(R.string.keyForJwtResponse))

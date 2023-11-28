@@ -5,13 +5,9 @@ import java.io.Serializable
 data class User(
 
     private val id: Long,
-
     val name:String,
-
     val phone: String,
-
     val email: String,
-
     val role: String
 
 ): Serializable{
