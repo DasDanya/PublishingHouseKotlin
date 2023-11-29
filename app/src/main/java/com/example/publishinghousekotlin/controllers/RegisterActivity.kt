@@ -3,16 +3,14 @@ package com.example.publishinghousekotlin.controllers
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.example.publishinghousekotlin.R
 import com.example.publishinghousekotlin.basics.Listener
 import com.example.publishinghousekotlin.basics.Messages
 import com.example.publishinghousekotlin.databinding.ActivityRegisterBinding
 import com.example.publishinghousekotlin.http.requests.RegisterRequest
-import com.example.publishinghousekotlin.http.responses.RegisterResponse
+import com.example.publishinghousekotlin.http.responses.MessageResponse
 import com.example.publishinghousekotlin.repositories.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -68,7 +66,7 @@ class RegisterActivity: AppCompatActivity() {
             val password = activityRegisterBinding.passwordText.text.toString().trim()
 
             val registerRequest = RegisterRequest(name, phone, email,password, "CUSTOMER")
-            var registerResponse: RegisterResponse? = null
+            var messageResponse: MessageResponse? = null
 
             lifecycleScope.launch(Dispatchers.IO) {
                 try{
@@ -77,7 +75,7 @@ class RegisterActivity: AppCompatActivity() {
                         activityRegisterBinding.progressBar.visibility = View.VISIBLE
                     }
 
-                    registerResponse = UserRepository().register(registerRequest)
+                    messageResponse = UserRepository().register(registerRequest)
 
                 } catch (e:Exception){
                     message.showError("Ошибка регистрации. Повторите попытку",activityRegisterBinding.root)
@@ -86,11 +84,11 @@ class RegisterActivity: AppCompatActivity() {
                     activityRegisterBinding.progressBar.visibility = View.GONE
                 }
 
-                if(registerResponse != null){
-                    if(registerResponse!!.code == 400){
-                        message.showError(registerResponse!!.message, activityRegisterBinding.root)
+                if(messageResponse != null){
+                    if(messageResponse!!.code == 400){
+                        message.showError(messageResponse!!.message, activityRegisterBinding.root)
                     }else{
-                        message.showSuccess(registerResponse!!.message, activityRegisterBinding.root)
+                        message.showSuccess(messageResponse!!.message, activityRegisterBinding.root)
 
                         delay(1000)
                         val intent = Intent(this@RegisterActivity, LoginActivity::class.java)

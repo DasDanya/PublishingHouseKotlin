@@ -6,6 +6,7 @@ import androidx.paging.liveData
 import com.example.publishinghousekotlin.MyApplication
 import com.example.publishinghousekotlin.R
 import com.example.publishinghousekotlin.http.JwtInterceptor
+import com.example.publishinghousekotlin.http.responses.MessageResponse
 import com.example.publishinghousekotlin.models.TypeProduct
 import com.example.publishinghousekotlin.pagination.TypeProductsDataSource
 import com.google.gson.GsonBuilder
@@ -59,6 +60,35 @@ class TypeProductRepository {
         return response.code
     }
 
+    suspend fun update(typeProduct: TypeProduct): Int{
+        val typeProductAsJson = gson.toJson(typeProduct)
+        val mediaType = "application/json; chapset=utf-8".toMediaType()
+        val body = typeProductAsJson.toRequestBody(mediaType)
+
+        val request = Request.Builder()
+            .url("$serverUrl/api/typeProducts/update/${typeProduct.id}")
+            .put(body)
+            .build()
+
+        val response = client.newCall(request).execute()
+
+        return response.code
+    }
+
+    suspend fun delete(typeProductId: Long): MessageResponse?{
+        val request = Request.Builder()
+            .url("$serverUrl/api/typeProducts/delete/$typeProductId")
+            .delete()
+            .build()
+
+        val response = client.newCall(request).execute()
+
+        if(response.code == 409 || response.code == 200){
+            return MessageResponse(response.code, response.body!!.string())
+        }
+
+        return null
+    }
 
 //    fun getPagedTypeProducts(): Flow<PagingData<TypeProduct>> {
 //        val pageSize = 5

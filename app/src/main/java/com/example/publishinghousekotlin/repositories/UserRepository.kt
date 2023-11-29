@@ -4,12 +4,11 @@ import com.example.publishinghousekotlin.R
 import com.example.publishinghousekotlin.http.requests.LoginRequest
 import com.example.publishinghousekotlin.http.requests.RegisterRequest
 import com.example.publishinghousekotlin.http.responses.JwtResponse
-import com.example.publishinghousekotlin.http.responses.RegisterResponse
+import com.example.publishinghousekotlin.http.responses.MessageResponse
 import com.google.gson.GsonBuilder
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 
 
@@ -38,7 +37,7 @@ class UserRepository() {
         return null
      }
 
-    suspend fun register(registerData: RegisterRequest):RegisterResponse?{
+    suspend fun register(registerData: RegisterRequest):MessageResponse?{
 
         val registerDataAsJson = gson.toJson(registerData)
         val mediaType = "application/json; chapset=utf-8".toMediaType()
@@ -51,7 +50,7 @@ class UserRepository() {
 
         val response = client.newCall(request).execute()
         if(response.code == 200 || response.code == 400){
-            return RegisterResponse(response.code, response.body!!.string())
+            return MessageResponse(response.code, response.body!!.string())
         }
 
         return null

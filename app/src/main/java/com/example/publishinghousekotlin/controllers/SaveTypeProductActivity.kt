@@ -74,7 +74,35 @@ class SaveTypeProductActivity: AppCompatActivity() {
 
             val typeProductRepository = TypeProductRepository()
             if(typeProduct?.id != 0.toLong()){
+                lifecycleScope.launch(Dispatchers.IO) {
+                    try{
+                        delay(1000)
+                        withContext(Dispatchers.Main){
+                            saveTypeProductBinding.progressBar.visibility = View.VISIBLE
+                        }
 
+                        when (typeProductRepository.update(typeProduct!!)) {
+                            409 -> {
+                                message.showError("В базе данных уже существует тип продукции с наименованием ${typeProduct?.type}", saveTypeProductBinding.root)
+                            }
+                            400 -> {
+                                message.showError("Данные о типе продукции некорректны", saveTypeProductBinding.root)
+                            }
+                            200 -> {
+                                message.showSuccess("Данные о типе продукции успешно изменены!", saveTypeProductBinding.root)
+
+                                delay(1000)
+                                goToListTypeProducts()
+                            }
+                        }
+
+                    }catch (e:Exception){
+                        message.showError("Ошибка изменения данных о типе продукции. Повторите попытку",saveTypeProductBinding.root)
+                    }
+                    runOnUiThread {
+                        saveTypeProductBinding.progressBar.visibility = View.GONE
+                    }
+                }
             }else{
                 lifecycleScope.launch(Dispatchers.IO) {
                     try {
@@ -91,10 +119,7 @@ class SaveTypeProductActivity: AppCompatActivity() {
                             message.showSuccess("Тип продукции успешно добавлен!", saveTypeProductBinding.root)
 
                             delay(1000)
-
-                            val intent = Intent(this@SaveTypeProductActivity, MainActivity::class.java)
-                            intent.putExtra("fragment", "TypeProductFragment")
-                            startActivity(intent)
+                            goToListTypeProducts()
 
                         }
                     } catch (e:Exception){
@@ -110,5 +135,12 @@ class SaveTypeProductActivity: AppCompatActivity() {
         }else{
             message.showError("Некорректный ввод. Повторите попытку.",saveTypeProductBinding.root)
         }
+    }
+
+    private fun goToListTypeProducts(){
+
+        val intent = Intent(this@SaveTypeProductActivity, MainActivity::class.java)
+        intent.putExtra("fragment", "TypeProductFragment")
+        startActivity(intent)
     }
 }

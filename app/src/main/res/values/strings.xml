@@ -29,17 +29,21 @@
     <string name="password">Пароль</string>
     <string name="confirmPassword">Подтверждение пароля</string>
     <string name="loginButton">Войти</string>
-    <string name="registerButton">Зарегистироваться</string>
-    <string name="signupTextView">Зарегистрироваться</string>
+    <string name="signup">Зарегистрироваться</string>
     <string name="registerMessage">Данные для регистрации</string>
     <string name="nameUser">Наименование</string>
     <string name="phone">Номер телефона</string>
 
-    //Типы продукции
+    //Тип продукции - сохранение
     <string name="saveTypeProductLabel">Сохранение типа продукции</string>
     <string name="DataAboutTypeProductTitle">Данные о типе продукции</string>
     <string name="TypeProduct">Тип продукции</string>
     <string name="marginOfTypeProduct">Наценка в %</string>
     <string name="saveButton">Сохранить</string>
+
+    //Тип продукции - детальная информация
+    <string name="detailsLabel">Полная информация</string>
+    <string name="deleteButton">Удалить</string>
+    <string name="editButton">Изменить данные</string>
 
 </resources>
