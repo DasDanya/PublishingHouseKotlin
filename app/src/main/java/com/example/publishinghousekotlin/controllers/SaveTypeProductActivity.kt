@@ -32,6 +32,7 @@ class SaveTypeProductActivity: AppCompatActivity() {
         setStartData()
         setListeners()
 
+
         saveTypeProductBinding.saveBtn.setOnClickListener {
             save()
         }
@@ -68,12 +69,12 @@ class SaveTypeProductActivity: AppCompatActivity() {
         val message = Messages()
 
         if(saveTypeProductBinding.typeContainer.helperText == null && saveTypeProductBinding.marginContainer.helperText == null){
-            typeProduct?.type = saveTypeProductBinding.typeText.text.toString().trim()
-            typeProduct?.margin = saveTypeProductBinding.marginText.text.toString().trim().toDouble()
+            typeProduct!!.type = saveTypeProductBinding.typeText.text.toString().trim()
+            typeProduct!!.margin = saveTypeProductBinding.marginText.text.toString().trim().toDouble()
 
 
             val typeProductRepository = TypeProductRepository()
-            if(typeProduct?.id != 0.toLong()){
+            if(typeProduct!!.id != 0.toLong()){
                 lifecycleScope.launch(Dispatchers.IO) {
                     try{
                         delay(1000)

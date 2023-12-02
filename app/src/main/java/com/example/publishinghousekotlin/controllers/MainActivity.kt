@@ -18,6 +18,7 @@ import com.example.publishinghousekotlin.R
 import com.example.publishinghousekotlin.basics.Messages
 import com.example.publishinghousekotlin.databinding.ActivityMainBinding
 import com.example.publishinghousekotlin.http.responses.JwtResponse
+import com.example.publishinghousekotlin.models.Material
 import com.example.publishinghousekotlin.models.TypeProduct
 import com.example.publishinghousekotlin.models.User
 import com.example.publishinghousekotlin.models.UserRole
@@ -53,7 +54,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_slideshow, R.id.typeProductsScreen
+                R.id.nav_home, R.id.materialsScreen, R.id.typeProductsScreen
             ), drawerLayout
         )
         setupActionBarWithNavController(navController!!, appBarConfiguration)
@@ -103,8 +104,10 @@ class MainActivity : AppCompatActivity() {
             R.id.nav_home -> {
                 Messages().showError("Nav home", binding.root)
             }
-            R.id.nav_slideshow -> {
-                Messages().showError("Nav Slideshow", binding.root)
+            R.id.materialsScreen -> {
+                val intent = Intent(this@MainActivity, SaveMaterialActivity::class.java)
+                intent.putExtra("material", Material())
+                startActivity(intent)
             }
             else -> {
                 val intent = Intent(this@MainActivity, SaveTypeProductActivity::class.java)
@@ -119,7 +122,10 @@ class MainActivity : AppCompatActivity() {
 
         if(fragment.equals("TypeProductFragment")){
             navController!!.navigate(R.id.typeProductsScreen)
+        }else if(fragment.equals("MaterialFragment")){
+            navController!!.navigate(R.id.materialsScreen)
         }
+
     }
 
 
@@ -139,8 +145,9 @@ class MainActivity : AppCompatActivity() {
                     binding.drawerLayout.closeDrawers()
                     true
                 }
-                R.id.nav_customers ->{
-                    navController!!.navigate(R.id.nav_slideshow)
+                R.id.nav_materials ->{
+                    navController!!.navigate(R.id.materialsScreen)
+                    binding.drawerLayout.closeDrawers()
                     true
                 }
                 R.id.nav_bookings ->{

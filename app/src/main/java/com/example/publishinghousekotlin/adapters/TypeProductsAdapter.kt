@@ -15,9 +15,9 @@ import com.example.publishinghousekotlin.models.TypeProduct
 
 class TypeProductsAdapter(private val clickListener: OnItemClickListener): PagingDataAdapter<TypeProduct, TypeProductsAdapter.Holder> (COMPARATOR) {
 
-    inner class Holder(val binding: ItemRecyclerViewBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+    inner class Holder(val itemRecyclerViewBinding: ItemRecyclerViewBinding) : RecyclerView.ViewHolder(itemRecyclerViewBinding.root), View.OnClickListener {
         init{
-            binding.root.setOnClickListener(this)
+            itemRecyclerViewBinding.root.setOnClickListener(this)
         }
 
         override fun onClick(view: View?) {
@@ -41,7 +41,7 @@ class TypeProductsAdapter(private val clickListener: OnItemClickListener): Pagin
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val typeProduct = getItem(position) ?: return
 
-        with(holder.binding){
+        with(holder.itemRecyclerViewBinding){
             iconView.setImageResource(R.drawable.type_product)
 //            if(typeProduct.type.length > 12){
 //                mainTextView.text = typeProduct.type.substring(0,12) + "..."

@@ -83,10 +83,30 @@ class Listener {
             val doubleValue = doubleAsText.text.toString()
 
             if(doubleValue != "") {
-                doubleContainer.helperText = validator.isValidDoubleValue(doubleAsText.text.toString().toDouble(), minValue, maxValue)
+                if(doubleValue.toCharArray()[0] == '.'){
+                    doubleAsText.setText("")
+                }else {
+                    doubleContainer.helperText = validator.isValidDoubleValue(
+                        doubleAsText.text.toString().toDouble(),
+                        minValue,
+                        maxValue
+                    )
+                }
             }else{
                 doubleContainer.helperText = "Необходимо ввести"
             }
+        }
+    }
+
+    fun colorListener(colorText:TextInputEditText, colorContainer:TextInputLayout){
+        colorText.addTextChangedListener {
+            colorContainer.helperText = validator.isValidColor(colorText.text.toString())
+        }
+    }
+
+    fun sizeListener(sizeText: TextInputEditText, sizeContainer: TextInputLayout){
+        sizeText.addTextChangedListener {
+            sizeContainer.helperText = validator.isValidSizeOfMaterial(sizeText.text.toString())
         }
     }
 

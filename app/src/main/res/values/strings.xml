@@ -18,7 +18,7 @@
     <string name="exit">Выйти</string>
 
     // Данные для сервера
-    <string name="server">http://192.168.1.2:8080</string>
+    <string name="server">http://10.0.2.2:8080</string>
     <string name="keyForJwtResponse">THISISKEYFORJWTRESPONSE</string>
 
     // Регистрация и авторизация
@@ -45,5 +45,14 @@
     <string name="detailsLabel">Полная информация</string>
     <string name="deleteButton">Удалить</string>
     <string name="editButton">Изменить данные</string>
+
+    //Материал
+    <string name="material">Материал</string>
+    <string name="saveMaterialLabel">Сохранение материала</string>
+    <string name="dataAboutMaterialTitle">Данные о материале</string>
+    <string name="type">Тип</string>
+    <string name="cost">Стоимость</string>
+    <string name="size">Размер</string>
+    <string name="color">Цвет</string>
 
 </resources>

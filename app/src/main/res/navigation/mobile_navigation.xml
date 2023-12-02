@@ -15,11 +15,11 @@
         android:id="@+id/typeProductsScreen"
         android:name="com.example.publishinghousekotlin.ui.typeProduct.TypeProductFragment"
         android:label="@string/menu_typeProducts"
-        tools:layout="@layout/fragment_type_products" />
+        tools:layout="@layout/fragment_general" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.publishinghousekotlin.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_customers"
+        android:id="@+id/materialsScreen"
+        android:name="com.example.publishinghousekotlin.ui.Material.MaterialFragment"
+        android:label="@string/menu_materials"
         tools:layout="@layout/fragment_slideshow" />
 </navigation>

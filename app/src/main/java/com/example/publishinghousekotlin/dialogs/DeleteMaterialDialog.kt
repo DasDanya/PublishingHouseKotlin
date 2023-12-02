@@ -8,22 +8,21 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
-import com.example.publishinghousekotlin.R
 import com.example.publishinghousekotlin.basics.Messages
 import com.example.publishinghousekotlin.controllers.MainActivity
-import com.example.publishinghousekotlin.repositories.TypeProductRepository
+import com.example.publishinghousekotlin.repositories.MaterialRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class DeleteTypeProductDialog(private var typeProductId: Long, private var root: ViewGroup) : DialogFragment() {
+class DeleteMaterialDialog(private var materialId: Long, private var root:ViewGroup): DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return AlertDialog.Builder(activity)
-            .setTitle("Удаление типа продукции")
-            .setMessage("Вы подтверждаете удаление этого типа продукции?")
+            .setTitle("Удаление материала")
+            .setMessage("Вы подтвержаете удаление этого материала?")
             .setPositiveButton("Подтвердить", null)
-            .setNegativeButton("Отмена", {_, _ ->})
+            .setNegativeButton("Отмена", {_,_ ->})
             .create().apply {
                 setOnShowListener {
                     val positiveButton = getButton(AlertDialog.BUTTON_POSITIVE)
@@ -34,34 +33,36 @@ class DeleteTypeProductDialog(private var typeProductId: Long, private var root:
                         val messages = Messages()
 
                         lifecycleScope.launch(Dispatchers.IO) {
-                            try {
-                                val messageResponse = TypeProductRepository().delete(typeProductId)
+                            try{
+                                val messageResponse = MaterialRepository().delete(materialId)
                                 if(messageResponse != null){
 
-                                    if(messageResponse.code == 409) {
+                                    if(messageResponse.code == 409){
                                         messages.showError(messageResponse.message, root)
 
                                         delay(500)
                                         dismiss()
-                                    } else if(messageResponse.code == 204){
-                                        messages.showSuccess("Тип продукции успешно удалён!", root)
+                                    }else if(messageResponse.code == 204){
+                                        messages.showSuccess("Материал успешно удалён!",root)
 
                                         delay(500)
                                         val intent = Intent(activity, MainActivity::class.java)
-                                        intent.putExtra("fragment", "TypeProductFragment")
+                                        intent.putExtra("fragment", "MaterialFragment")
                                         startActivity(intent)
                                     }
                                 }
-                            } catch (e: Exception){
-                                messages.showError("Ошибка удаления типа продукции. Повторите попытку",root)
+
+                            }catch (e:Exception){
+                                messages.showError("Ошибка удаления материала. Повторите попытку",root)
 
                                 delay(500)
                                 dismiss()
                             }
-
                         }
+
                     }
                 }
             }
+
     }
 }

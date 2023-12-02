@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".controllers.SaveTypeProductActivity">
+    tools:context=".controllers.SaveMaterialActivity">
 
 
     <LinearLayout
@@ -23,7 +23,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/black"
-            android:text="@string/DataAboutTypeProductTitle" />
+            android:text="@string/dataAboutMaterialTitle" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/typeContainer"
@@ -46,33 +46,83 @@
                 android:minHeight="48dp"
                 android:inputType="text"
                 android:maxLength="20"
-                android:hint="@string/TypeProduct"/>
+                android:hint="@string/type"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/marginContainer"
+            android:id="@+id/sizeContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            app:counterMaxLength="6"
+            app:counterMaxLength="2"
             app:counterEnabled="true"
             app:errorEnabled="true"
             app:helperText="Необходимо ввести"
             app:helperTextTextColor="@color/design_default_color_error">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/marginText"
+                android:id="@+id/sizeText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:ems="10"
+                android:minHeight="48dp"
+                android:inputType="text"
+                android:maxLength="2"
+                android:hint="@string/size"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/colorContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:counterMaxLength="11"
+            app:counterEnabled="true"
+            app:errorEnabled="true"
+            app:helperText="Необходимо ввести"
+            app:helperTextTextColor="@color/design_default_color_error">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/colorText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:ems="10"
+                android:minHeight="48dp"
+                android:inputType="text"
+                android:maxLength="11"
+                android:hint="@string/color"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/costContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:counterMaxLength="5"
+            app:counterEnabled="true"
+            app:errorEnabled="true"
+            app:helperText="Необходимо ввести"
+            app:helperTextTextColor="@color/design_default_color_error">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/costText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:ems="10"
                 android:minHeight="48dp"
                 android:inputType="numberDecimal"
-                android:maxLength="6"
+                android:maxLength="5"
                 android:lines="1"
-                android:hint="@string/marginOfTypeProduct" />
+                android:hint="@string/cost" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

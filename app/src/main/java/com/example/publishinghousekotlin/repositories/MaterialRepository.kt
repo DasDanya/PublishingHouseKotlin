@@ -7,8 +7,9 @@ import com.example.publishinghousekotlin.MyApplication
 import com.example.publishinghousekotlin.R
 import com.example.publishinghousekotlin.http.JwtInterceptor
 import com.example.publishinghousekotlin.http.responses.MessageResponse
+import com.example.publishinghousekotlin.models.Material
 import com.example.publishinghousekotlin.models.TypeProduct
-import com.example.publishinghousekotlin.pagination.TypeProductsDataSource
+import com.example.publishinghousekotlin.pagination.MaterialsDataSource
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
 import okhttp3.MediaType.Companion.toMediaType
@@ -16,16 +17,14 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 
-class TypeProductRepository {
+class MaterialRepository {
 
     private val client = OkHttpClient.Builder().addInterceptor(JwtInterceptor()).build()
     private val gson = GsonBuilder().create()
     private val serverUrl = MyApplication.instance.applicationContext.resources.getString(R.string.server)
 
-
-    suspend fun get(page:Int,type:String):List<TypeProduct>?{
-
-        var url = "$serverUrl/api/typeProducts?page=$page"
+    suspend fun get(page: Int, type:String):List<Material>?{
+        var url = "$serverUrl/api/materials?page=$page"
         if(type != ""){
             url += "&type=$type"
         }
@@ -37,52 +36,22 @@ class TypeProductRepository {
         val response = client.newCall(request).execute()
 
         if(response.isSuccessful){
-            val typeOfData = object : TypeToken<List<TypeProduct>>() {}.type
+            val typeOfData = object : TypeToken<List<Material>>() {}.type
             return gson.fromJson(response.body?.string(), typeOfData);
         }
 
         return null;
     }
 
-    fun getPagedTypeProducts(type:String) = Pager(
+    fun getPagedMaterials(type:String) = Pager(
         config = PagingConfig(pageSize = 7, enablePlaceholders = false),
-        pagingSourceFactory = {TypeProductsDataSource(type)}
+        pagingSourceFactory = {MaterialsDataSource(type)}
     ).liveData
 
-    suspend fun add(typeProduct: TypeProduct): Int{
 
-        val typeProductAsJson = gson.toJson(typeProduct)
-        val mediaType = "application/json; chapset=utf-8".toMediaType()
-        val body = typeProductAsJson.toRequestBody(mediaType)
-
+    suspend fun delete(materialId:Long): MessageResponse?{
         val request = Request.Builder()
-            .url("$serverUrl/api/typeProducts/add")
-            .post(body)
-            .build()
-
-        val response = client.newCall(request).execute()
-
-        return response.code
-    }
-
-    suspend fun update(typeProduct: TypeProduct): Int{
-        val typeProductAsJson = gson.toJson(typeProduct)
-        val mediaType = "application/json; chapset=utf-8".toMediaType()
-        val body = typeProductAsJson.toRequestBody(mediaType)
-
-        val request = Request.Builder()
-            .url("$serverUrl/api/typeProducts/update/${typeProduct.id}")
-            .put(body)
-            .build()
-
-        val response = client.newCall(request).execute()
-
-        return response.code
-    }
-
-    suspend fun delete(typeProductId: Long): MessageResponse?{
-        val request = Request.Builder()
-            .url("$serverUrl/api/typeProducts/delete/$typeProductId")
+            .url("$serverUrl/api/materials/delete/$materialId")
             .delete()
             .build()
 
@@ -95,16 +64,33 @@ class TypeProductRepository {
         return null
     }
 
-//    fun getPagedTypeProducts(): Flow<PagingData<TypeProduct>> {
-//        val pageSize = 5
-//        return Pager(
-//            config = PagingConfig(
-//                pageSize = pageSize,
-//                enablePlaceholders = false
-//            ),
-//            pagingSourceFactory = {TypeProductsDataSource(pageSize)}
-//        ).flow
-//    }
+    suspend fun add(material:Material): Int{
+        val materialAsJson = gson.toJson(material)
+        val mediaType = "application/json; chapset=utf-8".toMediaType()
+        val body = materialAsJson.toRequestBody(mediaType)
 
+        val request = Request.Builder()
+            .url("$serverUrl/api/materials/add")
+            .post(body)
+            .build()
 
+        val response = client.newCall(request).execute()
+
+        return response.code
+    }
+
+    suspend fun update(material: Material): Int{
+        val materialAsJson = gson.toJson(material)
+        val mediaType = "application/json; chapset=utf-8".toMediaType()
+        val body = materialAsJson.toRequestBody(mediaType)
+
+        val request = Request.Builder()
+            .url("$serverUrl/api/materials/update/${material.id}")
+            .put(body)
+            .build()
+
+        val response = client.newCall(request).execute()
+
+        return response.code
+    }
 }

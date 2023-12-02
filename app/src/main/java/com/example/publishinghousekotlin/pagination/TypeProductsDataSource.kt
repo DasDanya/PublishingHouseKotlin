@@ -7,7 +7,7 @@ import com.example.publishinghousekotlin.repositories.TypeProductRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class TypeProductsDataSource: PagingSource<Int, TypeProduct>() {
+class TypeProductsDataSource(private var type:String): PagingSource<Int, TypeProduct>() {
     override fun getRefreshKey(state: PagingState<Int, TypeProduct>): Int? {
         val anchorPosition = state.anchorPosition?: return null
         val page = state.closestPageToPosition(anchorPosition) ?: return null
@@ -20,7 +20,7 @@ class TypeProductsDataSource: PagingSource<Int, TypeProduct>() {
 
         return try{
                 val typeProducts = withContext(Dispatchers.IO){
-                    TypeProductRepository().get(pageIndex)
+                    TypeProductRepository().get(pageIndex,type)
                 }
 
             return LoadResult.Page(
