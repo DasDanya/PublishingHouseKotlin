@@ -1,11 +1,10 @@
-package com.example.publishinghousekotlin.ui.Material
+package com.example.publishinghousekotlin.ui.material
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -15,7 +14,6 @@ import com.example.publishinghousekotlin.adapters.MaterialsAdapter
 import com.example.publishinghousekotlin.basics.OnItemClickListener
 import com.example.publishinghousekotlin.controllers.DetailsMaterialActivity
 import com.example.publishinghousekotlin.databinding.FragmentGeneralBinding
-import com.example.publishinghousekotlin.databinding.FragmentSlideshowBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -40,7 +40,7 @@ class RegisterActivity: AppCompatActivity() {
     private fun setListeners(){
         val listener = Listener()
 
-        listener.usernameListener(activityRegisterBinding.nameText, activityRegisterBinding.nameContainer)
+        listener.nameListener(activityRegisterBinding.nameText, activityRegisterBinding.nameContainer)
         listener.phoneListener(activityRegisterBinding.phoneText, activityRegisterBinding.phoneContainer)
         listener.emailListener(activityRegisterBinding.emailText, activityRegisterBinding.emailContainer)
         listener.passwordAndConfirmPasswordListener(activityRegisterBinding.passwordText, activityRegisterBinding.confirmPasswordText, activityRegisterBinding.passwordContainer, activityRegisterBinding.confirmPasswordContainer)
@@ -81,7 +81,7 @@ class RegisterActivity: AppCompatActivity() {
                     message.showError("Ошибка регистрации. Повторите попытку",activityRegisterBinding.root)
                 }
                 runOnUiThread{
-                    activityRegisterBinding.progressBar.visibility = View.GONE
+                    activityRegisterBinding.progressBar.visibility = View.INVISIBLE
                 }
 
                 if(messageResponse != null){
@@ -93,8 +93,6 @@ class RegisterActivity: AppCompatActivity() {
                         delay(1000)
                         val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
                         startActivity(intent)
-
-
                     }
                 }
             }

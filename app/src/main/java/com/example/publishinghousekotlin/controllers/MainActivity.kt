@@ -19,6 +19,7 @@ import com.example.publishinghousekotlin.basics.Messages
 import com.example.publishinghousekotlin.databinding.ActivityMainBinding
 import com.example.publishinghousekotlin.http.responses.JwtResponse
 import com.example.publishinghousekotlin.models.Material
+import com.example.publishinghousekotlin.models.PrintingHouse
 import com.example.publishinghousekotlin.models.TypeProduct
 import com.example.publishinghousekotlin.models.User
 import com.example.publishinghousekotlin.models.UserRole
@@ -54,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.materialsScreen, R.id.typeProductsScreen
+                R.id.nav_home, R.id.materialsScreen, R.id.typeProductsScreen, R.id.printingHousesScreen
             ), drawerLayout
         )
         setupActionBarWithNavController(navController!!, appBarConfiguration)
@@ -109,6 +110,11 @@ class MainActivity : AppCompatActivity() {
                 intent.putExtra("material", Material())
                 startActivity(intent)
             }
+            R.id.printingHousesScreen ->{
+                val intent = Intent(this@MainActivity, SavePrintingHouseActivity::class.java)
+                intent.putExtra("printingHouse", PrintingHouse())
+                startActivity(intent)
+            }
             else -> {
                 val intent = Intent(this@MainActivity, SaveTypeProductActivity::class.java)
                 intent.putExtra("typeProduct", TypeProduct())
@@ -124,6 +130,8 @@ class MainActivity : AppCompatActivity() {
             navController!!.navigate(R.id.typeProductsScreen)
         }else if(fragment.equals("MaterialFragment")){
             navController!!.navigate(R.id.materialsScreen)
+        } else if(fragment.equals("PrintingHouseFragment")){
+            navController!!.navigate(R.id.printingHousesScreen)
         }
 
     }
@@ -147,6 +155,11 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.nav_materials ->{
                     navController!!.navigate(R.id.materialsScreen)
+                    binding.drawerLayout.closeDrawers()
+                    true
+                }
+                R.id.nav_printingHouses -> {
+                    navController!!.navigate(R.id.printingHousesScreen)
                     binding.drawerLayout.closeDrawers()
                     true
                 }

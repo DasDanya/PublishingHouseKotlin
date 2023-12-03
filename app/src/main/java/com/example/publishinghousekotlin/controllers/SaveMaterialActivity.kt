@@ -60,17 +60,14 @@ class SaveMaterialActivity: AppCompatActivity() {
             saveMaterialBinding.typeText.setText(material!!.type)
             saveMaterialBinding.typeContainer.helperText = null
         }
-
         if(material?.size != ""){
             saveMaterialBinding.sizeText.setText(material!!.size)
             saveMaterialBinding.sizeContainer.helperText = null
         }
-
         if(material?.color != ""){
             saveMaterialBinding.colorText.setText(material!!.color)
             saveMaterialBinding.colorContainer.helperText = null
         }
-
         if(material?.cost != BigDecimal(0)){
             saveMaterialBinding.costText.setText(material!!.cost.toString())
             saveMaterialBinding.costContainer.helperText = null

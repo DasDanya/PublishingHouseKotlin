@@ -1,4 +1,4 @@
-package com.example.publishinghousekotlin.ui.Material
+package com.example.publishinghousekotlin.ui.material
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,9 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.publishinghousekotlin.models.Material
-import com.example.publishinghousekotlin.models.TypeProduct
 import com.example.publishinghousekotlin.repositories.MaterialRepository
-import com.example.publishinghousekotlin.repositories.TypeProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 
 @HiltViewModel

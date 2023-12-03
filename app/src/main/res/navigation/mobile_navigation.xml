@@ -19,7 +19,11 @@
 
     <fragment
         android:id="@+id/materialsScreen"
-        android:name="com.example.publishinghousekotlin.ui.Material.MaterialFragment"
+        android:name="com.example.publishinghousekotlin.ui.material.MaterialFragment"
         android:label="@string/menu_materials"
         tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/printingHousesScreen"
+        android:name="com.example.publishinghousekotlin.ui.printingHouse.PrintingHouseFragment"
+        android:label="@string/menu_printingHouses" />
 </navigation>

@@ -44,8 +44,8 @@ class Validator {
         return null
     }
 
-    fun isValidUsername(username:String): String?{
-        if(username.length == 0){
+    fun isValidName(name:String): String?{
+        if(name.length == 0){
             return "Необходимо ввести наименование"
         }
 
@@ -129,6 +129,57 @@ class Validator {
         val sizeRegex = Regex("[A-C][0-9]")
         if(!size.matches(sizeRegex)){
             return "Требуемый формат:формат бумаги + размер"
+        }
+
+        return null
+    }
+
+    fun isValidCity(city:String):String?{
+        if(city.length < 3){
+            return "Минимальная длина: 3 символа"
+        }
+
+        if(city.length > 50){
+            return "Максимальная длина: 50 символов"
+        }
+
+        val cityRegex = Regex("^[А-Яа-я]*(?:[\\s-][А-Яа-я]*)*$")
+        if(!city.matches(cityRegex)){
+            return "Некорректный ввод города"
+        }
+
+        return null
+    }
+
+    fun isValidStreet(street:String):String?{
+        if(street.length < 3){
+            return "Минимальная длина: 3 символа"
+        }
+
+        if(street.length > 50){
+            return "Максимальная длина: 50 символов"
+        }
+
+        val streetRegex = Regex("[а-яА-Я\\d\\-\\s]+")
+        if(!street.matches(streetRegex)){
+            return "Некорректный ввод улицы"
+        }
+
+        return null
+    }
+
+    fun isValidHouseNumber(houseNumber: String):String?{
+        if(houseNumber.length == 0){
+            return "Необходимо ввести"
+        }
+
+        if(houseNumber.length > 50){
+            return "Максимальная длина: 50 символов"
+        }
+
+        val houseRegex = Regex("^[0-9]+[А-Е]?(/[0-9]+)?$")
+        if(!houseNumber.matches(houseRegex)){
+            return "Некорректный ввод номера дома"
         }
 
         return null

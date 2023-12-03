@@ -21,16 +21,16 @@ class MaterialRepository {
 
     private val client = OkHttpClient.Builder().addInterceptor(JwtInterceptor()).build()
     private val gson = GsonBuilder().create()
-    private val serverUrl = MyApplication.instance.applicationContext.resources.getString(R.string.server)
+    private val apiUrl = MyApplication.instance.applicationContext.resources.getString(R.string.server) + "/api/materials"
 
     suspend fun get(page: Int, type:String):List<Material>?{
-        var url = "$serverUrl/api/materials?page=$page"
+        var partUrl = "?page=$page"
         if(type != ""){
-            url += "&type=$type"
+            partUrl += "&type=$type"
         }
 
         val request = Request.Builder()
-            .url(url)
+            .url(apiUrl+partUrl)
             .build()
 
         val response = client.newCall(request).execute()
@@ -40,7 +40,7 @@ class MaterialRepository {
             return gson.fromJson(response.body?.string(), typeOfData);
         }
 
-        return null;
+        return null
     }
 
     fun getPagedMaterials(type:String) = Pager(
@@ -51,7 +51,7 @@ class MaterialRepository {
 
     suspend fun delete(materialId:Long): MessageResponse?{
         val request = Request.Builder()
-            .url("$serverUrl/api/materials/delete/$materialId")
+            .url("$apiUrl/delete/$materialId")
             .delete()
             .build()
 
@@ -70,7 +70,7 @@ class MaterialRepository {
         val body = materialAsJson.toRequestBody(mediaType)
 
         val request = Request.Builder()
-            .url("$serverUrl/api/materials/add")
+            .url("$apiUrl/add")
             .post(body)
             .build()
 
@@ -85,7 +85,7 @@ class MaterialRepository {
         val body = materialAsJson.toRequestBody(mediaType)
 
         val request = Request.Builder()
-            .url("$serverUrl/api/materials/update/${material.id}")
+            .url("$apiUrl/update/${material.id}")
             .put(body)
             .build()
 

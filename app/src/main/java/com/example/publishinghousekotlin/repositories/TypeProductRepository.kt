@@ -20,18 +20,18 @@ class TypeProductRepository {
 
     private val client = OkHttpClient.Builder().addInterceptor(JwtInterceptor()).build()
     private val gson = GsonBuilder().create()
-    private val serverUrl = MyApplication.instance.applicationContext.resources.getString(R.string.server)
+    private val apiUrl = MyApplication.instance.applicationContext.resources.getString(R.string.server) + "/api/typeProducts"
 
 
     suspend fun get(page:Int,type:String):List<TypeProduct>?{
 
-        var url = "$serverUrl/api/typeProducts?page=$page"
+        var partUrl = "?page=$page"
         if(type != ""){
-            url += "&type=$type"
+            partUrl += "&type=$type"
         }
 
         val request = Request.Builder()
-            .url(url)
+            .url(apiUrl+partUrl)
             .build()
 
         val response = client.newCall(request).execute()
@@ -56,7 +56,7 @@ class TypeProductRepository {
         val body = typeProductAsJson.toRequestBody(mediaType)
 
         val request = Request.Builder()
-            .url("$serverUrl/api/typeProducts/add")
+            .url("$apiUrl/add")
             .post(body)
             .build()
 
@@ -71,7 +71,7 @@ class TypeProductRepository {
         val body = typeProductAsJson.toRequestBody(mediaType)
 
         val request = Request.Builder()
-            .url("$serverUrl/api/typeProducts/update/${typeProduct.id}")
+            .url("$apiUrl/update/${typeProduct.id}")
             .put(body)
             .build()
 
@@ -82,7 +82,7 @@ class TypeProductRepository {
 
     suspend fun delete(typeProductId: Long): MessageResponse?{
         val request = Request.Builder()
-            .url("$serverUrl/api/typeProducts/delete/$typeProductId")
+            .url("$apiUrl/delete/$typeProductId")
             .delete()
             .build()
 

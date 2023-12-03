@@ -55,4 +55,9 @@
     <string name="size">Размер</string>
     <string name="color">Цвет</string>
 
+    //Типография
+    <string name="printingHouse">Типография</string>
+    <string name="savePrintingHouseLabel">Сохранение типографии</string>
+    <string name="dataAboutPrintingHouseTitle">Данные о типографии</string>
+
 </resources>

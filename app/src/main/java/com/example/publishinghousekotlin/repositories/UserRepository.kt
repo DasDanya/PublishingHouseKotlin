@@ -16,7 +16,7 @@ class UserRepository() {
 
     private val client = OkHttpClient()
     private val gson = GsonBuilder().create()
-    private var serverUrl = MyApplication.instance.applicationContext.resources.getString(R.string.server)
+    private val apiUrl = MyApplication.instance.applicationContext.resources.getString(R.string.server) + "/api/auth"
 
      suspend fun login(loginData: LoginRequest): JwtResponse?{
 
@@ -25,7 +25,7 @@ class UserRepository() {
         val body = loginDataAsJson.toRequestBody(mediaType)
 
         val request = Request.Builder()
-            .url("$serverUrl/api/auth/login")
+            .url("$apiUrl/login")
             .post(body)
             .build()
 
@@ -44,7 +44,7 @@ class UserRepository() {
         val body = registerDataAsJson.toRequestBody(mediaType)
 
         val request = Request.Builder()
-            .url("$serverUrl/api/auth/register")
+            .url("$apiUrl/register")
             .post(body)
             .build()
 

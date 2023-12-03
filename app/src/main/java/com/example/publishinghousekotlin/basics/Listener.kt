@@ -34,9 +34,9 @@ class Listener {
         }
     }
 
-    fun usernameListener(usernameText: TextInputEditText, usernameContainer: TextInputLayout){
-        usernameText.addTextChangedListener {
-            usernameContainer.helperText = validator.isValidUsername(usernameText.text.toString())
+    fun nameListener(nameText: TextInputEditText, nameContainer: TextInputLayout){
+        nameText.addTextChangedListener {
+            nameContainer.helperText = validator.isValidName(nameText.text.toString())
         }
     }
 
@@ -110,4 +110,21 @@ class Listener {
         }
     }
 
+    fun cityListener(cityText:TextInputEditText, cityContainer: TextInputLayout){
+        cityText.addTextChangedListener{
+            cityContainer.helperText = validator.isValidCity(cityText.text.toString())
+        }
+    }
+
+    fun streetListener(streetText: TextInputEditText, streetContainer: TextInputLayout){
+        streetText.addTextChangedListener{
+            streetContainer.helperText = validator.isValidStreet(streetText.text.toString())
+        }
+    }
+
+    fun houseNumberListener(houseNumberText: TextInputEditText, houseNumberContainer: TextInputLayout){
+        houseNumberText.addTextChangedListener {
+            houseNumberContainer.helperText = validator.isValidHouseNumber(houseNumberText.text.toString())
+        }
+    }
 }

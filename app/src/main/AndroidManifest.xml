@@ -48,6 +48,13 @@
             android:name=".controllers.SaveMaterialActivity"
             android:label="@string/saveMaterialLabel">
         </activity>
+        <activity
+            android:name=".controllers.DetailsPrintingHouseActivity"
+            android:label="@string/detailsLabel">
+        </activity>
+        <activity android:name=".controllers.SavePrintingHouseActivity"
+            android:label="@string/savePrintingHouseLabel">
+        </activity>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
