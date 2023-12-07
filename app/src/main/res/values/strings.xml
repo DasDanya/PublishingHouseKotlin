@@ -60,4 +60,8 @@
     <string name="savePrintingHouseLabel">Сохранение типографии</string>
     <string name="dataAboutPrintingHouseTitle">Данные о типографии</string>
 
+    // Сотрудники
+    <string name="dataAboutEmployeeTitle">Данные о сотруднике</string>
+    <string name="saveEmployeeLabel">Сохранение сотрудника</string>
+
 </resources>

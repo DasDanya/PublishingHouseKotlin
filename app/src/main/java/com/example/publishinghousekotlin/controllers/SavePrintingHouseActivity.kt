@@ -104,7 +104,7 @@ class SavePrintingHouseActivity: AppCompatActivity() {
             printingHouse!!.house = savePrintingHouseBinding.houseText.text.toString().trim()
 
             val printingHouseRepository = PrintingHouseRepository()
-            var messageResponse: MessageResponse? = null
+            var messageResponse: MessageResponse?
             if(printingHouse!!.id != 0.toLong()){
                 lifecycleScope.launch(Dispatchers.IO) {
                     try{

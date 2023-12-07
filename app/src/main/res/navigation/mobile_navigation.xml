@@ -26,4 +26,8 @@
         android:id="@+id/printingHousesScreen"
         android:name="com.example.publishinghousekotlin.ui.printingHouse.PrintingHouseFragment"
         android:label="@string/menu_printingHouses" />
+    <fragment
+        android:id="@+id/employeesScreen"
+        android:name="com.example.publishinghousekotlin.ui.employee.EmployeeFragment"
+        android:label="@string/menu_employees" />
 </navigation>

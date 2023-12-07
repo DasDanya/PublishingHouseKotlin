@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
 <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".MyApplication"
         android:usesCleartextTraffic="true"
@@ -13,6 +19,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PublishingHouseKotlin"
+        android:requestLegacyExternalStorage="true"
         tools:targetApi="31">
         <activity
             android:name=".controllers.LoginActivity"
@@ -52,8 +59,13 @@
             android:name=".controllers.DetailsPrintingHouseActivity"
             android:label="@string/detailsLabel">
         </activity>
-        <activity android:name=".controllers.SavePrintingHouseActivity"
+        <activity
+            android:name=".controllers.SavePrintingHouseActivity"
             android:label="@string/savePrintingHouseLabel">
+        </activity>
+        <activity
+            android:name=".controllers.SaveEmployeeActivity"
+            android:label="@string/saveEmployeeLabel">
         </activity>
         <meta-data
             android:name="preloaded_fonts"

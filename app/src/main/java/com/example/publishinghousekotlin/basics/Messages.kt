@@ -2,7 +2,6 @@ package com.example.publishinghousekotlin.basics
 
 import android.graphics.Color
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 
@@ -24,5 +23,15 @@ class Messages {
         textViewOfSnackBar.setTextColor(Color.parseColor("#00FF00"))
 
         snackbar.show()
+    }
+
+    fun setSuccess(textView: TextView, message:String){
+        textView.text = message
+        textView.setTextColor(Color.parseColor("#00FF00"))
+    }
+
+    fun setError(textView: TextView, message: String){
+        textView.text = message
+        textView.setTextColor(Color.parseColor("#BB4444"))
     }
 }
