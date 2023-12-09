@@ -65,7 +65,6 @@ class DetailsPrintingHouseActivity: AppCompatActivity() {
 
 
         val address = "$city, $street, $house"
-
         MapWorker().showAddress(address, detailsPrintingHouseBinding.mapView)
     }
 

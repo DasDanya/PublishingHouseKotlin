@@ -67,6 +67,14 @@
             android:name=".controllers.SaveEmployeeActivity"
             android:label="@string/saveEmployeeLabel">
         </activity>
+        <activity
+            android:name=".controllers.DetailsEmployeeActivity"
+            android:label="@string/detailsLabel">
+        </activity>
+        <activity
+            android:name=".controllers.SaveProductActivity"
+            android:label="@string/saveProductLabel">
+        </activity>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

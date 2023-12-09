@@ -11,7 +11,8 @@ data class Employee(
     var phone:String,
     var email:String,
     var post: String,
+    var pathToImage: String,
     var birthday: LocalDate
 ):Serializable {
-    constructor(): this(0, "", "", "", "", "", "", LocalDate.now())
+    constructor(): this(0, "", "", "", "", "", "", "", LocalDate.now())
 }

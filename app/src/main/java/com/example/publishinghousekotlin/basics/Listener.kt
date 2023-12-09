@@ -78,6 +78,16 @@ class Listener {
         }
     }
 
+    fun russianWordsListener(maxLengthOfWord: Int, russianWordsText: TextInputEditText, russianWordsContainer: TextInputLayout){
+        russianWordsText.addTextChangedListener {
+            if(russianWordsText.text!!.isNotEmpty()) {
+                russianWordsContainer.helperText = validator.isValidRussianWord(russianWordsText.text.toString(),0, maxLengthOfWord)
+            }else{
+                russianWordsContainer.helperText = null
+            }
+        }
+    }
+
     fun doubleNumberListener(minValue: Double, maxValue: Double, doubleAsText: TextInputEditText, doubleContainer: TextInputLayout){
         doubleAsText.addTextChangedListener {
             val doubleValue = doubleAsText.text.toString()

@@ -67,13 +67,53 @@ class EmployeeRepository {
         val request = Request.Builder()
             .url("$apiUrl/add")
             .post(body)
-            .header("Content-Type", "multipart/form-data")
             .build()
 
         val response = client.newCall(request).execute()
         if(response.code == 200 || response.code == 400 || response.code == 409){
             if(response.code == 200){
                 return MessageResponse(response.code, "Сотрудник успешно добавлен!")
+            }
+            return MessageResponse(response.code, response.body!!.string())
+        }
+
+        return null
+    }
+
+    suspend fun delete(employeeId: Long): MessageResponse?{
+        val request = Request.Builder()
+            .url("$apiUrl/delete/$employeeId")
+            .delete()
+            .build()
+
+        val response = client.newCall(request).execute()
+
+        if(response.code == 204 || response.code == 409){
+            return MessageResponse(response.code, response.body!!.string())
+        }
+
+        return null
+    }
+
+    suspend fun update(employee: Employee, photo: File): MessageResponse?{
+        val employeeAsJson = gson.toJson(employee)
+
+        val body = MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .addFormDataPart("employee", null, employeeAsJson.toRequestBody("application/json; chapset=utf-8".toMediaType()))
+            .addFormDataPart("photo", photo.name, photo.asRequestBody("image/*".toMediaType()))
+            .build()
+
+        val request = Request.Builder()
+            .url("$apiUrl/update/${employee.id}")
+            .put(body)
+            .build()
+
+        val response = client.newCall(request).execute()
+
+        if(response.code == 200 || response.code == 400 || response.code == 409){
+            if(response.code == 200){
+                return MessageResponse(response.code, "Данные о сотруднике успешно изменены!")
             }
             return MessageResponse(response.code, response.body!!.string())
         }

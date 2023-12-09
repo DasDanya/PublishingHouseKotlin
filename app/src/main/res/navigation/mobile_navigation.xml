@@ -30,4 +30,8 @@
         android:id="@+id/employeesScreen"
         android:name="com.example.publishinghousekotlin.ui.employee.EmployeeFragment"
         android:label="@string/menu_employees" />
+    <fragment
+        android:id="@+id/productsScreen"
+        android:name="com.example.publishinghousekotlin.ui.product.ProductFragment"
+        android:label="@string/menu_products" />
 </navigation>

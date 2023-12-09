@@ -11,10 +11,11 @@ data class EmployeeDTO(
     var phone:String,
     var email:String,
     var post: String,
+    var pathToImage: String,
+    var photo: String,
     var birthday: LocalDate,
-    val photo: String
 ): Serializable
 {
-    constructor(): this(0, "", "", "", "", "", "", LocalDate.now(),"")
+    constructor(): this(0, "", "", "", "", "", "","", "", LocalDate.now())
 
 }

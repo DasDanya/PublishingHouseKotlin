@@ -63,5 +63,9 @@
     // Сотрудники
     <string name="dataAboutEmployeeTitle">Данные о сотруднике</string>
     <string name="saveEmployeeLabel">Сохранение сотрудника</string>
+    <string name="employee">Сотрудник</string>
+
+    // Продукции
+    <string name = "saveProductLabel">Сохранение продукции</string>
 
 </resources>

@@ -13,6 +13,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import com.example.publishinghousekotlin.R
 import com.example.publishinghousekotlin.basics.Messages
@@ -56,12 +57,13 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.materialsScreen, R.id.typeProductsScreen, R.id.printingHousesScreen, R.id.employeesScreen
+                R.id.nav_home, R.id.materialsScreen, R.id.typeProductsScreen, R.id.printingHousesScreen, R.id.employeesScreen, R.id.productsScreen
             ), drawerLayout
         )
         setupActionBarWithNavController(navController!!, appBarConfiguration)
         navView.setupWithNavController(navController!!)
 
+        hidingAddingBooking()
         setUserInfo()
         goToFragmentAfterAction()
         listenerOfSelectedItemNavView()
@@ -120,6 +122,9 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this@MainActivity, SaveEmployeeActivity::class.java)
                 intent.putExtra("employee", EmployeeDTO())
                 startActivity(intent)
+            }R.id.productsScreen ->{
+                val intent = Intent(this@MainActivity, SaveProductActivity::class.java)
+                startActivity(intent)
             }
             else -> {
                 val intent = Intent(this@MainActivity, SaveTypeProductActivity::class.java)
@@ -144,6 +149,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun hidingAddingBooking(){
+        binding.appBarMain.fab.isVisible = user?.role != UserRole.ADMINISTRATOR.name
+    }
 
     private fun listenerOfSelectedItemNavView(){
         binding.navView.setNavigationItemSelectedListener { menuItem->
@@ -158,26 +166,38 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.nav_typeProducts ->{
                     navController!!.navigate(R.id.typeProductsScreen)
+                    binding.appBarMain.fab.isVisible = true
                     binding.drawerLayout.closeDrawers()
                     true
                 }
                 R.id.nav_materials ->{
                     navController!!.navigate(R.id.materialsScreen)
+                    binding.appBarMain.fab.isVisible = true
                     binding.drawerLayout.closeDrawers()
                     true
                 }
                 R.id.nav_printingHouses -> {
                     navController!!.navigate(R.id.printingHousesScreen)
+                    binding.appBarMain.fab.isVisible = true
                     binding.drawerLayout.closeDrawers()
                     true
                 }
                 R.id.nav_employees ->{
                     navController!!.navigate(R.id.employeesScreen)
+                    binding.appBarMain.fab.isVisible = true
+                    binding.drawerLayout.closeDrawers()
+                    true
+                }
+                R.id.nav_products->{
+                    navController!!.navigate(R.id.productsScreen)
+                    binding.appBarMain.fab.isVisible = user?.role != UserRole.ADMINISTRATOR.name
                     binding.drawerLayout.closeDrawers()
                     true
                 }
                 R.id.nav_bookings ->{
                     navController!!.navigate(R.id.nav_home)
+                    hidingAddingBooking()
+                    binding.drawerLayout.closeDrawers()
                     true
                 }
                 else -> {

@@ -23,6 +23,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
 import java.time.LocalDate
 import java.time.Period
 
@@ -34,6 +35,7 @@ class SaveEmployeeActivity:AppCompatActivity() {
     private var imagePickerLauncher: ActivityResultLauncher<Intent>? = null
     private var selectedImageUri: Uri? = null
     private var employee: Employee? = null
+    private var base64String: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         saveEmployeeBinding = ActivitySaveEmployeeBinding.inflate(layoutInflater)
@@ -87,7 +89,8 @@ class SaveEmployeeActivity:AppCompatActivity() {
 
         saveEmployeeBinding.patronymicText.setText(employeeDTO!!.patronymic)
 
-        employee = Employee(employeeDTO.id, employeeDTO.surname, employeeDTO.name, employeeDTO.patronymic, employeeDTO.phone, employeeDTO.email, employeeDTO.post, employeeDTO.birthday)
+        employee = Employee(employeeDTO.id, employeeDTO.surname, employeeDTO.name, employeeDTO.patronymic, employeeDTO.phone, employeeDTO.email, employeeDTO.post, employeeDTO.pathToImage, employeeDTO.birthday)
+        base64String = employeeDTO.photo
 
         setBirthday()
         setPhoto()
@@ -136,6 +139,8 @@ class SaveEmployeeActivity:AppCompatActivity() {
                 selectedImageUri = data?.data
                 if(selectedImageUri != null){
                     message.setSuccess(saveEmployeeBinding.photoHelperText, "Изображение выбрано")
+                }else{
+                    message.setError(saveEmployeeBinding.photoHelperText, "Необходимо выбрать фото")
                 }
             }
         }
@@ -146,6 +151,7 @@ class SaveEmployeeActivity:AppCompatActivity() {
 
         listener.russianWordsListener(1, 20, saveEmployeeBinding.nameText, saveEmployeeBinding.nameContainer)
         listener.russianWordsListener(1,20,saveEmployeeBinding.surnameText, saveEmployeeBinding.surnameContainer)
+        listener.russianWordsListener(20, saveEmployeeBinding.patronymicText, saveEmployeeBinding.patronymicContainer)
         listener.emailListener(saveEmployeeBinding.emailText, saveEmployeeBinding.emailContainer)
         listener.phoneListener(saveEmployeeBinding.phoneText, saveEmployeeBinding.phoneContainer)
         listener.russianWordsListener(3,25, saveEmployeeBinding.postText, saveEmployeeBinding.postContainer)
@@ -153,7 +159,7 @@ class SaveEmployeeActivity:AppCompatActivity() {
     }
 
     private fun save() {
-       if(saveEmployeeBinding.surnameContainer.helperText == null && saveEmployeeBinding.nameContainer.helperText == null && saveEmployeeBinding.phoneContainer.helperText == null &&
+       if(saveEmployeeBinding.surnameContainer.helperText == null && saveEmployeeBinding.nameContainer.helperText == null && saveEmployeeBinding.patronymicContainer.helperText == null && saveEmployeeBinding.phoneContainer.helperText == null &&
            saveEmployeeBinding.emailContainer.helperText == null && saveEmployeeBinding.postContainer.helperText == null && !saveEmployeeBinding.birthdayHelperText.text.startsWith("Необходимо")
            && !saveEmployeeBinding.birthdayHelperText.text.startsWith("Минимальный возраст") && !saveEmployeeBinding.photoHelperText.text.startsWith("Необходимо")) {
 
@@ -164,43 +170,76 @@ class SaveEmployeeActivity:AppCompatActivity() {
            employee!!.email = saveEmployeeBinding.emailText.text.toString().trim()
            employee!!.post = saveEmployeeBinding.postText.text.toString().trim()
 
+           val employeeRepository = EmployeeRepository()
+           var messageResponse: MessageResponse?
+           var fileWorker = FileWorker()
+           var photo:File?
 
-           val photo = FileWorker(applicationContext).uriToFile(selectedImageUri!!)
-
-           if (photo != null) {
-               val employeeRepository = EmployeeRepository()
-               var messageResponse: MessageResponse?
-               if (employee!!.id != 0.toLong()) {
-
-               } else {
-                   lifecycleScope.launch(Dispatchers.IO) {
-                       try {
-                           delay(1000)
-                           withContext(Dispatchers.Main) {
-                               saveEmployeeBinding.progressBar.visibility = View.VISIBLE
-                           }
-
-                           messageResponse = employeeRepository.add(employee!!, photo)
-                           if(messageResponse != null){
-                               if(messageResponse?.code == 400 || messageResponse?.code == 409){
-                                   message.showError(messageResponse!!.message, saveEmployeeBinding.root)
-                               }else if(messageResponse?.code == 200){
-                                   message.showSuccess(messageResponse!!.message, saveEmployeeBinding.root)
-
-                                   delay(1000)
-                                   goToListEmployees()
-                               }
-                           }
-                       } catch (e: Exception) {
-                           message.showError("Ошибка добавления сотрудника. Повторите попытку", saveEmployeeBinding.root)
+           if (employee!!.id != 0.toLong()) {
+               lifecycleScope.launch(Dispatchers.IO) {
+                   try{
+                       withContext(Dispatchers.Main){
+                           saveEmployeeBinding.progressBar.visibility = View.VISIBLE
                        }
-                       runOnUiThread {
-                           saveEmployeeBinding.progressBar.visibility = View.INVISIBLE
+
+                       photo = if(selectedImageUri == null){
+                           fileWorker.fromBase64ToFile(base64String)
+                       }else{
+                           FileWorker().uriToFile(selectedImageUri!!, applicationContext)
                        }
+
+                       if(photo != null){
+                            messageResponse = employeeRepository.update(employee!!, photo!!)
+                            if(messageResponse != null){
+                                if (messageResponse?.code != 200) {
+                                    message.showError(messageResponse!!.message, saveEmployeeBinding.root)
+                                }else{
+                                    message.showSuccess(messageResponse!!.message, saveEmployeeBinding.root)
+
+                                    delay(1000)
+                                    goToListEmployees()
+                                }
+                            }
+                       }else{
+                           message.showError("Выбранного изображения не существует", saveEmployeeBinding.root)
+                       }
+                   }catch (e:Exception){
+                       message.showError("Ошибка изменения данных о сотруднике. Повторите попытку",saveEmployeeBinding.root)
+                   }
+                   runOnUiThread {
+                       saveEmployeeBinding.progressBar.visibility = View.INVISIBLE
                    }
                }
-           } else{
-               message.showError("Выбранная фотография не существует", saveEmployeeBinding.root)
+           } else {
+               lifecycleScope.launch(Dispatchers.IO) {
+                   try {
+                       delay(1000)
+                       withContext(Dispatchers.Main) {
+                           saveEmployeeBinding.progressBar.visibility = View.VISIBLE
+                       }
+                        photo = fileWorker.uriToFile(selectedImageUri!!, applicationContext)
+                        if(photo != null) {
+                            messageResponse = employeeRepository.add(employee!!, photo!!)
+                            if (messageResponse != null) {
+                                if (messageResponse?.code == 400 || messageResponse?.code == 409) {
+                                    message.showError(messageResponse!!.message, saveEmployeeBinding.root)
+                                } else if (messageResponse?.code == 200) {
+                                    message.showSuccess(messageResponse!!.message, saveEmployeeBinding.root)
+
+                                    delay(1000)
+                                    goToListEmployees()
+                                }
+                            }
+                        }else{
+                            message.showError("Выбранного изображения не существует", saveEmployeeBinding.root)
+                        }
+                   } catch (e: Exception) {
+                       message.showError("Ошибка добавления сотрудника. Повторите попытку", saveEmployeeBinding.root)
+                   }
+                   runOnUiThread {
+                       saveEmployeeBinding.progressBar.visibility = View.INVISIBLE
+                   }
+               }
            }
        } else {
            message.showError("Некорректный ввод. Повторите попытку.", saveEmployeeBinding.root)

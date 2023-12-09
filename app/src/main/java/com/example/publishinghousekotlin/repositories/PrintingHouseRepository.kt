@@ -54,7 +54,7 @@ class PrintingHouseRepository {
 
         val response = client.newCall(request).execute()
 
-        if(response.code == 409 || response.code == 204){
+        if(response.code == 204 || response.code == 409){
             return MessageResponse(response.code, response.body!!.string())
         }
 
