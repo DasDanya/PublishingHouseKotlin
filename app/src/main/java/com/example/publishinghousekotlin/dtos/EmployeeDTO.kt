@@ -1,4 +1,4 @@
-package com.example.publishinghousekotlin.models
+package com.example.publishinghousekotlin.dtos
 
 import java.io.Serializable
 import java.time.LocalDate

@@ -25,6 +25,15 @@ class Messages {
         snackbar.show()
     }
 
+    fun showWarning(message: String, root: ViewGroup){
+        val snackbar = Snackbar.make(root,message, Snackbar.LENGTH_LONG)
+
+        val textViewOfSnackBar: TextView = snackbar.view.findViewById(com.google.android.material.R.id.snackbar_text)
+        textViewOfSnackBar.setTextColor(Color.parseColor("#FFFF00"))
+
+        snackbar.show()
+    }
+
     fun setSuccess(textView: TextView, message:String){
         textView.text = message
         textView.setTextColor(Color.parseColor("#00FF00"))

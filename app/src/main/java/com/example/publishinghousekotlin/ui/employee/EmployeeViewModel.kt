@@ -7,7 +7,7 @@ import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.publishinghousekotlin.models.EmployeeDTO
+import com.example.publishinghousekotlin.dtos.EmployeeDTO
 import com.example.publishinghousekotlin.repositories.EmployeeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 

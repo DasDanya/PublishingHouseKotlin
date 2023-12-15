@@ -75,6 +75,10 @@
             android:name=".controllers.SaveProductActivity"
             android:label="@string/saveProductLabel">
         </activity>
+        <activity
+            android:name=".controllers.DetailsProductActivity"
+            android:label="@string/detailsLabel">
+        </activity>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

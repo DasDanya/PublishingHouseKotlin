@@ -19,7 +19,9 @@ import com.example.publishinghousekotlin.R
 import com.example.publishinghousekotlin.basics.Messages
 import com.example.publishinghousekotlin.databinding.ActivityMainBinding
 import com.example.publishinghousekotlin.http.responses.JwtResponse
-import com.example.publishinghousekotlin.models.EmployeeDTO
+import com.example.publishinghousekotlin.dtos.EmployeeDTO
+import com.example.publishinghousekotlin.dtos.ProductAcceptDTO
+import com.example.publishinghousekotlin.dtos.ProductSendDTO
 import com.example.publishinghousekotlin.models.Material
 import com.example.publishinghousekotlin.models.PrintingHouse
 import com.example.publishinghousekotlin.models.TypeProduct
@@ -63,9 +65,9 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController!!, appBarConfiguration)
         navView.setupWithNavController(navController!!)
 
-        hidingAddingBooking()
         setUserInfo()
         goToFragmentAfterAction()
+        hidingAdding()
         listenerOfSelectedItemNavView()
 
     }
@@ -124,6 +126,7 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }R.id.productsScreen ->{
                 val intent = Intent(this@MainActivity, SaveProductActivity::class.java)
+                intent.putExtra("productId", 0L)
                 startActivity(intent)
             }
             else -> {
@@ -145,13 +148,19 @@ class MainActivity : AppCompatActivity() {
             navController!!.navigate(R.id.printingHousesScreen)
         }else if(fragment.equals("EmployeeFragment")){
             navController!!.navigate(R.id.employeesScreen)
+        }else if(fragment.equals("ProductFragment")){
+            navController!!.navigate(R.id.productsScreen)
         }
 
     }
 
-    private fun hidingAddingBooking(){
-        binding.appBarMain.fab.isVisible = user?.role != UserRole.ADMINISTRATOR.name
+    private fun hidingAdding(){
+        if(navController!!.currentDestination?.id == R.id.productsScreen || navController!!.currentDestination?.id == R.id.nav_home) {
+            binding.appBarMain.fab.isVisible = user?.role != UserRole.ADMINISTRATOR.name
+        }
     }
+
+
 
     private fun listenerOfSelectedItemNavView(){
         binding.navView.setNavigationItemSelectedListener { menuItem->
@@ -190,13 +199,13 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.nav_products->{
                     navController!!.navigate(R.id.productsScreen)
-                    binding.appBarMain.fab.isVisible = user?.role != UserRole.ADMINISTRATOR.name
+                    hidingAdding()
                     binding.drawerLayout.closeDrawers()
                     true
                 }
                 R.id.nav_bookings ->{
                     navController!!.navigate(R.id.nav_home)
-                    hidingAddingBooking()
+                    hidingAdding()
                     binding.drawerLayout.closeDrawers()
                     true
                 }

@@ -8,7 +8,7 @@ import androidx.core.text.bold
 import com.example.publishinghousekotlin.basics.FileWorker
 import com.example.publishinghousekotlin.databinding.DetailsEmployeeBinding
 import com.example.publishinghousekotlin.dialogs.DeleteEmployeeDialog
-import com.example.publishinghousekotlin.models.EmployeeDTO
+import com.example.publishinghousekotlin.dtos.EmployeeDTO
 import java.time.format.DateTimeFormatter
 
 class DetailsEmployeeActivity: AppCompatActivity() {

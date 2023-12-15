@@ -23,15 +23,18 @@ class TypeProductRepository {
     private val apiUrl = MyApplication.instance.applicationContext.resources.getString(R.string.server) + "/api/typeProducts"
 
 
-    suspend fun get(page:Int,type:String):List<TypeProduct>?{
+    suspend fun get(page:Int?,type:String):List<TypeProduct>?{
+        var partUrl = ""
 
-        var partUrl = "?page=$page"
-        if(type != ""){
-            partUrl += "&type=$type"
+        if(page != null) {
+            partUrl = "?page=$page"
+            if (type != "") {
+                partUrl += "&type=$type"
+            }
         }
 
         val request = Request.Builder()
-            .url(apiUrl+partUrl)
+            .url(apiUrl + partUrl)
             .build()
 
         val response = client.newCall(request).execute()

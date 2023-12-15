@@ -57,6 +57,7 @@ dependencies {
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
     implementation ("com.google.code.gson:gson:2.8.5")
 
+
     // Пагинация
     implementation ("androidx.paging:paging-runtime-ktx:3.2.1")
     implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")

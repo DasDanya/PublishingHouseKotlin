@@ -17,7 +17,7 @@ import com.example.publishinghousekotlin.basics.Messages
 import com.example.publishinghousekotlin.databinding.ActivitySaveEmployeeBinding
 import com.example.publishinghousekotlin.http.responses.MessageResponse
 import com.example.publishinghousekotlin.models.Employee
-import com.example.publishinghousekotlin.models.EmployeeDTO
+import com.example.publishinghousekotlin.dtos.EmployeeDTO
 import com.example.publishinghousekotlin.repositories.EmployeeRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

@@ -9,7 +9,7 @@ import com.example.publishinghousekotlin.adapters.LocalDateAdapter
 import com.example.publishinghousekotlin.http.JwtInterceptor
 import com.example.publishinghousekotlin.http.responses.MessageResponse
 import com.example.publishinghousekotlin.models.Employee
-import com.example.publishinghousekotlin.models.EmployeeDTO
+import com.example.publishinghousekotlin.dtos.EmployeeDTO
 import com.example.publishinghousekotlin.pagination.EmployeesDataSource
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken

@@ -18,7 +18,7 @@
     <string name="exit">Выйти</string>
 
     // Данные для сервера
-    <string name="server">http://10.0.2.2:8080</string>
+    <string name="server">http://192.168.13.51:8080</string>
     <string name="keyForJwtResponse">THISISKEYFORJWTRESPONSE</string>
 
     // Регистрация и авторизация
@@ -67,5 +67,10 @@
 
     // Продукции
     <string name = "saveProductLabel">Сохранение продукции</string>
+    <string name="dataAboutProductTitle">Данные о продукции</string>
+    <string name="showMaterials">Показать материалы</string>
+    <string name="hideMaterials">Скрыть материалы</string>
+    <string name="showBookings">Показать заказы</string>
+    <string name="hideBookings">Скрыть заказы</string>
 
 </resources>

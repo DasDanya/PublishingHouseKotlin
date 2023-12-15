@@ -23,10 +23,14 @@ class MaterialRepository {
     private val gson = GsonBuilder().create()
     private val apiUrl = MyApplication.instance.applicationContext.resources.getString(R.string.server) + "/api/materials"
 
-    suspend fun get(page: Int, type:String):List<Material>?{
-        var partUrl = "?page=$page"
-        if(type != ""){
-            partUrl += "&type=$type"
+    suspend fun get(page: Int?, type:String):List<Material>?{
+        var partUrl = ""
+
+        if(page != null) {
+            partUrl = "?page=$page"
+            if (type != "") {
+                partUrl += "&type=$type"
+            }
         }
 
         val request = Request.Builder()
