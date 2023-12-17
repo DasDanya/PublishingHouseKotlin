@@ -7,31 +7,31 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.publishinghousekotlin.ui.gallery.GalleryFragment"
+        android:name="com.example.publishinghousekotlin.fragments.gallery.GalleryFragment"
         android:label="@string/menu_bookings"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
         android:id="@+id/typeProductsScreen"
-        android:name="com.example.publishinghousekotlin.ui.typeProduct.TypeProductFragment"
+        android:name="com.example.publishinghousekotlin.fragments.typeProduct.TypeProductFragment"
         android:label="@string/menu_typeProducts"
         tools:layout="@layout/fragment_general" />
 
     <fragment
         android:id="@+id/materialsScreen"
-        android:name="com.example.publishinghousekotlin.ui.material.MaterialFragment"
+        android:name="com.example.publishinghousekotlin.fragments.material.MaterialFragment"
         android:label="@string/menu_materials"
         tools:layout="@layout/fragment_slideshow" />
     <fragment
         android:id="@+id/printingHousesScreen"
-        android:name="com.example.publishinghousekotlin.ui.printingHouse.PrintingHouseFragment"
+        android:name="com.example.publishinghousekotlin.fragments.printingHouse.PrintingHouseFragment"
         android:label="@string/menu_printingHouses" />
     <fragment
         android:id="@+id/employeesScreen"
-        android:name="com.example.publishinghousekotlin.ui.employee.EmployeeFragment"
+        android:name="com.example.publishinghousekotlin.fragments.employee.EmployeeFragment"
         android:label="@string/menu_employees" />
     <fragment
         android:id="@+id/productsScreen"
-        android:name="com.example.publishinghousekotlin.ui.product.ProductFragment"
+        android:name="com.example.publishinghousekotlin.fragments.product.ProductFragment"
         android:label="@string/menu_products" />
 </navigation>

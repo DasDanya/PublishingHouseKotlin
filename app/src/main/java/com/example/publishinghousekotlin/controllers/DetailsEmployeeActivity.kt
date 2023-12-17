@@ -11,11 +11,29 @@ import com.example.publishinghousekotlin.dialogs.DeleteEmployeeDialog
 import com.example.publishinghousekotlin.dtos.EmployeeDTO
 import java.time.format.DateTimeFormatter
 
+/**
+ * Activity для вывода подробной информации о сотруднике
+ *
+ * @author Климачков Даниил
+ * @since 1.0.0
+ */
 class DetailsEmployeeActivity: AppCompatActivity() {
 
+    /**
+     * Биндинг для доступа к компонентам
+     */
     private lateinit var detailsEmployeeBinding: DetailsEmployeeBinding
+
+    /**
+     * Сотрудник, данные о котором будут выводиться
+     */
     private var employeeDTO: EmployeeDTO? = null
 
+
+    /**
+     * Переопределение метода onCreate()
+     * @param[savedInstanceState] ссылка на объект Bundle
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -38,11 +56,19 @@ class DetailsEmployeeActivity: AppCompatActivity() {
         }
     }
 
+    /**
+     * Переход в прошлую активность
+     * @return завершать ли текущую активность
+     */
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
 
+
+    /**
+     * Метод установки стартовых данных
+     */
     private fun setStartData() {
         employeeDTO = intent.getSerializableExtra("employee") as? EmployeeDTO
 

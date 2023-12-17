@@ -17,11 +17,30 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.math.BigDecimal
 
+
+/**
+ * Activity для добавления/изменения материала
+ *
+ * @author Климачков Даниил
+ * @since 1.0.0
+ */
 class SaveMaterialActivity: AppCompatActivity() {
 
+    /**
+     * Биндинг для доступа к компонентам
+     */
     private lateinit var saveMaterialBinding: ActivitySaveMaterialBinding
+
+    /**
+     * Материал, который будет добавляться/изменяться
+     */
     private var material: Material? = null
 
+
+    /**
+     * Переопределение метода onCreate()
+     * @param[savedInstanceState] ссылка на объект Bundle
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         saveMaterialBinding = ActivitySaveMaterialBinding.inflate(layoutInflater)
@@ -38,11 +57,18 @@ class SaveMaterialActivity: AppCompatActivity() {
         }
     }
 
+    /**
+     * Переход в прошлую активность
+     * @return завершать ли текущую активность
+     */
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
 
+    /**
+     * Метод установки прослушивания изменения текста в EditTexts
+     */
     private fun setListeners() {
         val listener = Listener()
 
@@ -53,6 +79,9 @@ class SaveMaterialActivity: AppCompatActivity() {
 
     }
 
+    /**
+     * Метод установки стартовых данных
+     */
     private fun setStartData() {
         material = intent.getSerializableExtra("material") as? Material
 
@@ -74,6 +103,10 @@ class SaveMaterialActivity: AppCompatActivity() {
         }
     }
 
+    /**
+     * Метод сохранения данных о материале
+     * @exception[Exception] Ошибка при отправки данных на сервер
+     */
     private fun save(){
         val message = Messages()
 
@@ -145,6 +178,9 @@ class SaveMaterialActivity: AppCompatActivity() {
         }
     }
 
+    /**
+     * Метод перехода к списку материалов
+     */
     private fun goToListMaterials() {
         val intent = Intent(this@SaveMaterialActivity, MainActivity::class.java)
         intent.putExtra("fragment", "MaterialFragment")

@@ -22,6 +22,14 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.time.LocalDate
 
+/**
+ * Репозиторий, предоставляющий методы для работы с данными сотрудников на сервере.
+ * @author Климачков Даниил
+ * @since 1.0.0
+ * @property client OkHttpClient
+ * @property gson Поле, для сериализации и десериализации объектов Kotlin в JSON
+ * @property apiUrl URL-адрес сервера, используемый для взаимодействия с API сотрудников.
+ */
 class EmployeeRepository {
 
     private val client = OkHttpClient.Builder().addInterceptor(JwtInterceptor()).build()
@@ -29,6 +37,13 @@ class EmployeeRepository {
     private val apiUrl = MyApplication.instance.applicationContext.resources.getString(R.string.server) + "/api/employees"
 
 
+    /**
+     * Метод получения списка сотрудников с сервера с использованием пагинации и фильтрации по фамилии.
+     *
+     * @param page Номер страницы для пагинации.
+     * @param surname Фамилия для фильтрации результатов.
+     * @return Список сотрудников или null, если произошла ошибка.
+     */
     suspend fun get(page:Int, surname:String):List<EmployeeDTO>?{
         var partUrl = "?page=$page"
         if(surname != ""){
@@ -49,12 +64,25 @@ class EmployeeRepository {
         return null
     }
 
+    /**
+     * Метод получения списка сотрудников с использованием пагинации.
+     *
+     * @param surname Фамилия для фильтрации результатов.
+     * @return LiveData содержащая список сотрудников с использованием пагинации.
+     */
     fun getPagedEmployees(surname: String) = Pager(
         config = PagingConfig(pageSize = 7, enablePlaceholders = false),
         pagingSourceFactory = {EmployeesDataSource(surname)}
     ).liveData
 
 
+    /**
+     * Метод добавления нового сотрудника на сервер.
+     *
+     * @param employee Данные о сотруднике.
+     * @param photo Фотография сотрудника.
+     * @return Объект [MessageResponse] с информацией о результате операции.
+     */
     suspend fun add(employee: Employee, photo: File):MessageResponse?{
         val employeeAsJson = gson.toJson(employee)
 
@@ -80,6 +108,12 @@ class EmployeeRepository {
         return null
     }
 
+    /**
+     * Метод удаления сотрудника по его идентификатору на сервере.
+     *
+     * @param employeeId Идентификатор сотрудника.
+     * @return Объект [MessageResponse] с информацией о результате операции.
+     */
     suspend fun delete(employeeId: Long): MessageResponse?{
         val request = Request.Builder()
             .url("$apiUrl/delete/$employeeId")
@@ -95,6 +129,13 @@ class EmployeeRepository {
         return null
     }
 
+    /**
+     * Метод обновления данных о сотруднике на сервере.
+     *
+     * @param employee Данные о сотруднике.
+     * @param photo Фотография сотрудника.
+     * @return Объект [MessageResponse] с информацией о результате операции.
+     */
     suspend fun update(employee: Employee, photo: File): MessageResponse?{
         val employeeAsJson = gson.toJson(employee)
 

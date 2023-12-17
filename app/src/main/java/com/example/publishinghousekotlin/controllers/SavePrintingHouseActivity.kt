@@ -16,11 +16,29 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * Activity для добавления/изменения типографии
+ *
+ * @author Климачков Даниил
+ * @since 1.0.0
+ */
 class SavePrintingHouseActivity: AppCompatActivity() {
 
+    /**
+     * Биндинг для доступа к компонентам
+     */
     private lateinit var savePrintingHouseBinding: ActivitySavePrintingHouseBinding
+
+    /**
+     * Типография, которая будет добавляться/изменяться
+     */
     private var printingHouse: PrintingHouse? = null
 
+
+    /**
+     * Переопределение метода onCreate()
+     * @param[savedInstanceState] ссылка на объект Bundle
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         savePrintingHouseBinding = ActivitySavePrintingHouseBinding.inflate(layoutInflater)
@@ -37,12 +55,18 @@ class SavePrintingHouseActivity: AppCompatActivity() {
         }
     }
 
-
+    /**
+     * Переход в прошлую активность
+     * @return завершать ли текущую активность
+     */
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
 
+    /**
+     * Метод установки стартовых данных
+     */
     private fun setStartData() {
         printingHouse = intent.getSerializableExtra("printingHouse") as? PrintingHouse
 
@@ -77,6 +101,9 @@ class SavePrintingHouseActivity: AppCompatActivity() {
 
     }
 
+    /**
+     * Метод установки прослушивания изменения текста в EditTexts
+     */
     private fun setListeners() {
         val listener = Listener()
 
@@ -90,6 +117,10 @@ class SavePrintingHouseActivity: AppCompatActivity() {
 
     }
 
+    /**
+     * Метод сохранения данных о типографии
+     * @exception[Exception] Ошибка при отправки данных на сервер
+     */
     private fun save() {
         val message = Messages()
 
@@ -162,6 +193,9 @@ class SavePrintingHouseActivity: AppCompatActivity() {
         }
     }
 
+    /**
+     * Метод перехода к списку типографий
+     */
     private fun goToListPrintingHouses() {
         val intent = Intent(this@SavePrintingHouseActivity, MainActivity::class.java)
         intent.putExtra("fragment", "PrintingHouseFragment")

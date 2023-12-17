@@ -16,11 +16,29 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * Activity для добавления/изменения типа продукции
+ *
+ * @author Климачков Даниил
+ * @since 1.0.0
+ */
 class SaveTypeProductActivity: AppCompatActivity() {
 
+    /**
+     * Биндинг для доступа к компонентам
+     */
     private lateinit var saveTypeProductBinding: ActivitySaveTypeProductBinding
+
+    /**
+     * Тип продукции, который будет добавляться/изменяться
+     */
     private var typeProduct: TypeProduct? = null
 
+
+    /**
+     * Переопределение метода onCreate()
+     * @param[savedInstanceState] ссылка на объект Bundle
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         saveTypeProductBinding = ActivitySaveTypeProductBinding.inflate(layoutInflater)
@@ -38,11 +56,18 @@ class SaveTypeProductActivity: AppCompatActivity() {
         }
     }
 
+    /**
+     * Переход в прошлую активность
+     * @return завершать ли текущую активность
+     */
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
 
+    /**
+     * Метод установки стартовых данных
+     */
     private fun setStartData(){
         typeProduct = intent.getSerializableExtra("typeProduct") as? TypeProduct
 
@@ -58,6 +83,9 @@ class SaveTypeProductActivity: AppCompatActivity() {
         }
     }
 
+    /**
+     * Метод установки прослушивания изменения текста в EditTexts
+     */
     private fun setListeners(){
         val listener = Listener()
 
@@ -65,6 +93,10 @@ class SaveTypeProductActivity: AppCompatActivity() {
         listener.doubleNumberListener(1.00, 1000.00, saveTypeProductBinding.marginText, saveTypeProductBinding.marginContainer)
     }
 
+    /**
+     * Метод сохранения данных о типе продукции
+     * @exception[Exception] Ошибка при отправки данных на сервер
+     */
     private fun save(){
         val message = Messages()
 
@@ -138,6 +170,9 @@ class SaveTypeProductActivity: AppCompatActivity() {
         }
     }
 
+    /**
+     * Метод перехода к списку типов продукции
+     */
     private fun goToListTypeProducts(){
 
         val intent = Intent(this@SaveTypeProductActivity, MainActivity::class.java)

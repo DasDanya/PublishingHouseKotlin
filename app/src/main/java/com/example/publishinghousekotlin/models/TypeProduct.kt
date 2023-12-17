@@ -1,10 +1,18 @@
 package com.example.publishinghousekotlin.models
 
-import android.os.Parcel
-import android.os.Parcelable
+
 import java.io.Serializable
 
 
+/**
+ * Data-класс,хранящий в себе данные о типе продукции
+ * @author Климачков Даниил
+ * @since 1.0.0
+ * @property id Уникальный идентификатор.
+ * @property type Тип.
+ * @property margin Наценка в %.
+ * @constructor Создает объект [TypeProduct] с заданными значениями или значениями по умолчанию.
+ */
 data class TypeProduct(
 
     val id: Long,

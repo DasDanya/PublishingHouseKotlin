@@ -1,4 +1,4 @@
-package com.example.publishinghousekotlin.ui.material
+package com.example.publishinghousekotlin.fragments.material
 
 import android.content.Intent
 import android.os.Bundle
@@ -17,6 +17,15 @@ import com.example.publishinghousekotlin.databinding.FragmentGeneralBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
+/**
+ * Fragment для отображения списка материалов
+ * @author Климачков Даниил
+ * @since 1.0.0
+ * @property _fragmentMaterialsBinding Биндинг для доступа к компонентам
+ * @property fragmentMaterialsBinding Инициализированный биндинг
+ * @property materialViewModel ViewModel материалов
+ * @property adapter Adapter для recyclerView
+ */
 class MaterialFragment : Fragment(), OnItemClickListener {
 
     private var _fragmentMaterialsBinding: FragmentGeneralBinding? = null
@@ -25,6 +34,18 @@ class MaterialFragment : Fragment(), OnItemClickListener {
     private lateinit var materialViewModel: MaterialViewModel
     private lateinit var adapter: MaterialsAdapter
 
+
+    /**
+     * Метод,вызываемый при создании и отображении макета фрагмента.
+     *
+     * @param inflater Объект LayoutInflater, который может быть использован для
+     * создания представления фрагмента.
+     * @param container Если непустой, это корневое представление,
+     * к которому будет прикреплено фрагмент.
+     * @param savedInstanceState Если не нулевой, то в этом объекте содержится
+     * состояние фрагмента, сохраненное в последнем вызове onSaveInstanceState().
+     * @return Возвращает созданное представление фрагмента.
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -52,11 +73,21 @@ class MaterialFragment : Fragment(), OnItemClickListener {
         return fragmentMaterialsBinding.root
     }
 
+    /**
+     * Метод, вызываемый при уничтожении представления фрагмента.
+     * В данном случае, освобождает ресурсы, связанные с ViewBinding.
+     */
     override fun onDestroyView() {
         super.onDestroyView()
         _fragmentMaterialsBinding = null
     }
 
+    /**
+     * Метод, вызываемый при клике на элемент списка материалов.
+     * Открывает экран с детальной информацией о выбранном материале.
+     *
+     * @param position Позиция выбранного элемента в списке.
+     */
     override fun onItemClick(position: Int) {
         val intent = Intent(activity, DetailsMaterialActivity::class.java)
         intent.putExtra("material", adapter.getMaterial(position))

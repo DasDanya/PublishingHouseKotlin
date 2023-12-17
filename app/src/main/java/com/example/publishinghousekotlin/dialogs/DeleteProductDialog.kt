@@ -16,8 +16,23 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+
+/**
+ * Класс представляет собой диалоговое окно для подтверждения удаления продукции.
+ *
+ * @property productId Идентификатор продукции, которая подлежит удалению.
+ * @property root Корневой контейнер, используемый для отображения сообщений об успешном или неудачном удалении продукции.
+ */
 class DeleteProductDialog(private val productId: Long, private val root: ViewGroup):DialogFragment() {
 
+    /**
+     * Метод, создающий диалоговое окно для подтверждения удаления продукции.
+     *
+     * При подтверждении удаляет продукцию и возвращает к списку продукций.
+     * @param savedInstanceState Сохраненное состояние фрагмента.
+     * @throws Exception Если произошла ошибка работы с сервером
+     * @return Возвращает созданное диалоговое окно.
+     */
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return AlertDialog.Builder(activity)
             .setTitle("Удаление продукции")

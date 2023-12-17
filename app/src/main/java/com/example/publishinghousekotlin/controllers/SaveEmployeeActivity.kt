@@ -27,15 +27,49 @@ import java.io.File
 import java.time.LocalDate
 import java.time.Period
 
-
+/**
+ * Activity для добавления/изменения сотрудника
+ *
+ * @author Климачков Даниил
+ * @since 1.0.0
+ */
 class SaveEmployeeActivity:AppCompatActivity() {
 
+    /**
+     * Биндинг для доступа к компонентам
+     */
     private lateinit var saveEmployeeBinding: ActivitySaveEmployeeBinding
+
+    /**
+     * Экземпляр класса для отправки сообщений пользователю
+     */
     private var message = Messages()
+
+    /**
+     * Поле для выбора изображения
+     */
     private var imagePickerLauncher: ActivityResultLauncher<Intent>? = null
+
+    /**
+     * Путь до выбранной фотографии
+     */
     private var selectedImageUri: Uri? = null
+
+    /**
+     * Сотрудник, который будет добавляться/изменяться
+     */
     private var employee: Employee? = null
+
+    /**
+     * Фотография сотрудника в виде Base64String
+     */
     private var base64String: String = ""
+
+
+    /**
+     * Переопределение метода onCreate()
+     * @param[savedInstanceState] ссылка на объект Bundle
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         saveEmployeeBinding = ActivitySaveEmployeeBinding.inflate(layoutInflater)
@@ -55,11 +89,18 @@ class SaveEmployeeActivity:AppCompatActivity() {
     }
 
 
-
+    /**
+     * Переход в прошлую активность
+     * @return завершать ли текущую активность
+     */
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
+
+    /**
+     * Метод установки стартовых данных
+     */
     private fun setStartData(){
         val employeeDTO = intent.getSerializableExtra("employee") as? EmployeeDTO
 
@@ -96,6 +137,9 @@ class SaveEmployeeActivity:AppCompatActivity() {
         setPhoto()
     }
 
+    /**
+     * Метод выбора и отображения даты рождения
+     */
     private fun setBirthday() {
 
         if(employee!!.birthday != LocalDate.now()){
@@ -124,6 +168,9 @@ class SaveEmployeeActivity:AppCompatActivity() {
         }
     }
 
+    /**
+     * Метод перехода к выбору фотографий
+     */
     private fun setPhoto() {
         saveEmployeeBinding.photoButton.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
@@ -132,6 +179,9 @@ class SaveEmployeeActivity:AppCompatActivity() {
         }
     }
 
+    /**
+     * Метод получения пути до фотографии
+     */
     private fun waitingPhoto() {
         imagePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -146,6 +196,9 @@ class SaveEmployeeActivity:AppCompatActivity() {
         }
     }
 
+    /**
+     * Метод установки прослушивания изменения текста в EditTexts
+     */
     private fun setListeners() {
         val listener = Listener()
 
@@ -158,6 +211,10 @@ class SaveEmployeeActivity:AppCompatActivity() {
 
     }
 
+    /**
+     * Метод сохранения данных о сотруднике
+     * @exception[Exception] Ошибка при отправки данных на сервер
+     */
     private fun save() {
        if(saveEmployeeBinding.surnameContainer.helperText == null && saveEmployeeBinding.nameContainer.helperText == null && saveEmployeeBinding.patronymicContainer.helperText == null && saveEmployeeBinding.phoneContainer.helperText == null &&
            saveEmployeeBinding.emailContainer.helperText == null && saveEmployeeBinding.postContainer.helperText == null && !saveEmployeeBinding.birthdayHelperText.text.startsWith("Необходимо")
@@ -246,6 +303,9 @@ class SaveEmployeeActivity:AppCompatActivity() {
        }
     }
 
+    /**
+     * Метод перехода к списку сотрудников
+     */
     private fun goToListEmployees() {
         val intent = Intent(this@SaveEmployeeActivity, MainActivity::class.java)
         intent.putExtra("fragment", "EmployeeFragment")

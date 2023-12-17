@@ -2,6 +2,17 @@ package com.example.publishinghousekotlin.models
 
 import java.io.Serializable
 
+/**
+ * Data-класс,хранящий в себе данные о пользователе
+ * @author Климачков Даниил
+ * @since 1.0.0
+ * @property id Уникальный идентификатор.
+ * @property name Наименование.
+ * @property phone Номер телефона.
+ * @property email Электронная почта.
+ * @property role Роль.
+ * @constructor Создает объект [User] с заданными значениями или значениями по умолчанию.
+ */
 data class User(
 
     val id: Long,

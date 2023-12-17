@@ -16,6 +16,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+
+/**
+ * Класс представляет собой диалоговое окно для подтверждения удаления типа продукции.
+ *
+ * @property employeeId Идентификатор сотрудника, который подлежит удалению.
+ * @property root Корневой контейнер, используемый для отображения сообщений об успешном или неудачном удалении сотрудника.
+ */
 class DeleteTypeProductDialog(private var typeProductId: Long, private var root: ViewGroup) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

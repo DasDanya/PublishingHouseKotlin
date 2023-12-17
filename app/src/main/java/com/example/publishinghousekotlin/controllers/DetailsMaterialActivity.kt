@@ -9,11 +9,30 @@ import com.example.publishinghousekotlin.databinding.DetailsMaterialBinding
 import com.example.publishinghousekotlin.dialogs.DeleteMaterialDialog
 import com.example.publishinghousekotlin.models.Material
 
+
+/**
+ * Activity для вывода подробной информации о материале
+ *
+ * @author Климачков Даниил
+ * @since 1.0.0
+ */
 class DetailsMaterialActivity: AppCompatActivity() {
 
+    /**
+     * Биндинг для доступа к компонентам
+     */
     private lateinit var detailsMaterialBinding: DetailsMaterialBinding
+
+    /**
+     * Материал, данные о котором будут выводиться
+     */
     private var material: Material? = null
 
+
+    /**
+     * Переопределение метода onCreate()
+     * @param[savedInstanceState] ссылка на объект Bundle
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         detailsMaterialBinding = DetailsMaterialBinding.inflate(layoutInflater)
@@ -35,11 +54,18 @@ class DetailsMaterialActivity: AppCompatActivity() {
         }
     }
 
+    /**
+     * Переход в прошлую активность
+     * @return завершать ли текущую активность
+     */
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
 
+    /**
+     * Метод установки стартовых данных
+     */
     private fun setStartData() {
         material = intent.getSerializableExtra("material") as? Material
 

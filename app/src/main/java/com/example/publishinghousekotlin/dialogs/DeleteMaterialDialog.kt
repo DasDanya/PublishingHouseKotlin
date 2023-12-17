@@ -15,8 +15,22 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+/**
+ * Класс представляет собой диалоговое окно для подтверждения удаления материала.
+ *
+ * @property materialId Идентификатор материала, который подлежит удалению.
+ * @property root Корневой контейнер, используемый для отображения сообщений об успешном или неудачном удалении материала.
+ */
 class DeleteMaterialDialog(private var materialId: Long, private var root:ViewGroup): DialogFragment() {
 
+    /**
+     * Метод, создающий диалоговое окно для подтверждения удаления материала.
+     *
+     * При подтверждении удаляет материал и возвращает к списку материалов.
+     * @param savedInstanceState Сохраненное состояние фрагмента.
+     * @throws Exception Если произошла ошибка работы с сервером
+     * @return Возвращает созданное диалоговое окно.
+     */
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return AlertDialog.Builder(activity)
             .setTitle("Удаление материала")

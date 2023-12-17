@@ -7,7 +7,20 @@ import com.example.publishinghousekotlin.repositories.EmployeeRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
+/**
+ * Класс, представляющий источник данных для загрузки списка сотрудников с использованием пагинации.
+ * @author Климачков Даниил
+ * @since 1.0.0
+ * @param surname Фамилия сотрудника, по которой осуществляется фильтрация результатов.
+ */
 class EmployeesDataSource(private var surname: String): PagingSource<Int, EmployeeDTO>() {
+
+    /**
+     * Метод для получения ключа обновления при использовании функционала пагинации.
+     *
+     * @param state Состояние текущей загрузки данных.
+     * @return Ключ обновления или null, если его нет.
+     */
     override fun getRefreshKey(state: PagingState<Int, EmployeeDTO>): Int? {
         val anchorPosition = state.anchorPosition?: return null
         val page = state.closestPageToPosition(anchorPosition) ?: return null
@@ -15,6 +28,12 @@ class EmployeesDataSource(private var surname: String): PagingSource<Int, Employ
         return page.prevKey?.plus(1) ?: page.nextKey?.minus(1)
     }
 
+    /**
+     * Метод для загрузки данных в асинхронном режиме с использованием пагинации.
+     *
+     * @param params Параметры загрузки, такие как размер страницы и ключ пагинации.
+     * @return Результат загрузки данных, содержащий список сотрудников и информацию о ключах пагинации.
+     */
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, EmployeeDTO> {
         val pageIndex = params.key ?: 0
 

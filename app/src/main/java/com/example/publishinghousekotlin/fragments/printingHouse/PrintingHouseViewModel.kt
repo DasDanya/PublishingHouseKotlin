@@ -1,4 +1,4 @@
-package com.example.publishinghousekotlin.ui.printingHouse
+package com.example.publishinghousekotlin.fragments.printingHouse
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,6 +12,16 @@ import com.example.publishinghousekotlin.repositories.PrintingHouseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 
 @HiltViewModel
+
+/**
+ * ViewModel для управления списком типографий в рамках фрагмента.
+ *
+ * Содержит LiveData [listOfPrintingHouses], которая предоставляет пагинированный список типографий,
+ * отфильтрованный по поисковому запросу [searchType].
+ *
+ * @property searchType LiveData, содержащая текущий поисковый запрос.
+ * @property listOfPrintingHouses LiveData, предоставляющая пагинированный список типографий.
+ */
 class PrintingHouseViewModel: ViewModel() {
 
     private val searchType = MutableLiveData<String>("")
@@ -20,6 +30,10 @@ class PrintingHouseViewModel: ViewModel() {
         PrintingHouseRepository().getPagedPrintingHouses(query).cachedIn(viewModelScope)
     }
 
+    /**
+     * Метод обновления searchType
+     * @param query Новое значение searchType
+     */
     fun updateSearchType(query: String){
         searchType.value = query
     }

@@ -2,6 +2,20 @@ package com.example.publishinghousekotlin.models
 
 import java.io.Serializable
 
+/**
+ * Data-класс,хранящий в себе данные о типографии
+ * @author Климачков Даниил
+ * @since 1.0.0
+ * @property id Уникальный идентификатор.
+ * @property name Наименование.
+ * @property phone Номер телефона.
+ * @property email Электронная почта.
+ * @property state Субъект РФ.
+ * @property city Город.
+ * @property street Улица.
+ * @property house Номер дома.
+ * @constructor Создает объект [PrintingHouse] с заданными значениями или значениями по умолчанию.
+ */
 data class PrintingHouse(
     val id: Long,
     var name: String,

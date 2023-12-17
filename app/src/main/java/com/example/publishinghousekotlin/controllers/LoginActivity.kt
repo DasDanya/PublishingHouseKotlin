@@ -17,9 +17,26 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+
+
+/**
+ * Activity для авторизации пользователя
+ * @author Климачков Даниил
+ * @since 1.0.0
+ */
 class LoginActivity: AppCompatActivity() {
 
+
+    /**
+     * Биндинг для доступа к компонентам
+     */
     private lateinit var activityLoginBinding: ActivityLoginBinding
+
+
+    /**
+     * Переопределение метода onCreate()
+     * @param[savedInstanceState] ссылка на объект Bundle
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityLoginBinding = ActivityLoginBinding.inflate(layoutInflater)
@@ -39,12 +56,22 @@ class LoginActivity: AppCompatActivity() {
 
     }
 
+
+    /**
+     * Метод установки прослушивания изменения текста в EditTexts
+     */
     private fun setListeners(){
         val listener = Listener()
 
         listener.emailListener(activityLoginBinding.emailText, activityLoginBinding.emailContainer)
         listener.passwordListener(activityLoginBinding.passwordText, activityLoginBinding.passwordContainer)
     }
+
+
+    /**
+     * Метод авторизации пользователя
+     * @exception[Exception] Ошибка при отправки данных на сервер
+     */
     private fun login(){
         val message = Messages()
 
@@ -90,6 +117,11 @@ class LoginActivity: AppCompatActivity() {
         }
     }
 
+
+
+    /**
+     * Метод перехода на главный экран приложения
+     */
     private fun goToMainScreen(){
         if(JwtResponse.getFromMemory(applicationContext, applicationContext.resources.getString(R.string.keyForJwtResponse)) != null){
             val intent = Intent(this@LoginActivity, MainActivity::class.java)

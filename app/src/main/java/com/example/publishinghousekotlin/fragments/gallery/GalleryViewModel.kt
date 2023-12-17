@@ -1,4 +1,4 @@
-package com.example.publishinghousekotlin.ui.gallery
+package com.example.publishinghousekotlin.fragments.gallery
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

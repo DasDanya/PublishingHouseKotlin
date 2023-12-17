@@ -1,4 +1,4 @@
-package com.example.publishinghousekotlin.ui.employee
+package com.example.publishinghousekotlin.fragments.employee
 
 import android.content.Intent
 import android.os.Bundle
@@ -17,14 +17,37 @@ import com.example.publishinghousekotlin.databinding.FragmentGeneralBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
+
+/**
+ * Fragment для отображения списка сотрудников
+ * @author Климачков Даниил
+ * @since 1.0.0
+ * @property _fragmentEmployeesBinding Биндинг для доступа к компонентам
+ * @property fragmentEmployeesBinding Инициализированный биндинг
+ * @property employeeViewModel ViewModel сотрудников
+ * @property adapter Adapter для recyclerView
+ */
 class EmployeeFragment: Fragment(), OnItemClickListener {
 
     private var _fragmentEmployeesBinding: FragmentGeneralBinding? = null
     private val fragmentEmployeesBinding get() = _fragmentEmployeesBinding!!
 
     private lateinit var employeeViewModel: EmployeeViewModel
+
     private lateinit var adapter: EmployeesAdapter
 
+
+    /**
+     * Метод,вызываемый при создании и отображении макета фрагмента.
+     *
+     * @param inflater Объект LayoutInflater, который может быть использован для
+     * создания представления фрагмента.
+     * @param container Если непустой, это корневое представление,
+     * к которому будет прикреплено фрагмент.
+     * @param savedInstanceState Если не нулевой, то в этом объекте содержится
+     * состояние фрагмента, сохраненное в последнем вызове onSaveInstanceState().
+     * @return Возвращает созданное представление фрагмента.
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -52,11 +75,21 @@ class EmployeeFragment: Fragment(), OnItemClickListener {
         return fragmentEmployeesBinding.root
     }
 
+    /**
+     * Метод, вызываемый при уничтожении представления фрагмента.
+     * В данном случае, освобождает ресурсы, связанные с ViewBinding.
+     */
     override fun onDestroyView() {
         super.onDestroyView()
         _fragmentEmployeesBinding = null
     }
 
+    /**
+     * Метод, вызываемый при клике на элемент списка сотрудников.
+     * Открывает экран с детальной информацией о выбранном сотруднике.
+     *
+     * @param position Позиция выбранного элемента в списке.
+     */
     override fun onItemClick(position: Int) {
         val intent = Intent(activity, DetailsEmployeeActivity::class.java)
         intent.putExtra("employee", adapter.getEmployeeDTO(position))

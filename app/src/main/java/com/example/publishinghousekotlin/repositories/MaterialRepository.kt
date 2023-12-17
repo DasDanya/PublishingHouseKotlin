@@ -17,12 +17,28 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 
+/**
+ * Репозиторий, предоставляющий методы для работы с данными материалов на сервере.
+ * @author Климачков Даниил
+ * @since 1.0.0
+ * @property client OkHttpClient
+ * @property gson Поле, для сериализации и десериализации объектов Kotlin в JSON
+ * @property apiUrl URL-адрес сервера, используемый для взаимодействия с API материалов.
+ */
 class MaterialRepository {
 
     private val client = OkHttpClient.Builder().addInterceptor(JwtInterceptor()).build()
     private val gson = GsonBuilder().create()
     private val apiUrl = MyApplication.instance.applicationContext.resources.getString(R.string.server) + "/api/materials"
 
+
+    /**
+     * Метод получения списка материалов с сервера с использованием пагинации и фильтрации по типу.
+     *
+     * @param page Номер страницы для пагинации.
+     * @param type Тип материала для фильтрации результатов.
+     * @return Список сотрудников или null, если произошла ошибка.
+     */
     suspend fun get(page: Int?, type:String):List<Material>?{
         var partUrl = ""
 
@@ -47,12 +63,24 @@ class MaterialRepository {
         return null
     }
 
+    /**
+     * Метод получения списка материалов с использованием пагинации.
+     *
+     * @param type Тип материала для фильтрации результатов.
+     * @return LiveData содержащая список материалов с использованием пагинации.
+     */
     fun getPagedMaterials(type:String) = Pager(
         config = PagingConfig(pageSize = 7, enablePlaceholders = false),
         pagingSourceFactory = {MaterialsDataSource(type)}
     ).liveData
 
 
+    /**
+     * Метод удаления материала по его идентификатору на сервере.
+     *
+     * @param materialId Идентификатор материала.
+     * @return Объект [MessageResponse] с информацией о результате операции.
+     */
     suspend fun delete(materialId:Long): MessageResponse?{
         val request = Request.Builder()
             .url("$apiUrl/delete/$materialId")
@@ -68,6 +96,12 @@ class MaterialRepository {
         return null
     }
 
+    /**
+     * Метод добавления нового материала на сервер.
+     *
+     * @param material Данные о материале.
+     * @return Код состояния.
+     */
     suspend fun add(material:Material): Int{
         val materialAsJson = gson.toJson(material)
         val mediaType = "application/json; chapset=utf-8".toMediaType()
@@ -83,6 +117,13 @@ class MaterialRepository {
         return response.code
     }
 
+
+    /**
+     * Метод обновления данных о материале на сервере.
+     *
+     * @param material Данные о материале.
+     * @return Код состояния.
+     */
     suspend fun update(material: Material): Int{
         val materialAsJson = gson.toJson(material)
         val mediaType = "application/json; chapset=utf-8".toMediaType()

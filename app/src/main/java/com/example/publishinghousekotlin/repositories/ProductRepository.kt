@@ -1,6 +1,6 @@
 package com.example.publishinghousekotlin.repositories
 
-import android.util.Log
+
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.liveData
@@ -23,13 +23,28 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 
+
+/**
+ * Репозиторий, предоставляющий методы для работы с данными продукций на сервере.
+ * @author Климачков Даниил
+ * @since 1.0.0
+ * @property client OkHttpClient
+ * @property gson Поле, для сериализации и десериализации объектов Kotlin в JSON
+ * @property apiUrl URL-адрес сервера, используемый для взаимодействия с API продукций.
+ */
 class ProductRepository {
 
     private val client = OkHttpClient.Builder().addInterceptor(JwtInterceptor()).build()
     private val gson = GsonBuilder().create()
     private val apiUrl = MyApplication.instance.applicationContext.resources.getString(R.string.server) + "/api/products"
 
-
+    /**
+     * Метод получения списка продукций с сервера с использованием пагинации и фильтрации по названию.
+     *
+     * @param page Номер страницы для пагинации.
+     * @param name Название продукции для фильтрации результатов.
+     * @return Список продукции или null, если произошла ошибка.
+     */
     suspend fun get(page: Int, name: String): List<ProductAcceptDTO>?{
         var partUrl = "?page=$page"
 
@@ -57,6 +72,11 @@ class ProductRepository {
         return null
     }
 
+    /**
+     * Метод получения данных о продукции
+     * @param productId Идентификатор продукции.
+     * @return Объект [ProductAcceptDTO] с информацией о продукции или null.
+     */
     suspend fun get(productId:Long): ProductAcceptDTO?{
 
         val request = Request.Builder()
@@ -71,12 +91,25 @@ class ProductRepository {
         return null
     }
 
+    /**
+     * Метод получения списка продукций с использованием пагинации.
+     *
+     * @param name Название продукции для фильтрации результатов.
+     * @return LiveData содержащая список продукции с использованием пагинации.
+     */
     fun getPagedProducts(name:String)= Pager(
         config = PagingConfig(pageSize = 7, enablePlaceholders = false),
         pagingSourceFactory = { ProductsDataSource(name)}
     ).liveData
 
 
+    /**
+     * Метод добавления новой продукции на сервер.
+     *
+     * @param product Данные о продукции.
+     * @param photos Список фотографий.
+     * @return Объект [MessageResponse] с информацией о результате операции.
+     */
     suspend fun add(product: ProductSendDTO, photos: List<File>): MessageResponse? {
         val productAsJson = gson.toJson(product)
 
@@ -107,6 +140,12 @@ class ProductRepository {
         return null
     }
 
+    /**
+     * Метод удаления продукции по её идентификатору на сервере.
+     *
+     * @param productId Идентификатор продукции.
+     * @return Объект [MessageResponse] с информацией о результате операции.
+     */
     suspend fun delete(productId:Long): MessageResponse?{
         val request = Request.Builder()
             .url("$apiUrl/delete/$productId")
@@ -122,6 +161,13 @@ class ProductRepository {
         return null
     }
 
+    /**
+     * Метод обновления данных о продукции на сервере.
+     *
+     * @param product Данные о продукции.
+     * @param photos Список фотографий.
+     * @return Объект [MessageResponse] с информацией о результате операции.
+     */
     suspend fun update(product: ProductSendDTO, photos: List<File>): MessageResponse?{
         val productAsJson = gson.toJson(product)
 

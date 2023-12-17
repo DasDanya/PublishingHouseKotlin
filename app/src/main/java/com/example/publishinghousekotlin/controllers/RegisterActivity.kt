@@ -17,10 +17,23 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-
+/**
+ * Activity для регистрации пользователя
+ * @author Климачков Даниил
+ * @since 1.0.0
+ */
 class RegisterActivity: AppCompatActivity() {
 
+    /**
+     * Биндинг для доступа к компонентам
+     */
     private lateinit var activityRegisterBinding: ActivityRegisterBinding
+
+
+    /**
+     * Переопределение метода onCreate()
+     * @param[savedInstanceState] ссылка на объект Bundle
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityRegisterBinding = ActivityRegisterBinding.inflate(layoutInflater)
@@ -37,6 +50,9 @@ class RegisterActivity: AppCompatActivity() {
 
     }
 
+    /**
+     * Метод установки прослушивания изменения текста в EditTexts
+     */
     private fun setListeners(){
         val listener = Listener()
 
@@ -48,12 +64,19 @@ class RegisterActivity: AppCompatActivity() {
     }
 
 
-
+    /**
+     * Переход в прошлую активность
+     * @return завершать ли текущую активность
+     */
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
 
+    /**
+     * Метод регистрации пользователя
+     * @exception[Exception] Ошибка при отправки данных на сервер
+     */
     private fun register(){
         val message = Messages()
 

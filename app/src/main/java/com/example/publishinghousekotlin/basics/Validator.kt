@@ -1,6 +1,18 @@
 package com.example.publishinghousekotlin.basics
 
+/**
+ * Класс, предоставляющий методы для валидации различных типов данных.
+ * @author Климачков Даниил
+ * @since 1.0.0
+ */
 class Validator {
+
+    /**
+     * Метод, проверяющий является ли заданная строка корректным адресом электронной почты.
+     *
+     * @param email Проверяемая строка.
+     * @return Сообщение об ошибке или null, если адрес электронной почты корректен.
+     */
     fun isValidEmail(email:String): String?{
 
         if(email.length < 5){
@@ -19,6 +31,12 @@ class Validator {
         return null
     }
 
+    /**
+     * Метод, проверяющий является ли заданная строка корректным паролем.
+     *
+     * @param password Проверяемая строка.
+     * @return Сообщение об ошибке или null, если пароль корректен.
+     */
     fun isValidPassword(password:String): String?{
         if(password.length < 8){
             return "Минимальная длина: 8 символов"
@@ -36,6 +54,13 @@ class Validator {
         return null
     }
 
+    /**
+     * Метод, проверяющий совпадают ли две строки паролей.
+     *
+     * @param password Первый пароль.
+     * @param confirmPassword Подтверждение пароля.
+     * @return Сообщение об ошибке или null, если пароли совпадают.
+     */
     fun isValidConfirmPassword(password:String?, confirmPassword:String?): String?{
         if(!confirmPassword.equals(password)){
             return "Пароли не совпадают"
@@ -44,6 +69,12 @@ class Validator {
         return null
     }
 
+    /**
+     * Метод, проверяющий является ли заданная строка корректным наименованием.
+     *
+     * @param name Проверяемая строка.
+     * @return Сообщение об ошибке или null, если наименование корректно.
+     */
     fun isValidName(name:String): String?{
         if(name.length == 0){
             return "Необходимо ввести наименование"
@@ -52,6 +83,12 @@ class Validator {
         return null
     }
 
+    /**
+     * Метод, проверяющий является ли заданная строка корректным номером телефона.
+     *
+     * @param phone Проверяемая строка.
+     * @return Сообщение об ошибке или null, если номер телефона корректен.
+     */
     fun isValidPhone(phone:String): String?{
         val phoneRegex = Regex("\\+7-\\d{3}-\\d{3}-\\d{2}-\\d{2}")
 
@@ -62,6 +99,14 @@ class Validator {
         return null
     }
 
+    /**
+     * Метод, проверяющий является ли заданная строка корректным русским словом.
+     *
+     * @param word Проверяемая строка.
+     * @param minLength минимальная длина строки
+     * @param maxLength максимальная длина строки
+     * @return Сообщение об ошибке или null, если слово корректно.
+     */
     fun isValidRussianWord(word:String, minLength: Int, maxLength:Int):String?{
         if(word.length < minLength){
             return "Минимальная длина $minLength символов"
@@ -79,6 +124,14 @@ class Validator {
         return null
     }
 
+    /**
+     * Метод, проверяющий является ли заданное doubleValue корректным.
+     *
+     * @param doubleValue Проверяемое значение.
+     * @param minValue минимальное значение
+     * @param maxValue максимальное значение
+     * @return Сообщение об ошибке или null, если doubleValue корректно.
+     */
     fun isValidDoubleValue(doubleValue: Double, minValue: Double, maxValue: Double): String? {
         if(doubleValue < minValue){
             return "Минимальное значение: $minValue"
@@ -100,6 +153,12 @@ class Validator {
         return null
     }
 
+    /**
+     * Метод, проверяющий является ли заданная строка является корректным цветом материала.
+     *
+     * @param color Проверяемая строка.
+     * @return Сообщение об ошибке или null, если цвет материала корректен.
+     */
     fun isValidColor(color:String):String?{
         if(color.length < 5){
             return "Минимальная длина: 5 символов"
@@ -117,6 +176,12 @@ class Validator {
         return null
     }
 
+    /**
+     * Метод, проверяющий является ли заданная строка является корректным размером материала.
+     *
+     * @param size Проверяемая строка.
+     * @return Сообщение об ошибке или null, если размер материала корректен.
+     */
     fun isValidSizeOfMaterial(size:String):String?{
         if(size.isEmpty()){
             return "Необходимо ввести"
@@ -134,6 +199,12 @@ class Validator {
         return null
     }
 
+    /**
+     * Метод, проверяющий является ли заданная строка корректным городом.
+     *
+     * @param city Проверяемая строка.
+     * @return Сообщение об ошибке или null, если город корректен.
+     */
     fun isValidCity(city:String):String?{
         if(city.length < 3){
             return "Минимальная длина: 3 символа"
@@ -151,6 +222,12 @@ class Validator {
         return null
     }
 
+    /**
+     * Метод, проверяющий является ли заданная строка корректной улицей.
+     *
+     * @param street Проверяемая строка.
+     * @return Сообщение об ошибке или null, если улица корректна.
+     */
     fun isValidStreet(street:String):String?{
         if(street.length < 3){
             return "Минимальная длина: 3 символа"
@@ -168,6 +245,12 @@ class Validator {
         return null
     }
 
+    /**
+     * Метод, проверяющий является ли заданная строка корректным номером дома.
+     *
+     * @param houseNumber Проверяемая строка.
+     * @return Сообщение об ошибке или null, если номер дома корректен.
+     */
     fun isValidHouseNumber(houseNumber: String):String?{
         if(houseNumber.length == 0){
             return "Необходимо ввести"

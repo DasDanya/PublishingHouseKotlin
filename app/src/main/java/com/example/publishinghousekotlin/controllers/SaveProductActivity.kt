@@ -37,19 +37,64 @@ import java.io.File
 import java.math.BigDecimal
 import java.math.RoundingMode
 
+/**
+ * Activity для добавления/изменения продукции
+ *
+ * @author Климачков Даниил
+ * @since 1.0.0
+ */
 class SaveProductActivity: AppCompatActivity() {
 
+    /**
+     * Биндинг для доступа к компонентам
+     */
     private lateinit var saveProductBinding: ActivitySaveProductBinding
+
+    /**
+     * Адаптер recyclerView для списка материалов
+     */
     private var recyclerViewMaterialsAdapter: RecyclerViewMaterialsAddAdapter? = null
+
+    /**
+     * Экземпляр класса для отображения сообщений пользователю
+     */
     private var message = Messages()
+
+    /**
+     * Репозиторий для получения/отправки данных на сервер
+     */
     private val productRepository = ProductRepository()
+
+    /**
+     * Отправляемая продукция
+     */
     private var productSendDTO = ProductSendDTO()
+
+    /**
+     * Продукция, полученная от сервера
+     */
     private var productAcceptDTO: ProductAcceptDTO? = null
 
+    /**
+     * Список путей до фотографий
+     */
     private var images = mutableListOf<Uri>()
+
+    /**
+     * Константа для обработки выбора изображений
+     */
     private val PICK_IMAGES_REQUEST = 1
+
+    /**
+     * Максимальное количество загружаемых фотографий
+     */
     private val maxCountPhotos = 5
 
+
+    /**
+     * Переопределение метода onCreate()
+     * @param[savedInstanceState] ссылка на объект Bundle
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         saveProductBinding = ActivitySaveProductBinding.inflate(layoutInflater)
@@ -69,6 +114,9 @@ class SaveProductActivity: AppCompatActivity() {
         }
     }
 
+    /**
+     * Метод установки стартовых данных
+     */
     private fun setStartData() {
 
         val productId = intent.getLongExtra("productId", 0)
@@ -101,6 +149,9 @@ class SaveProductActivity: AppCompatActivity() {
         }
     }
 
+    /**
+     * Метод открытия галлереи для выбора фотографий
+     */
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK).apply {
             type = "image/*"
@@ -110,6 +161,13 @@ class SaveProductActivity: AppCompatActivity() {
         startActivityForResult(intent, PICK_IMAGES_REQUEST)
     }
 
+
+    /**
+     * Метод обработки выбранный фотографий
+     * @param[requestCode] код запроса
+     * @param[resultCode] код результата
+     * @param[data] активность, которая открыла галлерею
+     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -141,16 +199,26 @@ class SaveProductActivity: AppCompatActivity() {
         }
     }
 
+    /**
+     * Переход в прошлую активность
+     * @return завершать ли текущую активность
+     */
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
 
+    /**
+     * Метод установки прослушивания изменения текста в EditTexts
+     */
     private fun setListeners() {
         Listener().nameListener(saveProductBinding.nameText, saveProductBinding.nameContainer)
         listenerOfCountMaterials()
     }
 
+    /**
+     * Метод прослушивания изменения данных о выбранных материалах
+     */
     private fun listenerOfCountMaterials() {
         for (i in 0 until recyclerViewMaterialsAdapter!!.itemCount) {
             val viewHolder = saveProductBinding.materialsRecyclerView.findViewHolderForAdapterPosition(i) as RecyclerViewMaterialsAddAdapter.ViewHolder?
@@ -194,6 +262,9 @@ class SaveProductActivity: AppCompatActivity() {
         }
     }
 
+    /**
+     * Загрузка данных о материалах
+     */
     private fun loadMaterials() {
         lifecycleScope.launch(Dispatchers.IO) {
             try{
@@ -234,6 +305,9 @@ class SaveProductActivity: AppCompatActivity() {
         }
     }
 
+    /**
+     * Загрузка данных о типах продукции
+     */
     private fun loadTypeProducts(){
 
         lifecycleScope.launch(Dispatchers.IO) {
@@ -270,6 +344,9 @@ class SaveProductActivity: AppCompatActivity() {
         }
     }
 
+    /**
+     * Метод подсчёта стоимости продукции
+     */
     private fun calculateCost() {
         productSendDTO!!.cost = BigDecimal(0)
 
@@ -295,11 +372,19 @@ class SaveProductActivity: AppCompatActivity() {
         setCostText(productSendDTO!!.cost)
     }
 
+    /**
+     * Метод отображения стоимости в textView
+     * @param[cost] стоимость продукции
+     */
     private fun setCostText(cost:BigDecimal){
         val costText = SpannableStringBuilder().bold { append("Итоговая стоимость: ") }.append(cost.toString() + "₽")
         saveProductBinding.costView.text = costText
     }
 
+    /**
+     * Метод добавления данных о выбранных материалах в список, связывающий продукцию с материалами
+     * @return список, связывающий продукцию с материалами
+     */
     private fun getProductMaterials(): MutableList<ProductMaterialDTO> {
         var productMaterials: MutableList<ProductMaterialDTO> = mutableListOf()
 
@@ -322,6 +407,10 @@ class SaveProductActivity: AppCompatActivity() {
         return productMaterials
     }
 
+    /**
+     * Метод сохранения данных о продукции
+     * @exception[Exception] Ошибка при отправки данных на сервер
+     */
     private fun save() {
         if(saveProductBinding.nameContainer.helperText == null && productSendDTO!!.cost != BigDecimal(0) && !saveProductBinding.photosHelperText.text.startsWith("Необходимо")){
             productSendDTO!!.name = saveProductBinding.nameText.text.toString().trim()
@@ -419,6 +508,11 @@ class SaveProductActivity: AppCompatActivity() {
         }
     }
 
+    /**
+     * Метод заполнения списка файлов
+     * @param[files] пустой список, в который будут заноситься фотографии
+     * @return Все ли фотографии были успешно заносены в список
+     */
     private fun fillingListOfFiles(files: MutableList<File>):Boolean{
         val fileWorker = FileWorker()
 
@@ -434,7 +528,9 @@ class SaveProductActivity: AppCompatActivity() {
         return true
     }
 
-
+    /**
+     * Метод перехода к списку продукций
+     */
     private fun goToListProducts(){
         val intent = Intent(this@SaveProductActivity, MainActivity::class.java)
         intent.putExtra("fragment", "ProductFragment")

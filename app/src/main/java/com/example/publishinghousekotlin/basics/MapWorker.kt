@@ -3,12 +3,26 @@ package com.example.publishinghousekotlin.basics
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 
+/**
+ * Класс для работы с Яндекс Картами
+ * @author Климачков Даниил
+ * @since 1.0.0
+ */
 class MapWorker {
 
+
     companion object{
+        /**
+         * Ключ для использования яндекс карт
+         */
         private var apiKey = "094078ac-b2f8-43b8-a414-702a2e9f3ea8"
     }
 
+    /**
+     * Метод отображения местоположения на Яндекс Карте
+     * @param[address] местоположение
+     * @param[webView] Компонент WebView, на котором будет отображена Яндекс Карта
+     */
     fun showAddress(address:String, webView: WebView){
 
         val webSettings = webView.settings

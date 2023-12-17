@@ -9,6 +9,14 @@ import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
 import java.io.Serializable
 
+/**
+ * Класс для работы с данными авторизованного пользователя
+ * @author Климачков Даниил
+ * @since 1.0.0
+ * @property token JWT токен.
+ * @property type Тип токена.
+ * @property user Данные о пользователе
+ */
 data class JwtResponse(
 
     val token:String,
@@ -19,6 +27,14 @@ data class JwtResponse(
 
 ) : Serializable{
     companion object{
+
+        /**
+         * Метод для сохранения объекта [JwtResponse] в память устройства по ключу [key].
+         *
+         * @param context Контекст приложения.
+         * @param jwtResponse Объект [JwtResponse], который необходимо сохранить в память.
+         * @param key Ключ, по которому будет производиться сохранение.
+         */
         fun saveToMemory(context: Context, jwtResponse: JwtResponse, key:String){
 
             val sharedPreferences = context.getSharedPreferences("Responses", Context.MODE_PRIVATE)
@@ -33,6 +49,14 @@ data class JwtResponse(
             editor.apply()
         }
 
+        /**
+         * Метод для получения объекта [JwtResponse] из памяти устройства по ключу [key].
+         *
+         * @param context Контекст приложения.
+         * @param key Ключ, по которому будет производиться поиск объекта.
+         *
+         * @return Объект [JwtResponse] или null, если объект не найден.
+         */
         fun getFromMemory(context: Context, key: String): JwtResponse?{
 
             val sharedPreferences = context.getSharedPreferences("Responses", Context.MODE_PRIVATE)
@@ -49,6 +73,12 @@ data class JwtResponse(
             return null
         }
 
+        /**
+         * Метод для удаления объекта из памяти устройства по ключу [key].
+         *
+         * @param context Контекст приложения.
+         * @param key Ключ, по которому будет производиться удаление объекта.
+         */
         fun deleteFromMemory(context: Context, key: String){
             val sharedPreferences = context.getSharedPreferences("Responses", Context.MODE_PRIVATE)
             val editor = sharedPreferences.edit()

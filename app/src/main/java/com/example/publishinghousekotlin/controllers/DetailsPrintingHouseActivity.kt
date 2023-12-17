@@ -12,10 +12,30 @@ import com.example.publishinghousekotlin.dialogs.DeleteMaterialDialog
 import com.example.publishinghousekotlin.dialogs.DeletePrintingHouseDialog
 import com.example.publishinghousekotlin.models.PrintingHouse
 
+
+/**
+ * Activity для вывода подробной информации о материале
+ *
+ * @author Климачков Даниил
+ * @since 1.0.0
+ */
 class DetailsPrintingHouseActivity: AppCompatActivity() {
 
+    /**
+     * Биндинг для доступа к компонентам
+     */
     private lateinit var detailsPrintingHouseBinding: DetailsPrintingHouseBinding
+
+    /**
+     * Типография, данные о которой будут выводиться
+     */
     private var printingHouse: PrintingHouse? = null
+
+
+    /**
+     * Переопределение метода onCreate()
+     * @param[savedInstanceState] ссылка на объект Bundle
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -38,11 +58,18 @@ class DetailsPrintingHouseActivity: AppCompatActivity() {
         }
     }
 
+    /**
+     * Переход в прошлую активность
+     * @return завершать ли текущую активность
+     */
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
 
+    /**
+     * Метод установки стартовых данных
+     */
     @SuppressLint("SetJavaScriptEnabled")
     private fun setStartData() {
         printingHouse = intent.getSerializableExtra("printingHouse") as? PrintingHouse

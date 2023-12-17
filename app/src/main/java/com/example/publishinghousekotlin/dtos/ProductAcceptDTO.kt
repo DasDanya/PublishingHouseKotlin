@@ -4,6 +4,21 @@ import com.example.publishinghousekotlin.models.TypeProduct
 import java.io.Serializable
 import java.math.BigDecimal
 
+/**
+ * Data-класс,представляющий собой объект принимаемой с сервера продукции.
+ * @author Климачков Даниил
+ * @since 1.0.0
+ * @property id Уникальный идентификатор.
+ * @property name Наименование.
+ * @property username Имя пользователя,являющимся владельцем продукции.
+ * @property userEmail Электронная почта пользователя.
+ * @property cost Стоимость.
+ * @property typeProduct Тип продукции (может быть null).
+ * @property productMaterialDTOS Список объектов [ProductMaterialDTO], представляющих собой материал и его количество в продукции (может быть null).
+ * @property countProductsDTOS Список объектов [CountProductsDTO], представляющих собой заказ и количество продукции в нем(может быть null).
+ * @property photos Список строк, представляющих собой фотографии продукции в виде Base64String (может быть null).
+ * @constructor Создает объект [ProductAcceptDTO] с заданными значениями или значениями по умолчанию.
+ */
 data class ProductAcceptDTO(
     val id: Long,
     val name: String,

@@ -29,15 +29,41 @@ import com.example.publishinghousekotlin.models.User
 import com.example.publishinghousekotlin.models.UserRole
 
 
+/**
+ * Activity главного экрана
+ *
+ * @author Климачков Даниил
+ * @since 1.0.0
+ */
 class MainActivity : AppCompatActivity() {
 
+    /**
+     * Поле для конфигурации appBar
+     */
     private lateinit var appBarConfiguration: AppBarConfiguration
+
+
+    /**
+     * Биндинг для доступа к компонентам
+     */
     private lateinit var binding: ActivityMainBinding
 
+    /**
+     * Контроллер для работы с навигацией
+     */
     var navController: NavController? = null
+
+
+    /**
+     * Текущий пользователь приложения
+     */
     private var user: User? = null
 
 
+    /**
+     * Переопределение метода onCreate()
+     * @param[savedInstanceState] ссылка на объект Bundle
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -72,17 +98,28 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * Переопределения метода создания меню
+     * @param[menu] меню
+     */
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
         return true
     }
 
+    /**
+     * Метод навигации по фрагментам
+     *  @return Успешно ли был совершен переход
+     */
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
+    /**
+     * Метод,скрывающий элементы в боковом меню
+     */
     private fun hideItemsMenu(){
         if(user?.role == UserRole.CUSTOMER.name){
             val itemsToHide = setOf(R.id.nav_customers, R.id.nav_materials, R.id.nav_employees, R.id.nav_printingHouses, R.id.nav_typeProducts)
@@ -93,6 +130,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    /**
+     * Метод, отображающий данные о пользователе
+     *
+     */
     private fun setUserInfo(){
         val headerView = binding.navView.getHeaderView(0)
         val nameText = headerView.findViewById<TextView>(R.id.name)
@@ -103,6 +145,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * Метод перехода к экранам додавления данных
+     */
     private fun goToAddItem(){
         val currentDestination = navController!!.currentDestination
 
@@ -137,6 +182,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Метод перехода к фрагменту после работы с данными о сущности
+     *
+     */
     private fun goToFragmentAfterAction(){
         val fragment = intent?.getStringExtra("fragment")
 
@@ -154,6 +203,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * Метод скрытия кнопки добавления
+     */
     private fun hidingAdding(){
         if(navController!!.currentDestination?.id == R.id.productsScreen || navController!!.currentDestination?.id == R.id.nav_home) {
             binding.appBarMain.fab.isVisible = user?.role != UserRole.ADMINISTRATOR.name
@@ -161,7 +213,9 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
+    /**
+     * Метод, обрабатывающий нажатие на элемент в боковом меню
+     */
     private fun listenerOfSelectedItemNavView(){
         binding.navView.setNavigationItemSelectedListener { menuItem->
             when(menuItem.itemId){

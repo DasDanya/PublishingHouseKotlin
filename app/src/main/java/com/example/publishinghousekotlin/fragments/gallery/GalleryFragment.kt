@@ -1,4 +1,4 @@
-package com.example.publishinghousekotlin.ui.gallery
+package com.example.publishinghousekotlin.fragments.gallery
 
 import android.os.Bundle
 import android.view.LayoutInflater

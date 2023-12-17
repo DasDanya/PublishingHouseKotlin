@@ -18,11 +18,26 @@ import okhttp3.RequestBody.Companion.toRequestBody
 
 class TypeProductRepository {
 
+    /**
+     * Репозиторий, предоставляющий методы для работы с данными типов продукции на сервере.
+     * @author Климачков Даниил
+     * @since 1.0.0
+     * @property client OkHttpClient
+     * @property gson Поле, для сериализации и десериализации объектов Kotlin в JSON
+     * @property apiUrl URL-адрес сервера, используемый для взаимодействия с API типов продукции.
+     */
     private val client = OkHttpClient.Builder().addInterceptor(JwtInterceptor()).build()
     private val gson = GsonBuilder().create()
     private val apiUrl = MyApplication.instance.applicationContext.resources.getString(R.string.server) + "/api/typeProducts"
 
 
+    /**
+     * Метод получения списка типов продукции с сервера с использованием пагинации и фильтрации по типу.
+     *
+     * @param page Номер страницы для пагинации.
+     * @param type Тип для фильтрации результатов.
+     * @return Список типов продукции или null, если произошла ошибка.
+     */
     suspend fun get(page:Int?,type:String):List<TypeProduct>?{
         var partUrl = ""
 
@@ -47,11 +62,24 @@ class TypeProductRepository {
         return null;
     }
 
+    /**
+     * Метод получения списка типов продукции с использованием пагинации.
+     *
+     * @param type Тип для фильтрации результатов.
+     * @return LiveData содержащая список типов продукции с использованием пагинации.
+     */
     fun getPagedTypeProducts(type:String) = Pager(
         config = PagingConfig(pageSize = 7, enablePlaceholders = false),
         pagingSourceFactory = {TypeProductsDataSource(type)}
     ).liveData
 
+
+    /**
+     * Метод добавления нового типа продукции на сервер.
+     *
+     * @param typeProduct Данные о типе продукции.
+     * @return Код состояния.
+     */
     suspend fun add(typeProduct: TypeProduct): Int{
 
         val typeProductAsJson = gson.toJson(typeProduct)
@@ -68,6 +96,12 @@ class TypeProductRepository {
         return response.code
     }
 
+    /**
+     * Метод обновления данных о типе продукции на сервере.
+     *
+     * @param typeProduct Данные о типе продукции.
+     * @return Код состояния.
+     */
     suspend fun update(typeProduct: TypeProduct): Int{
         val typeProductAsJson = gson.toJson(typeProduct)
         val mediaType = "application/json; chapset=utf-8".toMediaType()
@@ -83,6 +117,12 @@ class TypeProductRepository {
         return response.code
     }
 
+    /**
+     * Метод удаления типа продукции по его идентификатору на сервере.
+     *
+     * @param typeProductId Идентификатор типа продукции.
+     * @return Объект [MessageResponse] с информацией о результате операции.
+     */
     suspend fun delete(typeProductId: Long): MessageResponse?{
         val request = Request.Builder()
             .url("$apiUrl/delete/$typeProductId")
@@ -97,17 +137,4 @@ class TypeProductRepository {
 
         return null
     }
-
-//    fun getPagedTypeProducts(): Flow<PagingData<TypeProduct>> {
-//        val pageSize = 5
-//        return Pager(
-//            config = PagingConfig(
-//                pageSize = pageSize,
-//                enablePlaceholders = false
-//            ),
-//            pagingSourceFactory = {TypeProductsDataSource(pageSize)}
-//        ).flow
-//    }
-
-
 }

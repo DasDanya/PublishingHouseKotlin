@@ -16,11 +16,27 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 
+/**
+ * Репозиторий, предоставляющий методы для работы с данными типографий на сервере.
+ * @author Климачков Даниил
+ * @since 1.0.0
+ * @property client OkHttpClient
+ * @property gson Поле, для сериализации и десериализации объектов Kotlin в JSON
+ * @property apiUrl URL-адрес сервера, используемый для взаимодействия с API типографий.
+ */
 class PrintingHouseRepository {
 
     private val client = OkHttpClient.Builder().addInterceptor(JwtInterceptor()).build()
     private val gson = GsonBuilder().create()
     private val apiUrl = MyApplication.instance.applicationContext.resources.getString(R.string.server) + "/api/printingHouses"
+
+    /**
+     * Метод получения списка типографий с сервера с использованием пагинации и фильтрации по названию.
+     *
+     * @param page Номер страницы для пагинации.
+     * @param name Название типографии для фильтрации результатов.
+     * @return Список типографий или null, если произошла ошибка.
+     */
     suspend fun get(page: Int, name:String):List<PrintingHouse>?{
         var partUrl = "?page=$page"
         if(name != ""){
@@ -41,11 +57,23 @@ class PrintingHouseRepository {
         return null
     }
 
+    /**
+     * Метод получения списка типографий с использованием пагинации.
+     *
+     * @param name Название типографии для фильтрации результатов.
+     * @return LiveData содержащая список типографий с использованием пагинации.
+     */
     fun getPagedPrintingHouses(name:String) = Pager(
         config = PagingConfig(pageSize = 7, enablePlaceholders = false),
         pagingSourceFactory = {PrintingHousesDataSource(name)}
     ).liveData
 
+    /**
+     * Метод удаления типографии по её идентификатору на сервере.
+     *
+     * @param printingHouseId Идентификатор типографии.
+     * @return Объект [MessageResponse] с информацией о результате операции.
+     */
     suspend fun delete(printingHouseId:Long):MessageResponse?{
         val request = Request.Builder()
             .url("$apiUrl/delete/$printingHouseId")
@@ -61,6 +89,12 @@ class PrintingHouseRepository {
         return null
     }
 
+    /**
+     * Метод обновления данных о типографии на сервере.
+     *
+     * @param printingHouse Данные о типографии.
+     * @return Объект [MessageResponse] с информацией о результате операции.
+     */
     suspend fun update(printingHouse: PrintingHouse):MessageResponse?{
         val printingHouseAsJson = gson.toJson(printingHouse)
         val mediaType = "application/json; chapset=utf-8".toMediaType()
@@ -83,6 +117,12 @@ class PrintingHouseRepository {
         return null
     }
 
+    /**
+     * Метод добавления новой типографии на сервер.
+     *
+     * @param printingHouse Данные о типографии.
+     * @return Объект [MessageResponse] с информацией о результате операции.
+     */
     suspend fun add(printingHouse: PrintingHouse):MessageResponse?{
         val printingHouseAsJson = gson.toJson(printingHouse)
         val mediaType = "application/json; chapset=utf-8".toMediaType()

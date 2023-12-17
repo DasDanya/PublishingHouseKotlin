@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+    id("org.jetbrains.dokka")
 
 }
 
@@ -39,6 +40,21 @@ android {
         viewBinding = true
     }
 
+
+//    subprojects{
+//        apply(plugin = "org.jetbrains.dokka")
+//    }
+
+    packagingOptions {
+        resources {
+            resources.excludes.add("META-INF/*")
+        }
+    }
+
+//   dokka {
+//        outputDirectory = './docs'
+//    }
+
 }
 
 dependencies {
@@ -63,6 +79,8 @@ dependencies {
     implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation ("com.google.dagger:hilt-android:2.39.1")
 
+    // Dokka
+    implementation("org.jetbrains.dokka:dokka-gradle-plugin:1.9.10")
 
 
     testImplementation("junit:junit:4.13.2")

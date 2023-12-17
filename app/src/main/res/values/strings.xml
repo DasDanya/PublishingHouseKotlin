@@ -18,7 +18,7 @@
     <string name="exit">Выйти</string>
 
     // Данные для сервера
-    <string name="server">http://192.168.13.51:8080</string>
+    <string name="server">http://192.168.1.5:8080</string>
     <string name="keyForJwtResponse">THISISKEYFORJWTRESPONSE</string>
 
     // Регистрация и авторизация

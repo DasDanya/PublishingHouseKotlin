@@ -9,11 +9,32 @@ import com.example.publishinghousekotlin.databinding.DetailsTypeProductBinding
 import com.example.publishinghousekotlin.dialogs.DeleteTypeProductDialog
 import com.example.publishinghousekotlin.models.TypeProduct
 
+
+/**
+ * Activity для вывода подробной информации о типе продукции
+ *
+ * @author Климачков Даниил
+ * @since 1.0.0
+ */
 class DetailsTypeProductActivity: AppCompatActivity() {
 
+
+    /**
+     * Биндинг для доступа к компонентам
+     */
     private lateinit var detailsTypeProductBinding: DetailsTypeProductBinding
+
+
+    /**
+     * Тип продукции, данные о котором будут выводиться
+     */
     private var typeProduct:TypeProduct? = null
 
+
+    /**
+     * Переопределение метода onCreate()
+     * @param[savedInstanceState] ссылка на объект Bundle
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         detailsTypeProductBinding = DetailsTypeProductBinding.inflate(layoutInflater)
@@ -35,11 +56,19 @@ class DetailsTypeProductActivity: AppCompatActivity() {
         }
     }
 
+
+    /**
+     * Переход в прошлую активность
+     * @return завершать ли текущую активность
+     */
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
 
+    /**
+     * Метод установки стартовых данных
+     */
     private fun setStartData(){
         typeProduct = intent.getSerializableExtra("typeProduct") as? TypeProduct
 

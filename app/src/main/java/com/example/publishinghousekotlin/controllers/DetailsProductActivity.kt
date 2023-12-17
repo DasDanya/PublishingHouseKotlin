@@ -25,15 +25,50 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+
+/**
+ * Activity для вывода подробной информации о продукции
+ *
+ * @author Климачков Даниил
+ * @since 1.0.0
+ */
 class DetailsProductActivity: AppCompatActivity() {
 
+    /**
+     * Биндинг для доступа к компонентам
+     */
     private lateinit var detailsProductBinding: DetailsProductBinding
+
+    /**
+     * Экземпляр класса для отображения/установки сообщений для пользователя
+     */
     private val message = Messages()
+
+    /**
+     * Продукция, данные о которой будут выводиться
+     */
     private var product: ProductAcceptDTO? = null
+
+    /**
+     * Индекс отображаемой фотографии в ImageView
+     */
     private var indexOfPhoto = 0
+
+    /**
+     * Поле, указывающее отображается ли список материалов
+     */
     private var materialsAreShown = false
+
+    /**
+     * Поле, указывающее отображается ли список заказов
+     */
     private var bookingsAreShown = false
 
+
+    /**
+     * Переопределение метода onCreate()
+     * @param[savedInstanceState] ссылка на объект Bundle
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -53,12 +88,21 @@ class DetailsProductActivity: AppCompatActivity() {
         }
 
         detailsProductBinding.editBtn.setOnClickListener {
-            val intent = Intent(this@DetailsProductActivity, SaveProductActivity::class.java)
-            intent.putExtra("productId", product!!.id)
-            startActivity(intent)
+            if(product!!.countProductsDTOS?.size == 0) {
+                val intent = Intent(this@DetailsProductActivity, SaveProductActivity::class.java)
+                intent.putExtra("productId", product!!.id)
+                startActivity(intent)
+            } else{
+                message.showError("Невозможно изменить данные о продукции, так как она указана в заказе",detailsProductBinding.root)
+            }
         }
     }
 
+
+    /**
+     * Метод установки стартовых данных
+     * @throws[Exception] Если произошла ошибка получения данных о продукции
+     */
     private fun setStartData() {
 
         var productId = intent.getLongExtra("productId", 0)
@@ -167,10 +211,19 @@ class DetailsProductActivity: AppCompatActivity() {
         }
     }
 
+    /**
+     * Метод отображения фотографии в imageView
+     * @param[index] Индекс фотографии в списке фотографий
+     */
     private fun setPhotoInView(index: Int){
         val fileWorker = FileWorker()
         detailsProductBinding.photosView.setImageBitmap(fileWorker.getBitmap(product!!.photos!![index]))
     }
+
+    /**
+     * Переход в прошлую активность
+     * @return завершать ли текущую активность
+     */
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
