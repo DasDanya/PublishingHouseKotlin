@@ -89,7 +89,7 @@ class ProductsAdapter(private val clickListener: OnItemClickListener): PagingDat
 
         with(holder.largeItemRecyclerViewBinding){
             mainTextView.text = productDTO.name
-            subTextView.text = "Стоимость за 1 экземпляр: " + productDTO.cost + " ₽"
+            subTextView.text = "Стоимость за 1 шт: " + productDTO.cost + " ₽"
             iconView.setImageBitmap(FileWorker().getBitmap(productDTO.photos!![0]))
         }
     }

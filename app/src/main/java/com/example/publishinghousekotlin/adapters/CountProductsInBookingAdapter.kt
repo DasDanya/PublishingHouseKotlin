@@ -5,15 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.publishinghousekotlin.R
 import com.example.publishinghousekotlin.databinding.ItemRecyclerViewTwoSubsBinding
-import com.example.publishinghousekotlin.dtos.CountProductsDTO
+import com.example.publishinghousekotlin.dtos.CountProductsInBookingDTO
 
 /**
  * Adapter для recyclerView с данными о количестве продукций в заказе
  * @author Климачков Даниил
  * @since 1.0.0
- * @property[countProductsDTOS] список с продукциями и их количеством в заказе
+ * @property[countProductsInBookingDTOS] список с продукциями и их количеством в заказе
  */
-class CountProductsAdapter(private val countProductsDTOS: List<CountProductsDTO>): RecyclerView.Adapter<CountProductsAdapter.ViewHolder>() {
+class CountProductsInBookingAdapter(private val countProductsInBookingDTOS: List<CountProductsInBookingDTO>): RecyclerView.Adapter<CountProductsInBookingAdapter.ViewHolder>() {
 
     /**
      * Класс, предоставляющий элементы интерфейса, связанные с каждым элементом списка
@@ -38,7 +38,7 @@ class CountProductsAdapter(private val countProductsDTOS: List<CountProductsDTO>
      * @return Количество элементов в списке
      */
     override fun getItemCount(): Int {
-        return countProductsDTOS.size
+        return countProductsInBookingDTOS.size
     }
 
     /**
@@ -55,13 +55,13 @@ class CountProductsAdapter(private val countProductsDTOS: List<CountProductsDTO>
      * @param[position] индекс элемента в списке
      */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val countProductsDTO = countProductsDTOS[position]
+        val countProductsDTO = countProductsInBookingDTOS[position]
 
         with(holder.itemRecyclerViewTwoSubsBinding){
             iconView.setImageResource(R.drawable.booking)
             mainTextView.text = "Заказ №${countProductsDTO.booking.id}"
             firstSubTextView.text = "Стоимость выполнения: ${countProductsDTO.booking.cost} ₽"
-            secondSubTextView.text = "Количество продукции: ${countProductsDTO.margin}"
+            secondSubTextView.text = "Количество продукции: ${countProductsDTO.edition}"
 
         }
     }

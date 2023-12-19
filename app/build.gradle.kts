@@ -3,7 +3,6 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id("org.jetbrains.dokka")
-
 }
 
 android {
@@ -40,20 +39,17 @@ android {
         viewBinding = true
     }
 
-
 //    subprojects{
 //        apply(plugin = "org.jetbrains.dokka")
 //    }
 
     packagingOptions {
         resources {
-            resources.excludes.add("META-INF/*")
+            excludes += "/META-INF/*"
+            //resources.excludes.add("META-INF/*")
         }
     }
 
-//   dokka {
-//        outputDirectory = './docs'
-//    }
 
 }
 

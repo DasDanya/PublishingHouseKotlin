@@ -61,7 +61,6 @@ class EmployeeFragment: Fragment(), OnItemClickListener {
 
         adapter = EmployeesAdapter(this)
         fragmentEmployeesBinding.recyclerView.layoutManager = LinearLayoutManager(this.context)
-        fragmentEmployeesBinding.recyclerView.setHasFixedSize(true)
         fragmentEmployeesBinding.recyclerView.adapter = adapter
 
         employeeViewModel.listOfEmployees.observe(this.viewLifecycleOwner){
@@ -71,6 +70,9 @@ class EmployeeFragment: Fragment(), OnItemClickListener {
         fragmentEmployeesBinding.searchEditText.addTextChangedListener {
             employeeViewModel.updateSearchType(fragmentEmployeesBinding.searchEditText.text.toString().trim())
         }
+
+        fragmentEmployeesBinding.changeSearchTypeBtn.visibility = View.INVISIBLE
+        fragmentEmployeesBinding.generateReportBtn.visibility = View.INVISIBLE
 
         return fragmentEmployeesBinding.root
     }

@@ -60,7 +60,7 @@ class PrintingHouseFragment: Fragment(), OnItemClickListener {
 
         adapter = PrintingHouseAdapter(this)
         fragmentPrintingHousesBinding.recyclerView.layoutManager = LinearLayoutManager(this.context)
-        fragmentPrintingHousesBinding.recyclerView.setHasFixedSize(true)
+        //fragmentPrintingHousesBinding.recyclerView.setHasFixedSize(true)
         fragmentPrintingHousesBinding.recyclerView.adapter = adapter
 
         printingHouseViewModel.listOfPrintingHouses.observe(this.viewLifecycleOwner){
@@ -71,6 +71,8 @@ class PrintingHouseFragment: Fragment(), OnItemClickListener {
             printingHouseViewModel.updateSearchType(fragmentPrintingHousesBinding.searchEditText.text.toString().trim())
         }
 
+        fragmentPrintingHousesBinding.changeSearchTypeBtn.visibility = View.INVISIBLE
+        fragmentPrintingHousesBinding.generateReportBtn.visibility = View.INVISIBLE
 
         return fragmentPrintingHousesBinding.root
     }

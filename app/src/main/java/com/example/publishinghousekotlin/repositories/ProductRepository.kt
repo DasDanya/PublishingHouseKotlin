@@ -45,16 +45,21 @@ class ProductRepository {
      * @param name Название продукции для фильтрации результатов.
      * @return Список продукции или null, если произошла ошибка.
      */
-    suspend fun get(page: Int, name: String): List<ProductAcceptDTO>?{
-        var partUrl = "?page=$page"
+    suspend fun get(page: Int?, name: String): List<ProductAcceptDTO>?{
+        var partUrl = ""
+
+        if(page != null) {
+            partUrl = "?page=$page"
+        }
 
         if(name != ""){
             partUrl += "&name=$name"
         }
 
+        val symbol = if(partUrl != "") "&" else "?"
         val user = JwtResponse.getFromMemory(MyApplication.instance.applicationContext, MyApplication.instance.applicationContext.resources.getString(R.string.keyForJwtResponse))!!.user
         if(user.role == UserRole.CUSTOMER.name){
-            partUrl+= "&userId=${user.id}"
+            partUrl+= symbol +"userId=${user.id}"
         }
 
         val request = Request.Builder()

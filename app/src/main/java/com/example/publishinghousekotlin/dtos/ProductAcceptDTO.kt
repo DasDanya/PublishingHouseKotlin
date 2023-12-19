@@ -15,7 +15,7 @@ import java.math.BigDecimal
  * @property cost Стоимость.
  * @property typeProduct Тип продукции (может быть null).
  * @property productMaterialDTOS Список объектов [ProductMaterialDTO], представляющих собой материал и его количество в продукции (может быть null).
- * @property countProductsDTOS Список объектов [CountProductsDTO], представляющих собой заказ и количество продукции в нем(может быть null).
+ * @property countProductsInBookingDTOS Список объектов [CountProductsInBookingDTO], представляющих собой заказ и количество продукции в нем(может быть null).
  * @property photos Список строк, представляющих собой фотографии продукции в виде Base64String (может быть null).
  * @constructor Создает объект [ProductAcceptDTO] с заданными значениями или значениями по умолчанию.
  */
@@ -27,7 +27,7 @@ data class ProductAcceptDTO(
     val cost: BigDecimal,
     val typeProduct: TypeProduct?,
     val productMaterialDTOS: List<ProductMaterialDTO>?,
-    val countProductsDTOS: List<CountProductsDTO>?,
+    val countProductsInBookingDTOS: List<CountProductsInBookingDTO>?,
     val photos: List<String>?
 ):Serializable{
     constructor(): this(0, "", "", "", BigDecimal(0), null, null, null,null)

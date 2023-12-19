@@ -5,11 +5,11 @@ package com.example.publishinghousekotlin.dtos
  * @author Климачков Даниил
  * @since 1.0.0
  * @property booking Заказ.
- * @property margin Количество продукции.
+ * @property edition Количество продукции.
  */
-data class CountProductsDTO(
+data class CountProductsInBookingDTO(
     val booking: BookingSimpleAcceptDTO,
-    val margin: Int
+    val edition: Int
 ){
 
 }

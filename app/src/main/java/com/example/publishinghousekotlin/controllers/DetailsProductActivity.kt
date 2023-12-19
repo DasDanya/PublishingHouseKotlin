@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.publishinghousekotlin.MyApplication
 import com.example.publishinghousekotlin.R
-import com.example.publishinghousekotlin.adapters.CountProductsAdapter
+import com.example.publishinghousekotlin.adapters.CountProductsInBookingAdapter
 import com.example.publishinghousekotlin.adapters.RecyclerViewWithCountMaterialsAdapter
 import com.example.publishinghousekotlin.basics.FileWorker
 import com.example.publishinghousekotlin.basics.Messages
@@ -88,7 +88,7 @@ class DetailsProductActivity: AppCompatActivity() {
         }
 
         detailsProductBinding.editBtn.setOnClickListener {
-            if(product!!.countProductsDTOS?.size == 0) {
+            if(product!!.countProductsInBookingDTOS?.size == 0) {
                 val intent = Intent(this@DetailsProductActivity, SaveProductActivity::class.java)
                 intent.putExtra("productId", product!!.id)
                 startActivity(intent)
@@ -132,8 +132,8 @@ class DetailsProductActivity: AppCompatActivity() {
                         }
 
                         // Список заказов
-                        val countProductsAdapter = CountProductsAdapter(product!!.countProductsDTOS!!)
-                        detailsProductBinding.bookingsRecyclerView.adapter = countProductsAdapter
+                        val countProductsInBookingAdapter = CountProductsInBookingAdapter(product!!.countProductsInBookingDTOS!!)
+                        detailsProductBinding.bookingsRecyclerView.adapter = countProductsInBookingAdapter
                         detailsProductBinding.bookingsRecyclerView.layoutManager = LinearLayoutManager(applicationContext)
                         detailsProductBinding.bookingsRecyclerView.addItemDecoration(DividerItemDecoration(applicationContext, DividerItemDecoration.VERTICAL))
 

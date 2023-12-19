@@ -59,7 +59,7 @@ class MaterialFragment : Fragment(), OnItemClickListener {
 
         adapter = MaterialsAdapter(this)
         fragmentMaterialsBinding.recyclerView.layoutManager = LinearLayoutManager(this.context)
-        fragmentMaterialsBinding.recyclerView.setHasFixedSize(true)
+        //fragmentMaterialsBinding.recyclerView.setHasFixedSize(true)
         fragmentMaterialsBinding.recyclerView.adapter = adapter
 
         materialViewModel.listOfMaterials.observe(this.viewLifecycleOwner){
@@ -69,6 +69,9 @@ class MaterialFragment : Fragment(), OnItemClickListener {
         fragmentMaterialsBinding.searchEditText.addTextChangedListener {
             materialViewModel.updateSearchType(fragmentMaterialsBinding.searchEditText.text.toString().trim())
         }
+
+        fragmentMaterialsBinding.changeSearchTypeBtn.visibility = View.INVISIBLE
+        fragmentMaterialsBinding.generateReportBtn.visibility = View.INVISIBLE
 
         return fragmentMaterialsBinding.root
     }

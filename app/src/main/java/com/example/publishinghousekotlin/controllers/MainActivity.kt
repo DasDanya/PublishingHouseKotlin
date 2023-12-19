@@ -95,6 +95,10 @@ class MainActivity : AppCompatActivity() {
         goToFragmentAfterAction()
         hidingAdding()
         listenerOfSelectedItemNavView()
+        check()
+    }
+
+    private fun check(){
 
     }
 
@@ -153,7 +157,8 @@ class MainActivity : AppCompatActivity() {
 
         when (currentDestination?.id) {
             R.id.nav_home -> {
-                Messages().showError("Nav home", binding.root)
+                val intent = Intent(this@MainActivity, SaveBookingActivity::class.java)
+                startActivity(intent)
             }
             R.id.materialsScreen -> {
                 val intent = Intent(this@MainActivity, SaveMaterialActivity::class.java)

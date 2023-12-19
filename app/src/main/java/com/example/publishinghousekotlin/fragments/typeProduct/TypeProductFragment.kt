@@ -60,7 +60,7 @@ class TypeProductFragment : Fragment(), OnItemClickListener {
 
         adapter = TypeProductsAdapter(this)
         fragmentTypeProductsBinding.recyclerView.layoutManager = LinearLayoutManager(this.context)
-        fragmentTypeProductsBinding.recyclerView.setHasFixedSize(true)
+        //fragmentTypeProductsBinding.recyclerView.setHasFixedSize(true)
         fragmentTypeProductsBinding.recyclerView.adapter = adapter
 
         typeProductViewModel.listOfTypeProducts.observe(this.viewLifecycleOwner) {
@@ -70,6 +70,9 @@ class TypeProductFragment : Fragment(), OnItemClickListener {
         fragmentTypeProductsBinding.searchEditText.addTextChangedListener {
             typeProductViewModel.updateSearchType(fragmentTypeProductsBinding.searchEditText.text.toString().trim())
         }
+
+        fragmentTypeProductsBinding.changeSearchTypeBtn.visibility = View.INVISIBLE
+        fragmentTypeProductsBinding.generateReportBtn.visibility = View.INVISIBLE
 
         return fragmentTypeProductsBinding.root
     }
