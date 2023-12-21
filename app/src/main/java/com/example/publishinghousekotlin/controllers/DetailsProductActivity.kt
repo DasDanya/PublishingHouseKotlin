@@ -162,7 +162,7 @@ class DetailsProductActivity: AppCompatActivity() {
                         if(userRole == UserRole.ADMINISTRATOR.name){
 
                             val username = SpannableStringBuilder().bold { append("Заказчик: ") }.append(product!!.username)
-                            val userEmail = SpannableStringBuilder().bold { append("Почта заказчика: ") }.append(product!!.userEmail)
+                            val userEmail = SpannableStringBuilder().bold { append("Почта: ") }.append(product!!.userEmail)
 
                             detailsProductBinding.userTextView.text = username
                             detailsProductBinding.userEmailTextView.text = userEmail

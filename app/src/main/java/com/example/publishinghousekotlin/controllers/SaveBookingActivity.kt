@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.SpannableStringBuilder
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.bold
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.publishinghousekotlin.adapters.RecyclerViewProductsAddAdapter
 import com.example.publishinghousekotlin.basics.Messages
 import com.example.publishinghousekotlin.databinding.ActivitySaveBookingBinding
+import com.example.publishinghousekotlin.dtos.BookingAcceptDTO
 import com.example.publishinghousekotlin.dtos.BookingSendDTO
 import com.example.publishinghousekotlin.dtos.ProductWithEditionDTO
 import com.example.publishinghousekotlin.http.responses.MessageResponse
@@ -38,6 +40,7 @@ class SaveBookingActivity: AppCompatActivity() {
 
     private val bookingRepository = BookingRepository()
 
+    private var booking: BookingAcceptDTO? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +67,30 @@ class SaveBookingActivity: AppCompatActivity() {
     }
 
     private fun setStartData() {
+
+        val bookingId = intent.getLongExtra("bookingId", 0)
+
+        if(bookingId != 0L){
+            lifecycleScope.launch(Dispatchers.IO) {
+                try{
+                    booking = BookingRepository().get(bookingId)
+                    bookingSendDTO.id = booking!!.id
+                    withContext(Dispatchers.Main){
+                        delay(100)
+                        loadProducts()
+                    }
+                }catch (e:Exception){
+                    message.showError("Ошибка получения данных о заказе", saveBookingBinding.root)
+                }
+            }
+        }else{
+            loadProducts()
+        }
+
+        //calculateCost()
+    }
+
+    private fun loadProducts(){
         lifecycleScope.launch(Dispatchers.IO) {
             try{
                 val products = ProductRepository().get(null, "")
@@ -74,16 +101,33 @@ class SaveBookingActivity: AppCompatActivity() {
                         saveBookingBinding.productsRecyclerView.layoutManager = LinearLayoutManager(applicationContext)
                         saveBookingBinding.productsRecyclerView.addItemDecoration(DividerItemDecoration(applicationContext, DividerItemDecoration.VERTICAL))
 
+                        saveBookingBinding.productsRecyclerView.post {
+                            if(booking?.products != null){
+                                for (i in 0 until recyclerViewProductsAddAdapter!!.itemCount) {
+                                    val product = recyclerViewProductsAddAdapter!!.getProduct(i)
+
+                                    val foundProduct = booking!!.products!!.find { it.id == product.id }
+                                    if (foundProduct != null) {
+                                        val viewHolder = saveBookingBinding.productsRecyclerView.findViewHolderForAdapterPosition(i) as RecyclerViewProductsAddAdapter.ViewHolder?
+
+                                        viewHolder?.let {
+                                            it.largeItemRecyclerViewWithAddBinding.countEditText.setText(foundProduct.edition.toString())
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+
                         delay(100)
                         listenerOfCountProducts()
+                        calculateCost()
                     }
                 }
             }catch (e:Exception){
                 message.showError("Ошибка получения списка продукций", saveBookingBinding.root)
             }
         }
-
-        //calculateCost()
     }
 
     private fun listenerOfCountProducts(){
@@ -179,11 +223,36 @@ class SaveBookingActivity: AppCompatActivity() {
 
         if(bookingSendDTO.cost != BigDecimal(startIntervalCost) && bookingSendDTO.cost < BigDecimal(endIntervalCost)){
             bookingSendDTO.productsWithMargin = getProductsWithMargin()
-
             var messageResponse: MessageResponse?
 
             if(bookingSendDTO.id != 0.toLong()){
+                lifecycleScope.launch(Dispatchers.IO) {
+                    try{
+                        withContext(Dispatchers.Main) {
+                            saveBookingBinding.progressBar.visibility = View.VISIBLE
+                        }
 
+                        bookingSendDTO.status = booking!!.status
+                        bookingSendDTO.startExecution = booking!!.startExecution
+
+                        messageResponse = bookingRepository.update(bookingSendDTO,false)
+                        if(messageResponse != null){
+                            if(messageResponse!!.code != 200){
+                                message.showError(messageResponse!!.message, saveBookingBinding.root)
+                            }else{
+                                message.showSuccess(messageResponse!!.message, saveBookingBinding.root)
+                                delay(1000)
+                                goToListBookings()
+                            }
+                        }
+
+                    }catch (e:Exception){
+                        message.showError("Ошибка изменения данных о заказе. Повторите попытку.",saveBookingBinding.root)
+                    }
+                }
+                runOnUiThread {
+                    saveBookingBinding.progressBar.visibility = View.INVISIBLE
+                }
             }else{
                 lifecycleScope.launch(Dispatchers.IO) {
                     try{

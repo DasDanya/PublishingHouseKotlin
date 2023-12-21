@@ -16,12 +16,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import com.example.publishinghousekotlin.R
-import com.example.publishinghousekotlin.basics.Messages
 import com.example.publishinghousekotlin.databinding.ActivityMainBinding
 import com.example.publishinghousekotlin.http.responses.JwtResponse
 import com.example.publishinghousekotlin.dtos.EmployeeDTO
-import com.example.publishinghousekotlin.dtos.ProductAcceptDTO
-import com.example.publishinghousekotlin.dtos.ProductSendDTO
 import com.example.publishinghousekotlin.models.Material
 import com.example.publishinghousekotlin.models.PrintingHouse
 import com.example.publishinghousekotlin.models.TypeProduct
@@ -85,7 +82,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.materialsScreen, R.id.typeProductsScreen, R.id.printingHousesScreen, R.id.employeesScreen, R.id.productsScreen
+                R.id.bookingsScreen, R.id.materialsScreen, R.id.typeProductsScreen, R.id.printingHousesScreen, R.id.employeesScreen, R.id.productsScreen
             ), drawerLayout
         )
         setupActionBarWithNavController(navController!!, appBarConfiguration)
@@ -156,7 +153,7 @@ class MainActivity : AppCompatActivity() {
         val currentDestination = navController!!.currentDestination
 
         when (currentDestination?.id) {
-            R.id.nav_home -> {
+            R.id.bookingsScreen -> {
                 val intent = Intent(this@MainActivity, SaveBookingActivity::class.java)
                 startActivity(intent)
             }
@@ -212,7 +209,7 @@ class MainActivity : AppCompatActivity() {
      * Метод скрытия кнопки добавления
      */
     private fun hidingAdding(){
-        if(navController!!.currentDestination?.id == R.id.productsScreen || navController!!.currentDestination?.id == R.id.nav_home) {
+        if(navController!!.currentDestination?.id == R.id.productsScreen || navController!!.currentDestination?.id == R.id.bookingsScreen) {
             binding.appBarMain.fab.isVisible = user?.role != UserRole.ADMINISTRATOR.name
         }
     }
@@ -263,7 +260,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.nav_bookings ->{
-                    navController!!.navigate(R.id.nav_home)
+                    navController!!.navigate(R.id.bookingsScreen)
                     hidingAdding()
                     binding.drawerLayout.closeDrawers()
                     true

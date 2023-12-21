@@ -70,8 +70,6 @@ class ProductFragment: Fragment(), OnItemClickListener {
             productViewModel.updateSearchType(fragmentProductsBinding.searchEditText.text.toString().trim())
         }
 
-        fragmentProductsBinding.changeSearchTypeBtn.visibility = View.INVISIBLE
-        fragmentProductsBinding.generateReportBtn.visibility = View.INVISIBLE
 
         return fragmentProductsBinding.root
     }

@@ -71,8 +71,6 @@ class PrintingHouseFragment: Fragment(), OnItemClickListener {
             printingHouseViewModel.updateSearchType(fragmentPrintingHousesBinding.searchEditText.text.toString().trim())
         }
 
-        fragmentPrintingHousesBinding.changeSearchTypeBtn.visibility = View.INVISIBLE
-        fragmentPrintingHousesBinding.generateReportBtn.visibility = View.INVISIBLE
 
         return fragmentPrintingHousesBinding.root
     }

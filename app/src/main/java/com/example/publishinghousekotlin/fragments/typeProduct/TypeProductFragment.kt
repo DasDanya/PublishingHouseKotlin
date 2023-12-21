@@ -71,8 +71,6 @@ class TypeProductFragment : Fragment(), OnItemClickListener {
             typeProductViewModel.updateSearchType(fragmentTypeProductsBinding.searchEditText.text.toString().trim())
         }
 
-        fragmentTypeProductsBinding.changeSearchTypeBtn.visibility = View.INVISIBLE
-        fragmentTypeProductsBinding.generateReportBtn.visibility = View.INVISIBLE
 
         return fragmentTypeProductsBinding.root
     }

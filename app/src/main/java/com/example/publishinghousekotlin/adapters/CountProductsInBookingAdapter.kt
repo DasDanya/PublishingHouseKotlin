@@ -60,7 +60,7 @@ class CountProductsInBookingAdapter(private val countProductsInBookingDTOS: List
         with(holder.itemRecyclerViewTwoSubsBinding){
             iconView.setImageResource(R.drawable.booking)
             mainTextView.text = "Заказ №${countProductsDTO.booking.id}"
-            firstSubTextView.text = "Стоимость выполнения: ${countProductsDTO.booking.cost} ₽"
+            firstSubTextView.text = "Стоимость выполнения: ${countProductsDTO.booking.cost}₽"
             secondSubTextView.text = "Количество продукции: ${countProductsDTO.edition}"
 
         }

@@ -44,10 +44,14 @@ class EmployeeRepository {
      * @param surname Фамилия для фильтрации результатов.
      * @return Список сотрудников или null, если произошла ошибка.
      */
-    suspend fun get(page:Int, surname:String):List<EmployeeDTO>?{
-        var partUrl = "?page=$page"
-        if(surname != ""){
-            partUrl+="&surname=$surname"
+    suspend fun get(page:Int?, surname:String):List<EmployeeDTO>?{
+        var partUrl = ""
+
+        if(page != null) {
+            partUrl = "?page=$page"
+            if (surname != "") {
+                partUrl += "&surname=$surname"
+            }
         }
 
         val request = Request.Builder()

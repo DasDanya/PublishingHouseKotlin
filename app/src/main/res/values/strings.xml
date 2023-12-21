@@ -18,7 +18,7 @@
     <string name="exit">Выйти</string>
 
     // Данные для сервера
-    <string name="server">http://192.168.1.4:8080</string>
+    <string name="server">http://192.168.13.51:8080</string>
     <string name="keyForJwtResponse">THISISKEYFORJWTRESPONSE</string>
 
     // Регистрация и авторизация
@@ -78,5 +78,14 @@
     <string name="saveBookingLabel">Сохранение заказа</string>
     <string name="changeSearchType">Сменить параметр поиска</string>
     <string name ="generateReport">Сгенерировать отчёт</string>
+    <string name="booking">Заказ</string>
+    <string name="showProducts">Показать продукцию</string>
+    <string name="hideProducts">Скрыть продукцию</string>
+    <string name="showEmployees">Показать сотрудников</string>
+    <string name="hideEmployees">Скрыть сотрудников</string>
+    <string name="workingWithBooking">Работа с заказом</string>
+    <string name="chooseData">Выберите данные</string>
+    <string name="setDateExecution">Выбрать дату выполнения</string>
+    <string name="select">Выбрать</string>
 
 </resources>

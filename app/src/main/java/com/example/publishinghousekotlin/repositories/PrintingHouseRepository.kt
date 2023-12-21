@@ -37,10 +37,14 @@ class PrintingHouseRepository {
      * @param name Название типографии для фильтрации результатов.
      * @return Список типографий или null, если произошла ошибка.
      */
-    suspend fun get(page: Int, name:String):List<PrintingHouse>?{
-        var partUrl = "?page=$page"
-        if(name != ""){
-            partUrl+= "&name=$name"
+    suspend fun get(page: Int?, name:String):List<PrintingHouse>?{
+        var partUrl = ""
+
+        if(page != null) {
+            partUrl = "?page=$page"
+            if (name != "") {
+                partUrl += "&name=$name"
+            }
         }
 
         val request = Request.Builder()

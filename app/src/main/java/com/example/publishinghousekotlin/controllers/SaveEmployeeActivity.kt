@@ -134,7 +134,7 @@ class SaveEmployeeActivity:AppCompatActivity() {
         base64String = employeeDTO.photo
 
         setBirthday()
-        setPhoto()
+        openGallery()
     }
 
     /**
@@ -171,7 +171,7 @@ class SaveEmployeeActivity:AppCompatActivity() {
     /**
      * Метод перехода к выбору фотографий
      */
-    private fun setPhoto() {
+    private fun openGallery() {
         saveEmployeeBinding.photoButton.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"

@@ -48,21 +48,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
-
-    <Button
-        android:id="@+id/changeSearchTypeBtn"
-        android:layout_width="230dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:text="@string/changeSearchType"/>
-
-        <Button
-            android:id="@+id/generateReportBtn"
-            android:layout_width="230dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="@string/generateReport"/>
-
+        
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

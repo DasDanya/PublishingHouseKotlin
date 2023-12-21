@@ -71,8 +71,6 @@ class EmployeeFragment: Fragment(), OnItemClickListener {
             employeeViewModel.updateSearchType(fragmentEmployeesBinding.searchEditText.text.toString().trim())
         }
 
-        fragmentEmployeesBinding.changeSearchTypeBtn.visibility = View.INVISIBLE
-        fragmentEmployeesBinding.generateReportBtn.visibility = View.INVISIBLE
 
         return fragmentEmployeesBinding.root
     }

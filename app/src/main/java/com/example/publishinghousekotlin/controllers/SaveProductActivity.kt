@@ -133,12 +133,16 @@ class SaveProductActivity: AppCompatActivity() {
                             saveProductBinding.nameContainer.helperText = null
                             message.setSuccess(saveProductBinding.photosHelperText, "Текущие изображения сохранены")
                         }
-                    }
-                    withContext(Dispatchers.Main){
+
                         delay(100)
                         loadTypeProducts()
                         loadMaterials()
                     }
+//                    withContext(Dispatchers.Main){
+//                        delay(100)
+//                        loadTypeProducts()
+//                        loadMaterials()
+//                    }
                 }catch (e:Exception){
                     message.showError("Ошибка получения информации о продукции", saveProductBinding.root)
                 }
@@ -331,7 +335,7 @@ class SaveProductActivity: AppCompatActivity() {
                             }
 
                             override fun onNothingSelected(parent: AdapterView<*>?) {
-                                TODO("Not yet implemented")
+
                             }
                         }
                     }else{
