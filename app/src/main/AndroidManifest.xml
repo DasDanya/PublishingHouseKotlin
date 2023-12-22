@@ -105,8 +105,18 @@
         <activity
             android:name=".controllers.UpdateBookingAdminActivity"
             android:screenOrientation="portrait"
-            android:label="@string/workingWithBooking"
-            ></activity>
+            android:label="@string/workingWithBooking">
+        </activity>
+        <activity
+            android:name=".controllers.GenerateReportBookingActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/generateReportTitle">
+        </activity>
+        <activity
+            android:name=".controllers.DetailsCustomerActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/detailsLabel">
+        </activity>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

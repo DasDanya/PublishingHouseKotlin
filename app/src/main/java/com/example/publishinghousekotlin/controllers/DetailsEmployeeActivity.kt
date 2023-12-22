@@ -6,6 +6,7 @@ import android.text.SpannableStringBuilder
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.bold
 import com.example.publishinghousekotlin.basics.FileWorker
+import com.example.publishinghousekotlin.basics.Messages
 import com.example.publishinghousekotlin.databinding.DetailsEmployeeBinding
 import com.example.publishinghousekotlin.dialogs.DeleteEmployeeDialog
 import com.example.publishinghousekotlin.dtos.EmployeeDTO
@@ -70,26 +71,30 @@ class DetailsEmployeeActivity: AppCompatActivity() {
      * Метод установки стартовых данных
      */
     private fun setStartData() {
-        employeeDTO = intent.getSerializableExtra("employee") as? EmployeeDTO
+        try {
+            employeeDTO = intent.getSerializableExtra("employee") as? EmployeeDTO
 
-        val surname = SpannableStringBuilder().bold { append("Фамилия: ") }.append(employeeDTO?.surname)
-        val name = SpannableStringBuilder().bold { append("Имя: ") }.append(employeeDTO?.name)
+            val surname = SpannableStringBuilder().bold { append("Фамилия: ") }.append(employeeDTO?.surname)
+            val name = SpannableStringBuilder().bold { append("Имя: ") }.append(employeeDTO?.name)
 
-        val patronymicAppend = if(employeeDTO?.patronymic!!.isEmpty()) "отсутствует" else employeeDTO?.patronymic
-        val patronymic = SpannableStringBuilder().bold { append("Отчество: ") }.append(patronymicAppend)
-        val birthday = SpannableStringBuilder().bold { append("Дата рождения: ") }.append(employeeDTO?.birthday!!.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")))
-        val post = SpannableStringBuilder().bold { append("Должность: ") }.append(employeeDTO?.post)
-        val email = SpannableStringBuilder().bold { append("Электронная почта: ") }.append(employeeDTO?.email)
-        val phone = SpannableStringBuilder().bold { append("Номер телефона: ") }.append(employeeDTO?.phone)
+            val patronymicAppend = if (employeeDTO?.patronymic!!.isEmpty()) "отсутствует" else employeeDTO?.patronymic
+            val patronymic = SpannableStringBuilder().bold { append("Отчество: ") }.append(patronymicAppend)
+            val birthday = SpannableStringBuilder().bold { append("Дата рождения: ") }.append(employeeDTO?.birthday!!.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")))
+            val post = SpannableStringBuilder().bold { append("Должность: ") }.append(employeeDTO?.post)
+            val email = SpannableStringBuilder().bold { append("Электронная почта: ") }.append(employeeDTO?.email)
+            val phone = SpannableStringBuilder().bold { append("Номер телефона: ") }.append(employeeDTO?.phone)
 
-        detailsEmployeeBinding.surnameTextView.text = surname
-        detailsEmployeeBinding.nameTextView.text = name
-        detailsEmployeeBinding.patronymicTextView.text = patronymic
-        detailsEmployeeBinding.birthdayTextView.text = birthday
-        detailsEmployeeBinding.postTextView.text = post
-        detailsEmployeeBinding.emailTextView.text = email
-        detailsEmployeeBinding.phoneTextView.text = phone
-        detailsEmployeeBinding.photoView.setImageBitmap(FileWorker().getBitmap(employeeDTO!!.photo))
+            detailsEmployeeBinding.surnameTextView.text = surname
+            detailsEmployeeBinding.nameTextView.text = name
+            detailsEmployeeBinding.patronymicTextView.text = patronymic
+            detailsEmployeeBinding.birthdayTextView.text = birthday
+            detailsEmployeeBinding.postTextView.text = post
+            detailsEmployeeBinding.emailTextView.text = email
+            detailsEmployeeBinding.phoneTextView.text = phone
+            detailsEmployeeBinding.photoView.setImageBitmap(FileWorker().getBitmap(employeeDTO!!.photo))
+        } catch (e: Exception){
+            Messages().showError("Ошибка получения данных о сотруднике", detailsEmployeeBinding.root)
+        }
 
 
     }

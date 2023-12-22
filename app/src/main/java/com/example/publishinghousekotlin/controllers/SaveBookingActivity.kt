@@ -235,7 +235,7 @@ class SaveBookingActivity: AppCompatActivity() {
                         bookingSendDTO.status = booking!!.status
                         bookingSendDTO.startExecution = booking!!.startExecution
 
-                        messageResponse = bookingRepository.update(bookingSendDTO,false)
+                        messageResponse = bookingRepository.update(bookingSendDTO,"userUpdate")
                         if(messageResponse != null){
                             if(messageResponse!!.code != 200){
                                 message.showError(messageResponse!!.message, saveBookingBinding.root)
@@ -249,9 +249,10 @@ class SaveBookingActivity: AppCompatActivity() {
                     }catch (e:Exception){
                         message.showError("Ошибка изменения данных о заказе. Повторите попытку.",saveBookingBinding.root)
                     }
-                }
-                runOnUiThread {
-                    saveBookingBinding.progressBar.visibility = View.INVISIBLE
+
+                    runOnUiThread {
+                        saveBookingBinding.progressBar.visibility = View.INVISIBLE
+                    }
                 }
             }else{
                 lifecycleScope.launch(Dispatchers.IO) {
@@ -274,9 +275,10 @@ class SaveBookingActivity: AppCompatActivity() {
                     }catch (e:Exception){
                         message.showError("Ошибка добавления заказа. Повторите попытку.", saveBookingBinding.root)
                     }
-                }
-                runOnUiThread {
-                    saveBookingBinding.progressBar.visibility = View.INVISIBLE
+
+                    runOnUiThread {
+                        saveBookingBinding.progressBar.visibility = View.INVISIBLE
+                    }
                 }
             }
         }else{

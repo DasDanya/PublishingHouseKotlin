@@ -466,9 +466,10 @@ class SaveProductActivity: AppCompatActivity() {
                         }catch (e:Exception){
                             message.showError("Ошибка изменения данных о продукции", saveProductBinding.root)
                         }
-                    }
-                    runOnUiThread {
-                        saveProductBinding.progressBar.visibility = View.INVISIBLE
+
+                        runOnUiThread {
+                            saveProductBinding.progressBar.visibility = View.INVISIBLE
+                        }
                     }
 
                 } else {
@@ -495,12 +496,11 @@ class SaveProductActivity: AppCompatActivity() {
                             }catch (e:Exception){
                                 message.showError("Ошибка добавления продукции", saveProductBinding.root)
                             }
-                        }
-                        runOnUiThread {
-                            saveProductBinding.progressBar.visibility = View.INVISIBLE
-                        }
 
-
+                            runOnUiThread {
+                                saveProductBinding.progressBar.visibility = View.INVISIBLE
+                            }
+                        }
                     } else {
                         message.showError("Ошибка получения изображений. Повторите попытку", saveProductBinding.root)
                     }

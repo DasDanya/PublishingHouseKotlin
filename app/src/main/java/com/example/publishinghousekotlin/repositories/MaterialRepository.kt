@@ -8,7 +8,6 @@ import com.example.publishinghousekotlin.R
 import com.example.publishinghousekotlin.http.JwtInterceptor
 import com.example.publishinghousekotlin.http.responses.MessageResponse
 import com.example.publishinghousekotlin.models.Material
-import com.example.publishinghousekotlin.models.TypeProduct
 import com.example.publishinghousekotlin.pagination.MaterialsDataSource
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken

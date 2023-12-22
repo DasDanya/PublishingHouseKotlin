@@ -85,7 +85,7 @@ class ProductRepository {
     suspend fun get(productId:Long): ProductAcceptDTO?{
 
         val request = Request.Builder()
-            .url(apiUrl + "/$productId")
+            .url("$apiUrl/$productId")
             .build()
 
         val response = client.newCall(request).execute()

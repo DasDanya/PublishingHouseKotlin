@@ -87,5 +87,14 @@
     <string name="chooseData">Выберите данные</string>
     <string name="setDateExecution">Выбрать дату выполнения</string>
     <string name="select">Выбрать</string>
+    <string name="generateReportTitle">Генерация отчёта</string>
+
+    <string name="specifyPeriod">Укажите период</string>
+    <string name="chooseStartOfPeriod">Выбрать начало периода</string>
+    <string name="chooseEndOfPeriod">Выбрать конец периода</string>
+
+
+    //Заказчик
+    <string name="customer">Заказчик</string>
 
 </resources>

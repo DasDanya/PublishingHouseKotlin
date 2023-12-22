@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.bookingsScreen, R.id.materialsScreen, R.id.typeProductsScreen, R.id.printingHousesScreen, R.id.employeesScreen, R.id.productsScreen
+                R.id.bookingsScreen, R.id.materialsScreen, R.id.typeProductsScreen, R.id.printingHousesScreen, R.id.employeesScreen, R.id.productsScreen, R.id.customersScreen
             ), drawerLayout
         )
         setupActionBarWithNavController(navController!!, appBarConfiguration)
@@ -92,12 +92,8 @@ class MainActivity : AppCompatActivity() {
         goToFragmentAfterAction()
         hidingAdding()
         listenerOfSelectedItemNavView()
-        check()
     }
 
-    private fun check(){
-
-    }
 
     /**
      * Переопределения метода создания меню
@@ -209,7 +205,7 @@ class MainActivity : AppCompatActivity() {
      * Метод скрытия кнопки добавления
      */
     private fun hidingAdding(){
-        if(navController!!.currentDestination?.id == R.id.productsScreen || navController!!.currentDestination?.id == R.id.bookingsScreen) {
+        if(navController!!.currentDestination?.id == R.id.productsScreen || navController!!.currentDestination?.id == R.id.bookingsScreen || navController!!.currentDestination?.id == R.id.customersScreen) {
             binding.appBarMain.fab.isVisible = user?.role != UserRole.ADMINISTRATOR.name
         }
     }
@@ -261,6 +257,12 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.nav_bookings ->{
                     navController!!.navigate(R.id.bookingsScreen)
+                    hidingAdding()
+                    binding.drawerLayout.closeDrawers()
+                    true
+                }
+                R.id.nav_customers ->{
+                    navController!!.navigate(R.id.customersScreen)
                     hidingAdding()
                     binding.drawerLayout.closeDrawers()
                     true

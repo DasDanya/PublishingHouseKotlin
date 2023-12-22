@@ -202,23 +202,32 @@ class UpdateBookingAdminActivity: AppCompatActivity() {
         bookingSendDTO.idsOfEmployees = getSelectedEmployees()
         if((bookingSendDTO.idsOfEmployees as MutableList<Long>).isNotEmpty() && !updateBookingAdminBinding.endExecutionBtnHelperText.text.toString().contains("не может быть в прошлом")){
             lifecycleScope.launch(Dispatchers.IO) {
-                withContext(Dispatchers.Main) {
-                    updateBookingAdminBinding.progressBar.visibility = View.VISIBLE
+                try {
+                    withContext(Dispatchers.Main) {
+                        updateBookingAdminBinding.progressBar.visibility = View.VISIBLE
+                    }
+
+                    val messageResponse = BookingRepository().update(bookingSendDTO, "execute")
+                    if (messageResponse != null) {
+                        if (messageResponse!!.code != 200) {
+                            message.showError(messageResponse!!.message, updateBookingAdminBinding.root)
+                        } else {
+                            message.showSuccess(messageResponse!!.message, updateBookingAdminBinding.root)
+                            delay(1000)
+
+
+                            val intent = Intent(this@UpdateBookingAdminActivity, MainActivity::class.java)
+                            intent.putExtra("fragment", "BookingFragment")
+                            startActivity(intent)
+
+                        }
+                    }
+                }catch (e:Exception){
+                    message.showError("Ошибка обновления заказа. Повторите попытку", updateBookingAdminBinding.root)
                 }
 
-                val messageResponse = BookingRepository().update(bookingSendDTO,true)
-                if(messageResponse != null){
-                    if(messageResponse!!.code != 200){
-                        message.showError(messageResponse!!.message, updateBookingAdminBinding.root)
-                    }else{
-                        message.showSuccess(messageResponse!!.message, updateBookingAdminBinding.root)
-                        delay(1000)
-
-
-                        val intent = Intent(this@UpdateBookingAdminActivity, MainActivity::class.java)
-                        intent.putExtra("fragment", "BookingFragment")
-                        startActivity(intent)
-                    }
+                runOnUiThread {
+                    updateBookingAdminBinding.progressBar.visibility = View.INVISIBLE
                 }
             }
         }else{

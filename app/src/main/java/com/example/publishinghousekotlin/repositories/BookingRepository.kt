@@ -10,6 +10,7 @@ import com.example.publishinghousekotlin.dtos.BookingAcceptDTO
 import com.example.publishinghousekotlin.dtos.BookingSendDTO
 import com.example.publishinghousekotlin.dtos.BookingSimpleAcceptDTO
 import com.example.publishinghousekotlin.http.JwtInterceptor
+import com.example.publishinghousekotlin.http.requests.GenerateReportRequest
 import com.example.publishinghousekotlin.http.responses.JwtResponse
 import com.example.publishinghousekotlin.http.responses.MessageResponse
 import com.example.publishinghousekotlin.models.UserRole
@@ -115,13 +116,13 @@ class BookingRepository {
         return null
     }
 
-    suspend fun update(booking: BookingSendDTO,admin: Boolean):MessageResponse?{
+    suspend fun update(booking: BookingSendDTO,updateStatus:String):MessageResponse?{
         val bookingAsJson = gson.toJson(booking)
         val mediaType = "application/json; chapset=utf-8".toMediaType()
         val body = bookingAsJson.toRequestBody(mediaType)
 
         val request = Request.Builder()
-            .url("$apiUrl/update/${booking.id}?admin=$admin")
+            .url("$apiUrl/update/${booking.id}?updateStatus=$updateStatus")
             .put(body)
             .build()
 
@@ -135,4 +136,18 @@ class BookingRepository {
     }
 
 
+    suspend fun generateRepost(generateReportRequest: GenerateReportRequest): MessageResponse{
+        val requestAsJson = gson.toJson(generateReportRequest)
+        val mediaType = "application/json; chapset=utf-8".toMediaType()
+        val body = requestAsJson.toRequestBody(mediaType)
+
+        val request = Request.Builder()
+            .url("$apiUrl/generateReport")
+            .post(body)
+            .build()
+
+        val response = client.newCall(request).execute()
+
+        return MessageResponse(response.code, response.body!!.string())
+    }
 }

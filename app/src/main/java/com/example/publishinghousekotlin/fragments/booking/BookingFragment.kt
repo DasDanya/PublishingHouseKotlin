@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.publishinghousekotlin.adapters.BookingsAdapter
 import com.example.publishinghousekotlin.basics.OnItemClickListener
 import com.example.publishinghousekotlin.controllers.DetailsBookingActivity
+import com.example.publishinghousekotlin.controllers.GenerateReportBookingActivity
 import com.example.publishinghousekotlin.databinding.FragmentBookingBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -75,6 +76,14 @@ class  BookingFragment : Fragment(), OnItemClickListener {
 //            }
 //            statusSearching = !statusSearching
 //        }
+
+
+        fragmentBookingBinding.generateReportBtn.setOnClickListener {
+            val intent = Intent(activity, GenerateReportBookingActivity::class.java)
+            startActivity(intent)
+
+        }
+
 
         return fragmentBookingBinding.root
     }

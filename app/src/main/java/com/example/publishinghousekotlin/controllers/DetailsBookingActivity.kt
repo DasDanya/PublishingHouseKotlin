@@ -12,9 +12,10 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.publishinghousekotlin.R
 import com.example.publishinghousekotlin.adapters.DetailsRecyclerViewEmployeesAdapter
-import com.example.publishinghousekotlin.adapters.SimpleProductsAdapter
+import com.example.publishinghousekotlin.adapters.ProductsInBookingInfoAdapter
 import com.example.publishinghousekotlin.basics.Messages
 import com.example.publishinghousekotlin.databinding.DetailsBookingBinding
+import com.example.publishinghousekotlin.dialogs.CompleteBookingDialog
 import com.example.publishinghousekotlin.dialogs.DeleteBookingDialog
 import com.example.publishinghousekotlin.dtos.BookingAcceptDTO
 import com.example.publishinghousekotlin.http.responses.JwtResponse
@@ -114,6 +115,10 @@ class DetailsBookingActivity: AppCompatActivity() {
                                         intent.putExtra("booking", bookingAcceptDTO)
                                         startActivity(intent)
                                     }
+
+                                    detailsBookingBinding.secondBtn.setOnClickListener {
+                                        CompleteBookingDialog(booking!!.id, detailsBookingBinding.root).show(supportFragmentManager, "COMPLETEBOOKINGDIALOG")
+                                    }
                                 }
                                 else -> {
                                     detailsBookingBinding.firstBtn.isEnabled = false
@@ -142,7 +147,7 @@ class DetailsBookingActivity: AppCompatActivity() {
 
 
                         // Загрузка продукции
-                        val productsAdapter = SimpleProductsAdapter(booking!!.products!!)
+                        val productsAdapter = ProductsInBookingInfoAdapter(booking!!.products!!)
                         detailsBookingBinding.productsRecyclerView.adapter = productsAdapter
                         detailsBookingBinding.productsRecyclerView.layoutManager = LinearLayoutManager(applicationContext)
                         detailsBookingBinding.productsRecyclerView.addItemDecoration(DividerItemDecoration(applicationContext, DividerItemDecoration.VERTICAL))
