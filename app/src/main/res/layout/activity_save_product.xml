@@ -50,14 +50,15 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginStart="5dp"
+            android:layout_gravity="center_horizontal"
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="10dp"
                 android:textColor="@color/black"
@@ -68,14 +69,14 @@
 
             <Spinner
                 android:id="@+id/typeProductsSpinner"
-                android:layout_width="380dp"
+                android:layout_width="382dp"
                 android:layout_height="wrap_content"
-                android:paddingStart="0dp"
                 android:background="@drawable/spinner_border"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="10dp"
                 android:textColor="@color/black"
@@ -86,14 +87,16 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/materialsRecyclerView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:scrollbars="vertical"/>
 
             <TextView
                 android:id="@+id/costView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="10dp"
                 android:textColor="@color/black"
@@ -104,23 +107,25 @@
         </LinearLayout>
 
         <RelativeLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp">
+            android:layout_gravity="center_horizontal">
 
             <Button
                 android:id="@+id/photosBtn"
                 android:layout_width="382dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:text="Выбрать фотографии"
-                android:layout_marginBottom="10dp"/>
+                android:layout_marginBottom="7dp"/>
 
             <TextView
                 android:id="@+id/photosHelperText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/photosBtn"
-                android:layout_marginStart="16dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_centerInParent="true"
                 android:textSize="12dp"
                 android:text="Необходимо выбрать фотографии"
                 android:textColor="@color/design_default_color_error" />
